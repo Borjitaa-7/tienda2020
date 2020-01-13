@@ -9,11 +9,11 @@ class Alumno {
     private $password;
     private $admin;
     private $telefono;
-    private $fecha_alta;
+    private $fecha;
     private $imagen;
 
     //CONSTRUCTOR
-public function __construct($id, $dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha_alta, $imagen) {
+public function __construct($id, $dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen) {
     $this->id = $id;
     $this->dni = $dni;
     $this->nombre = $nombre;
@@ -22,7 +22,7 @@ public function __construct($id, $dni, $nombre, $apellidos, $email, $password, $
     $this->password = $password;
     $this->admin = $admin;
     $this->telefono = $telefono;
-    $this->fecha_alta = $fecha_alta;
+    $this->fecha = $fecha;
     $this->imagen = $imagen;
 }
 
@@ -60,7 +60,7 @@ public function __construct($id, $dni, $nombre, $apellidos, $email, $password, $
     }
 
     function getFecha_alta() {
-        return $this->fecha_alta;
+        return $this->fecha;
     }
 
     function getImagen() {
@@ -102,8 +102,8 @@ public function __construct($id, $dni, $nombre, $apellidos, $email, $password, $
         $this->telefono = $telefono;
     }
 
-    function setFecha_alta($fecha_alta) {
-        $this->fecha_alta = $fecha_alta;
+    function setFecha_alta($fecha) {
+        $this->fecha = $fecha;
     }
     
     function setImagen($imagen) {

@@ -1,10 +1,10 @@
 <?php
 
-require_once MODEL_PATH."Alumno.php";
+require_once MODEL_PATH."Usuarios.php";
 require_once CONTROLLER_PATH."ControladorBD.php";
 require_once UTILITY_PATH."funciones.php";
 
-class ControladorAlumno {
+class ControladorUsuarios {
 
      // Variable instancia para Singleton
     static private $instancia = null;
@@ -17,24 +17,24 @@ class ControladorAlumno {
     //Patrón Singleton. Contiene una instancia del Manejador de la BD
     public static function getControlador() {
         if (self::$instancia == null) {
-            self::$instancia = new ControladorAlumno();
+            self::$instancia = new ControladorUsuarios();
         }
         return self::$instancia;
     }
     
     //---------------------------------------------------------------LISTAR
-    public function listarAlumnos($nombre, $dni){
+    public function listarUsuario($nombre, $dni){
         $lista=[];
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
-        $consulta = "SELECT * FROM alumnadocrud WHERE nombre LIKE :nombre OR dni LIKE :dni";
+        $consulta = "SELECT * FROM tienda2020 WHERE nombre LIKE :nombre OR dni LIKE :dni";
         $parametros = array(':nombre' => "%".$nombre."%", ':dni' => "%".$dni."%");
         $res = $bd->consultarBD($consulta,$parametros);
         $filas=$res->fetchAll(PDO::FETCH_OBJ);
         if (count($filas) > 0) {
             foreach ($filas as $a) {
-                $alumno = new Alumno($a->id, $a->dni, $a->nombre, $a->email, $a->password, $a->idioma, $a->matricula, $a->lenguaje, $a->fecha, $a->imagen);
-                $lista[] = $alumno;
+                $alumno = new Usuario($a->id, $a->dni, $a->nombre, $a->apellidos, $a->email, $a->password, $a->admin, $a->telefono, $a->fecha, $a->imagen);
+                $lista[] = $usuario;
             }
             $bd->cerrarBD();
             return $lista;
@@ -45,15 +45,15 @@ class ControladorAlumno {
     //---------------------------------------------------------------LISTAR
     
     //---------------------------------------------------------------ALMACENAR
-    public function almacenarAlumno($dni, $nombre, $email, $password, $idioma, $matricula, $lenguaje, $fecha, $imagen){
+    public function almacenarUsuario($dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen){
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
-        $consulta = "INSERT INTO alumnadocrud (dni, nombre, email, password, 
-            idioma, matricula, lenguaje, fecha, imagen) VALUES (:dni, :nombre, :email, :password, :idioma, 
-            :matricula, :lenguaje, :fecha, :imagen)";
+        $consulta = "INSERT INTO tienda2020 (dni, nombre, apellidos, email, password, 
+            admin, telefono, fecha, imagen) VALUES (:dni, :nombre, :apellidos, :email, :password, :admin, 
+            :telefono, :fecha, :imagen)";
         
-        $parametros= array(':dni'=>$dni, ':nombre'=>$nombre, ':email'=>$email,':password'=>$password,
-                            ':idioma'=>$idioma, ':matricula'=>$matricula,':lenguaje'=>$lenguaje,':fecha'=>$fecha,':imagen'=>$imagen);
+        $parametros= array(':dni'=>$dni, ':nombre'=>$nombre, ':apellidos'=>$apellidos, ':email'=>$email,':password'=>$password,
+                            ':admin'=>$admin, ':telefono'=>$telefono,':fecha'=>$fecha,':imagen'=>$imagen);
         $estado = $bd->actualizarBD($consulta,$parametros);
         $bd->cerrarBD();
         return $estado;
@@ -61,20 +61,20 @@ class ControladorAlumno {
     //---------------------------------------------------------------ALMACENAR
     
     //---------------------------------------------------------------BUSCAR
-    public function buscarAlumno($id){ 
+    public function buscarUsuario($id){ 
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
-        $consulta = "SELECT* FROM alumnadocrud WHERE id = :id";
+        $consulta = "SELECT* FROM tienda2020 WHERE id = :id";
         $parametros = array(':id' => $id);
         $filas = $bd->consultarBD($consulta, $parametros);
         $res = $bd->consultarBD($consulta,$parametros);
         $filas=$res->fetchAll(PDO::FETCH_OBJ);
         if (count($filas) > 0) {
             foreach ($filas as $a) {
-                $alumno = new Alumno($a->id, $a->dni, $a->nombre, $a->email, $a->password, $a->idioma, $a->matricula, $a->lenguaje, $a->fecha, $a->imagen);
+                $usuario = new Usuario($a->id, $a->dni, $a->nombre, $a->apellidos, $a->email, $a->password, $a->admin, $a->telefono, $a->fecha, $a->imagen);
             }
             $bd->cerrarBD();
-            return $alumno;
+            return $usuario;
         }else{
             return null;
         }    
@@ -82,20 +82,20 @@ class ControladorAlumno {
     //---------------------------------------------------------------BUSCAR
 
     //---------------------------------------------------------------BUSCARconDNI
-    public function buscarAlumnoDni($dni){ 
+    public function buscarUsuarioDni($dni){ 
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
-        $consulta = "SELECT * FROM alumnadocrud WHERE dni = :dni";
+        $consulta = "SELECT * FROM tienda2020 WHERE dni = :dni";
         $parametros = array(':dni' => $dni);
         $filas = $bd->consultarBD($consulta, $parametros);
         $res = $bd->consultarBD($consulta,$parametros);
         $filas=$res->fetchAll(PDO::FETCH_OBJ);
         if (count($filas) > 0) {
             foreach ($filas as $a) {
-                $alumno = new Alumno($a->id, $a->dni, $a->nombre, $a->email, $a->password, $a->idioma, $a->matricula, $a->lenguaje, $a->fecha, $a->imagen);
+                $usuario = new Usuario($a->id, $a->dni, $a->nombre, $a->apellidos, $a->email, $a->password, $a->admin, $a->telefono, $a->fecha, $a->imagen);
             }
             $bd->cerrarBD();
-            return $alumno;
+            return $usuario;
         }else{
             return null;
         }    
@@ -103,11 +103,11 @@ class ControladorAlumno {
     //---------------------------------------------------------------BUSCARconDNI
 
     //---------------------------------------------------------------BORRAR
-    public function borrarAlumno($id){ 
+    public function borrarUsuario($id){ 
         $estado=false;
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
-        $consulta = "DELETE FROM alumnadocrud WHERE id = :id";
+        $consulta = "DELETE FROM tienda2020 WHERE id = :id";
         $parametros = array(':id' => $id);
         $estado = $bd->actualizarBD($consulta,$parametros);
         $bd->cerrarBD();
@@ -116,14 +116,14 @@ class ControladorAlumno {
     //---------------------------------------------------------------BORRAR
 
     //---------------------------------------------------------------ACTUALIZAR
-    public function actualizarAlumno($id, $dni, $nombre, $email, $password, $idioma, $matricula, $lenguaje, $fecha, $imagen){
+    public function actualizarUsuario($id, $dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen){
          $bd = ControladorBD::getControlador();
          $bd->abrirBD();
-         $consulta = "UPDATE alumnadocrud SET dni=:dni, nombre=:nombre, email=:email, password=:password, idioma=:idioma, 
-             matricula=:matricula, lenguaje=:lenguaje, fecha=:fecha, imagen=:imagen 
+         $consulta = "UPDATE tienda2020 SET dni=:dni, nombre=:nombre, apellidos=:apellidos, email=:email, password=:password, admin=:admin, 
+             telefono=:telefono, fecha=:fecha, imagen=:imagen 
              WHERE id=:id";
-         $parametros= array(':id' => $id, ':dni'=>$dni, ':nombre'=>$nombre, ':email'=>$email,':password'=>$password,
-                             ':idioma'=>$idioma, ':matricula'=>$matricula,':lenguaje'=>$lenguaje,':fecha'=>$fecha,':imagen'=>$imagen);
+         $parametros= array(':id' => $id, ':dni'=>$dni, ':nombre'=>$nombre, ':apellidos'=>$apellidos, ':email'=>$email,':password'=>$password,
+                             ':admin'=>$admin, ':telefoon'=>$telefono,':fecha'=>$fecha,':imagen'=>$imagen);
          $estado = $bd->actualizarBD($consulta,$parametros);
          $bd->cerrarBD();
          return $estado;
