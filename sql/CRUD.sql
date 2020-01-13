@@ -19,19 +19,6 @@ USE `tienda2020`;
 
 -- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `admin`. Passwd pepe y admin
---
-DROP TABLE IF EXISTS `admin`;
-CREATE TABLE `admin` (
-  `id` int(11) NOT NULL,
-  `email` text COLLATE utf8_spanish_ci NOT NULL,
-  `password` text COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
-INSERT INTO `admin` (`id`, `email`, `password`) VALUES
-(1, 'pepe@pepe.com', '926e27eecdbc7a18858b3798ba99bddd'),
-(2, 'admin@admin.com', '21232f297a57a5a743894a0e4a801fc3'); 
 
 -- --------------------------------------------------------
 
@@ -68,11 +55,6 @@ CREATE TABLE `productos` (
 
 -- --------------------------------------------------------
 
---
--- Indices de la tabla `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `usuarios`
@@ -83,11 +65,6 @@ ALTER TABLE `usuarios`
 -- Indices de la tabla `productos`
 ALTER TABLE `productos`
   ADD PRIMARY KEY (`id`),
-
---
--- AUTO_INCREMENT de la tabla `admin`
-ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
