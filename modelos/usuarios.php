@@ -4,25 +4,25 @@ class Alumno {
     private $id;
     private $dni;
     private $nombre;
+    private $apellidos;
     private $email;
     private $password;
-    private $idioma;
-    private $matricula;
-    private $lenguaje;
-    private $fecha;
+    private $admin;
+    private $telefono;
+    private $fecha_alta;
     private $imagen;
 
     //CONSTRUCTOR
-public function __construct($id, $dni, $nombre, $email, $password, $idioma, $matricula, $lenguaje, $fecha, $imagen) {
+public function __construct($id, $dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha_alta, $imagen) {
     $this->id = $id;
     $this->dni = $dni;
     $this->nombre = $nombre;
+    $this->apellidos = $apellidos;
     $this->email = $email;
     $this->password = $password;
-    $this->idioma = $idioma;
-    $this->matricula = $matricula;
-    $this->lenguaje = $lenguaje;
-    $this->fecha = $fecha;
+    $this->admin = $admin;
+    $this->telefono = $telefono;
+    $this->fecha_alta = $fecha_alta;
     $this->imagen = $imagen;
 }
 
@@ -39,6 +39,10 @@ public function __construct($id, $dni, $nombre, $email, $password, $idioma, $mat
         return $this->nombre;
     }
 
+    function getApellidos() {
+        return $this->apellidos;
+    }
+
     function getEmail() {
         return $this->email;
     }
@@ -47,20 +51,16 @@ public function __construct($id, $dni, $nombre, $email, $password, $idioma, $mat
         return $this->password;
     }
 
-    function getIdioma() {
-        return $this->idioma;
+    function getAdmin() {
+        return $this->admin;
     }
 
-    function getMatricula() {
-        return $this->matricula;
+    function getTelefono() {
+        return $this->telefono;
     }
 
-    function getLenguaje() {
-        return $this->lenguaje;
-    }
-
-    function getFecha() {
-        return $this->fecha;
+    function getFecha_alta() {
+        return $this->fecha_alta;
     }
 
     function getImagen() {
@@ -81,6 +81,10 @@ public function __construct($id, $dni, $nombre, $email, $password, $idioma, $mat
         $this->nombre = $nombre;
     }
 
+    function setApellidos($apellidos) {
+        $this->apellidos = $apellidos;
+    }
+
     function setEmail($email) {
         $this->email = $email;
     }
@@ -89,21 +93,17 @@ public function __construct($id, $dni, $nombre, $email, $password, $idioma, $mat
         //$this->password = $password;
         $this->password = md5($password);
     } 
-    
-    function setIdioma($idioma) {
-        $this->idioma = $idioma;
+
+    function setAdmin($admin) {
+        $this->admin = $admin;
     }
 
-    function setMatricula($matricula) {
-        $this->matricula = $matricula;
+    function setTelefono($telefono) {
+        $this->telefono = $telefono;
     }
 
-    function setLenguaje($lenguaje) {
-        $this->lenguaje = $lenguaje;
-    }
-
-    function setFecha($fecha) {
-        $this->fecha = $fecha;
+    function setFecha_alta($fecha_alta) {
+        $this->fecha_alta = $fecha_alta;
     }
     
     function setImagen($imagen) {
