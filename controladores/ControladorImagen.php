@@ -1,6 +1,7 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT']."/iaw/dbz/dirs.php";
+    require_once $_SERVER['DOCUMENT_ROOT']."/iaw/tienda2020/dirs.php";
     require_once CONTROLLER_PATH."ControladorAlumno.php";
+    require_once CONTROLLER_PATH."ControladorArticulo.php";
     require_once UTILITY_PATH."funciones.php";
 
 class ControladorImagen {

@@ -19,6 +19,10 @@ if ( !defined('IMAGE_PATH') )
 if ( !defined('IMAGE_PATH') )
     define('IMAGE_PATH', ROOT_PATH."usuariosImagenes/");
 
+if ( !defined('IMAGE_PATH') )
+    define('IMAGE_PATH', ROOT_PATH."imagenes/");
+
+
 if ( !defined('UTILITY_PATH') )
     define('UTILITY_PATH', ROOT_PATH."utilidades/");
 

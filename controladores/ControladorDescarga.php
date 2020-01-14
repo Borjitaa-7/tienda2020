@@ -1,8 +1,9 @@
 <?php
-
-require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/dbz/dirs.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 require_once CONTROLLER_PATH . "ControladorAlumno.php";
+require_once CONTROLLER_PATH . "ControladorArticulo.php";
 require_once MODEL_PATH . "Alumno.php";
+require_once MODEL_PATH . "articulo.php";
 require_once VENDOR_PATH . "autoload.php";
 use Spipu\Html2Pdf\HTML2PDF;
 

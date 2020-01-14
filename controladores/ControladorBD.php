@@ -15,7 +15,7 @@ class ControladorBD {
     private $servername = "localhost";
     private $username = "root";
     private $password = "";
-    private $dbname = "crud";
+    private $dbname = "tienda2020";
     private $server ="mysql";
     
     // Variables

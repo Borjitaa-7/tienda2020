@@ -1,4 +1,5 @@
-<?php
+<?php 
+require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 
 echo "<h1>------------------------------------------------------------------";
 echo "<br>";
@@ -18,7 +19,7 @@ echo "------------------------------------------------------------------</h1>";
 </head>
 <body>
     
-<h3><a href="productos/listado.php">Pincha aqui</a> para gestión de productos</h3>
+<h3><a href="/iaw/tienda2020/admin/productos/index.php">Pincha aqui</a> para gestión de productos</h3>
 
 <h3><a href="usuarios/listado.php">Pincha aqui</a> para gestión de usuarios</h3>
 
