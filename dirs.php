@@ -10,14 +10,11 @@ if ( !defined('VIEW_PATH') )
 if ( !defined('CONTROLLER_PATH') )
     define('CONTROLLER_PATH', ROOT_PATH."controladores/");
 
+if ( !defined('IMAGE_PATH') )
+    define('IMAGE_PATH', ROOT_PATH."imagenes/");
+
 if ( !defined('MODEL_PATH') )
     define('MODEL_PATH', ROOT_PATH."modelos/");
-
-if ( !defined('IMAGE_PATH') )
-    define('IMAGE_PATH', ROOT_PATH."productosImagenes/");
-
-if ( !defined('IMAGE_PATH') )
-    define('IMAGE_PATH', ROOT_PATH."usuariosImagenes/");
 
 if ( !defined('IMAGE_PATH') )
     define('IMAGE_PATH', ROOT_PATH."imagenes/");
