@@ -1,23 +1,10 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <ul class="nav navbar-nav">
-      <li class="active"><a href=<?php echo "/iaw/dbz/index.php"; ?>>Inicio</a></li>
-      <?php
-      session_start();
-      if(isset($_SESSION['USUARIO']['email'])){
-        // Menu de administrador
-        echo '<li><a href="#">Administracion</a></li>';
-        echo '<li><a href="#">Jefatura</a></li>';
-        echo '<li><a href="#">Direccion</li>';
-        echo '<li><a href="#">Configuracion</a></li>';
-        echo '<li><a href="#">Ministerio de Educacion</a></li>';
-    } else{
-        // Menú normal
-        echo '<li><a href="#">Alumnos</a></li>';
-        echo '<li><a href="#">Informacion </a></li>';
-    }
-  ?>
-    <li><a href="#">Horarios</a></li>
+      <li class="active"><a href=<?php echo "/iaw/tienda2020/administracion.php"; ?>>TIENDA BOTÁNICA Y FLORISTERÍA</a></li>
+    <li><a href="#">Horario de apertura</a></li>
+    <li><a href="#">Usuarios</a></li>
+    <li><a href="#">Productos</a></li>
     </ul>
       <ul class="nav navbar-nav navbar-right">
         <?php

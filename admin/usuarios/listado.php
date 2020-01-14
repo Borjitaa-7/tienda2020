@@ -25,7 +25,6 @@
     <!-- ---------------------------------------------------------Opciones del navbar -->
             <?php
             require_once CONTROLLER_PATH."ControladorUsuario.php";
-            require_once CONTROLLER_PATH . "Paginador.php";
             require_once UTILITY_PATH."funciones.php";
 
             if (!isset($_POST["usuario"])) {
