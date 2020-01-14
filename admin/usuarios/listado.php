@@ -1,4 +1,7 @@
-<?php require_once VIEW_PATH."cabecera.php"; ?>
+
+<?php require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php"; ?>
+<?php require_once VIEW_PATH."/usuarios/cabecera.php"; ?>
+
 
     <!-- ---------------------------------------------------------Opciones del navbar -->
     <div class="container-fluid">
@@ -24,7 +27,7 @@
             </div>
     <!-- ---------------------------------------------------------Opciones del navbar -->
             <?php
-            require_once CONTROLLER_PATH."ControladorUsuario.php";
+            require_once CONTROLLER_PATH."ControladorUsuarios.php";
             require_once UTILITY_PATH."funciones.php";
 
             if (!isset($_POST["usuario"])) {
@@ -38,7 +41,7 @@
             $controlador = ControladorUsuario::getControlador();
 
             //-------------------------------------------------------------TABLA
-            if(count( $resultados->datos)>0){
+            if(count($resultados->datos)>0){
                 echo "<table class='table table-bordered table-striped'>";
                 echo "<thead>";
                 echo "<tr>";
