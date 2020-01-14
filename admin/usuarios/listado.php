@@ -38,7 +38,7 @@
                 $dni = filtrado($_POST["usuario"]);
             }
 
-            $controlador = ControladorUsuario::getControlador();
+            $controlador = ControladorUsuarios::getControlador();
 
             //-------------------------------------------------------------TABLA
             if(count($resultados->datos)>0){
