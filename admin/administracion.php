@@ -1,5 +1,8 @@
-<?php
+<?php 
+    require_once "dirs.php";
+?>
 
+<?php
 echo "<h1>------------------------------------------------------------------";
 echo "<br>";
 echo "Tienda Botánica y floristería";

@@ -1,13 +1,13 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT']."/iaw/dbz/dirs.php";
-require_once CONTROLLER_PATH."ControladorAlumno.php";
+require_once $_SERVER['DOCUMENT_ROOT']."/iaw/tienda2020/dirs.php";
+require_once CONTROLLER_PATH."ControladorUsuarios.php";
 require_once UTILITY_PATH."funciones.php";
 
 if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     $id = decode($_GET["id"]);
-    $controlador = ControladorAlumno::getControlador();
-    $alumno= $controlador->buscarAlumno($id);
-    if (is_null($alumno)){
+    $controlador = ControladorUsario::getControlador();
+    $usuario= $controlador->buscarUsuario($id);
+    if (is_null($usuario)){
         header("location: error.php");
         exit();
     } 
@@ -21,52 +21,52 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h1>Ficha de Alumno/a</h1>
+                        <h1>Ficha de Usuario</h1>
                     </div>
                     <table>
                         <tr>
                             <td class="col-xs-11" class="align-top">
                                 <div class="form-group" class="align-left">
                                     <label>DNI</label>
-                                    <p class="form-control-static"><?php echo $alumno->getDni(); ?></p>
+                                    <p class="form-control-static"><?php echo $usuario->getDni(); ?></p>
                                 </div>
                             </td>
                             <td class="align-left">
                                 <label>Fotografía</label><br>
-                                <img src='<?php echo "../imagenes/" . $alumno->getImagen() ?>' class='rounded' class='img-thumbnail' width='48' height='auto'>
+                                <img src='<?php echo "../imagenes/" . $usuario->getImagen() ?>' class='rounded' class='img-thumbnail' width='48' height='auto'>
                             </td>
                         </tr>
                     </table>
                 
                     <div class="form-group">
                         <label>Nombre</label>
-                        <p class="form-control-static"><?php echo $alumno->getNombre(); ?></p>
+                        <p class="form-control-static"><?php echo $usuario->getNombre(); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellidos</label>
+                        <p class="form-control-static"><?php echo $usuario->getApellidos(); ?></p>
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                            <p class="form-control-static"><?php echo $alumno->getEmail(); ?></p>
+                            <p class="form-control-static"><?php echo $usuario->getEmail(); ?></p>
                     </div>
                     <div class="form-group">
                         <label>Contraseña</label>
-                        <p class="form-control-static"><?php echo str_repeat("*",strlen($alumno->getPassword())); ?></p>
+                        <p class="form-control-static"><?php echo str_repeat("*",strlen($usuario->getPassword())); ?></p>
                     </div>
                     <div class="form-group">
-                        <label>Idioma</label>
-                            <p class="form-control-static"><?php echo $alumno->getIdioma(); ?></p>
+                        <label>Administrador</label>
+                            <p class="form-control-static"><?php echo $usuario->getAdmin(); ?></p>
                     </div>
                     <div class="form-group">
-                        <label>Matricula</label>
-                            <p class="form-control-static"><?php echo $alumno->getMatricula(); ?></p>
-                    </div>
-                    <div class="form-group">
-                        <label>Lenguaje</label>
-                            <p class="form-control-static"><?php echo $alumno->getLenguaje(); ?></p>
+                        <label>Telefono</label>
+                            <p class="form-control-static"><?php echo $usuario->getTelefono(); ?></p>
                     </div>
                     <div class="form-group">
                         <label>Fecha</label>
-                            <p class="form-control-static"><?php echo $alumno->getFecha(); ?></p>
+                            <p class="form-control-static"><?php echo $usuario->getFecha(); ?></p>
                     </div>
-                    <p><a href="../index.php" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Aceptar</a></p>
+                    <p><a href="../administracion.php" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Aceptar</a></p>
                 </div>
             </div>        
         </div>

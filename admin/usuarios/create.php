@@ -1,35 +1,22 @@
 <?php
-//error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
-session_start();
-if(!isset($_SESSION['USUARIO']['email'])){
-    header("location: login.php");
-    exit();
-}
 
-require_once $_SERVER['DOCUMENT_ROOT']."/iaw/dbz/dirs.php";
-require_once CONTROLLER_PATH."ControladorAlumno.php";
+require_once $_SERVER['DOCUMENT_ROOT']."/iaw/tienda2020/dirs.php";
+require_once CONTROLLER_PATH."ControladorUsuarios.php";
 require_once CONTROLLER_PATH."ControladorImagen.php";
 require_once UTILITY_PATH."funciones.php";
 
 //-----------------------------------------------------------------PROCESAR FORMULARIO
-$dni = $nombre = $email = $password = $idioma = $matricula = $lenguaje = $fecha = $imagen ="";
-$dniErr = $nombreErr = $emailErr = $passwordErr = $idiomaErr= $matriculaErr = $fechaErr = $imagenErr= "";
+$dni = $nombre = $apellidos = $email = $password = $admin = $telefono = $fecha = $imagen ="";
+$dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr = $fechaErr = $imagenErr= "";
  
 // Procesamos el formulario 
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
 
-    // Procesamos el dni
-    $dniVal = filtrado($_POST["dni"]);
-    if(empty($dniVal)){
-        $dniErr = "Por favor introduzca un DNI válido.";
-    }elseif(!filter_var($dniVal, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/[0-9]{8}[A-Za-z]{1}/")))){
-            $dniErr = "Por favor introduzca un DNI con formato válido XXXXXXXXL, donde X es un dígito y L una letra.";
-    }
-     // Buscamos que no exista el alumno
-     $controlador = ControladorAlumno::getControlador();
-     $alumno = $controlador->buscarAlumnoDni($dniVal);
-    if(isset($alumno)){
-        $dniErr = "Ya existe un alumno con DNI:" .$dniVal. " en la Base de Datos";
+     // Procesamos DNI
+     $controlador = ControladorUsuario::getControlador();
+     $usuario = $controlador->buscarUsuarioDni($dniVal);
+    if(isset($usuario)){
+        $dniErr = "Ya existe un usuario con DNI:" .$dniVal. " en la Base de Datos";
     }else{
         $dni= $dniVal;
     }
@@ -38,10 +25,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
     $nombreVal = filtrado(($_POST["nombre"]));
     if(empty($nombreVal)){
         $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos.";
-    } elseif(!preg_match("/([^\s][A-zÀ-ž\s]+$)/", $nombreVal)) { 
-        $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos.";
     } else{
         $nombre= $nombreVal;
+    }
+
+    // Procesamos los apellidos
+    $apellidosVal = filtrado(($_POST["apellidos"]));
+    if(empty($apellidosVal)){
+        $apellidosErr = "Por favor introduzca un apellido válido con solo carácteres alfabéticos.";
+    } else{
+        $apellidos= $apellidosVal;
     }
     
     // Procesamos el email
@@ -60,11 +53,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
         $password= hash('md5',$passwordVal);
     }
 
-    // Procsamos idiomas
-    if(isset($_POST["idioma"])){
-        $idioma = filtrado(implode(", ", $_POST["idioma"]));
+    // Procsamos admin
+    if(isset($_POST["admin"])){
+        $admin = filtrado(implode(", ", $_POST["admin"]));
     }else{
-        $idiomaErr = "Debe elegir al menos un idioma";
+        $adminErr = "Debe elegir si vas a ser Administrador o no";
     }
 
     // Procesamos matrícula
@@ -74,11 +67,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
         $matriculaErr = "Debe elegir al menos una matricula";
     }
     
-    // Procesamos lenguaje
-    if(isset($_POST["lenguaje"])){
-        $lenguaje = filtrado($_POST["lenguaje"]);
+    // Procesamos telefono
+    if(isset($_POST["telefono"])){
+        $telefono = filtrado($_POST["telefono"]);
     }else{
-        $matriculaErr = "Debe elegir al menos una matricula";
+        $telefonoErr = "Tienes que escribir tu número de teléfono";
     }
     
     // Procesamos fecha
@@ -90,26 +83,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
         $fecha = date("d/m/Y", strtotime(filtrado($_POST["fecha"])));
     }
 
-
     // Procesamos la foto
     $propiedades = explode("/", $_FILES['imagen']['type']);
     $extension = $propiedades[1];
-    $tam_max = 50000; // 50 KBytes
-    $tam = $_FILES['imagen']['size'];
     $mod = true; // Si vamos a modificar
 
-    // Si no coicide la extensión
-    if($extension != "jpg" && $extension != "jpeg"){
-        $mod = false;
-        $imagenErr= "Formato debe ser jpg/jpeg";
-    }
-    // si no tiene el tamaño
-    if($tam>$tam_max){
-        $mod = false;
-        $imagenErr= "Tamaño superior al limite de: ". ($tam_max/1000). " KBytes";
-    }
-
-    // Si todo es correcto, mod = true
+    // Si todo es correcto, mod = true se sube la foto sin problemas
     if($mod){
         $imagen = md5($_FILES['imagen']['tmp_name'] . $_FILES['imagen']['name'].time()) . "." . $extension;
         $controlador = ControladorImagen::getControlador();
@@ -119,12 +98,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
     }
 
     // Chequeamos los errores 
-    if(empty($dniErr) && empty($nombreErr) && empty($passwordErr) && empty($emailErr) && 
-        empty($idiomaErr) && empty($matriculaErr) && empty($fechaErr) && empty($imagenErr)){
-        $controlador = ControladorAlumno::getControlador();
-        $estado = $controlador->almacenarAlumno($dni, $nombre, $email, $password, $idioma, $matricula, $lenguaje, $fecha, $imagen);
+    if(empty($dniErr) && empty($nombreErr) && empty($apellidosErr) && empty($passwordErr) && empty($emailErr) && 
+        empty($adminErr) && empty($telefonoErr) && empty($fechaErr) && empty($imagenErr)){
+        $controlador = ControladorUsuario::getControlador();
+        $estado = $controlador->almacenarUsuario($dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen);
         if($estado){
-            header("location: ../index.php");
+            header("location: ../administración.php");
             exit();
         }else{
             header("location: error.php");
@@ -135,8 +114,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
     }
 
 }else{
-    $idioma="castellano";
-    $matricula="modular";
     $fecha = date("Y-m-d");
 }
 //-----------------------------------------------------------------PROCESAR FORMULARIO
@@ -150,82 +127,70 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h2>Crear Alumno/a</h2>
+                        <h2>Crear Usuario</h2>
                     </div>
-                    <p>Por favor rellene este formulario para añadir un nuevo alumno/a a la base de datos de la clase.</p>
+                    <p>Por favor, rellene este formulario para añadir un nuevo usuario a la base de datos de la Tienda Botánica y Floristería</p>
                     <!-- Formulario-->
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
                      <!-- DNI-->
                         <div class="form-group <?php echo (!empty($dniErr)) ? 'error: ' : ''; ?>">
                             <label>DNI</label>
-                            <input type="text" required name="dni" class="form-control" value="<?php echo $dni; ?>" 
-                                pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra">
+                            <input type="text" required name="dni" class="form-control" value="<?php echo $dni; ?>"
+                            pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra">>
                             <span class="help-block"><?php echo $dniErr;?></span>
                         </div>
-                        <!-- Nombre-->
+                    <!-- Nombre-->
                         <div class="form-group <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>">
                             <label>Nombre</label>
-                            <input type="text" required name="nombre" class="form-control" value="<?php echo $nombre; ?>" 
-                                pattern="([^\s][A-zÀ-ž\s]+)"
-                                title="El nombre no puede contener números"
-                                minlength="3">
+                            <input type="text" required name="nombre" class="form-control" value="<?php echo $nombre; ?>" minlength="3">
                             <span class="help-block"><?php echo $nombreErr;?></span>
                         </div>
-                        <!-- Email -->
+                    <!-- Apellidos-->
+                        <div class="form-group <?php echo (!empty($apellidosErr)) ? 'error: ' : ''; ?>">
+                            <label>Apellidos</label>
+                            <input type="text" required name="apellidos" class="form-control" value="<?php echo $apellidos; ?>" minlength="3">
+                            <span class="help-block"><?php echo $apellidosErr;?></span>
+                        </div>
+                    <!-- Email -->
                         <div class="form-group <?php echo (!empty($emailErr)) ? 'error: ' : ''; ?>">
                             <label>E-Mail</label>
                             <input type="email" required name="email" class="form-control" value="<?php echo $email; ?>">
                             <span class="help-block"><?php echo $emailErr;?></span>
                         </div>
-                        <!-- Password -->
+                    <!-- Password -->
                         <div class="form-group <?php echo (!empty($passwordErr)) ? 'error: ' : ''; ?>">
                             <label>Password</label>
                             <input type="password" required name="password" class="form-control" value="<?php //echo $password; ?>"
                                 minlength="5">
                             <span class="help-block"><?php echo $passwordErr;?></span>
                         </div>
-                        <div class="form-group <?php echo (!empty($idiomaErr)) ? 'error: ' : ''; ?>">
-                            <label>Idiomas</label>
-                            <input type="checkbox" name="idioma[]" value="castellano" <?php echo (strstr($idioma, 'castellano')) ? 'checked' : ''; ?>>Castellano</input>
-                            <input type="checkbox" name="idioma[]" value="ingles" <?php echo (strstr($idioma, 'ingles')) ? 'checked' : ''; ?>>Inglés</input>
-                            <input type="checkbox" name="idioma[]" value="frances" <?php echo (strstr($idioma, 'frances')) ? 'checked' : ''; ?>>Francés</input>
-                            <input type="checkbox" name="idioma[]" value="chino" <?php echo (strstr($idioma, 'chino')) ? 'checked' : ''; ?>>Chino</input>
-                            <span class="help-block"><?php echo $idiomaErr;?></span>
-                        </div>
-                        <!-- Matrícula -->
-                        <div class="form-group <?php echo (!empty($matriculaErr)) ? 'error: ' : ''; ?>">
-                            <label>Matrícula</label>
-                            <input type="radio" name="matricula" value="modular" <?php echo (strstr($matricula, 'modular')) ? 'checked' : ''; ?>>Modular</input>
-                            <input type="radio" name="matricula" value="completa" <?php echo (strstr($matricula, 'completa')) ? 'checked' : ''; ?>>Completa</input><br>
+                    <!-- Administrador -->
+                        <div class="form-group <?php echo (!empty($adminErr)) ? 'error: ' : ''; ?>">
+                            <label>¿Administrador?</label>
+                            <input type="radio" name="admin" value="si" <?php echo (strstr($matricula, 'si')) ? 'checked' : ''; ?>>Si</input>
+                            <input type="radio" name="admin" value="no" <?php echo (strstr($matricula, 'no')) ? 'checked' : ''; ?>>No</input><br>
                             <span class="help-block"><?php echo $matriculaErr;?></span>
                         </div>
-                        <!-- Lenguaje-->
-                        <div class="form-group">
-                        <label>Lenguaje</label>
-                            <select name="lenguaje">
-                                <option value="PHP" <?php echo (strstr($lenguaje, 'PHP')) ? 'selected' : ''; ?>>PHP</option>
-                                <option value="JAVA" <?php echo (strstr($lenguaje, 'JAVA')) ? 'selected' : ''; ?>>JAVA</option>
-                                <option value="C#" <?php echo (strstr($lenguaje, 'C#')) ? 'selected' : ''; ?>>C#</option>
-                                <option value="PYTHON" <?php echo (strstr($lenguaje, 'PYTHON')) ? 'selected' : ''; ?>>PYTHON</option>
-                            </select>
+                    <!-- Telefono-->
+                        <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
+                            <label>Telefono de Contacto</label>
+                            <input type="text" required name="telefono" class="form-control" value="<?php echo $telefono;?>" pattern="[0-9]{9}" 
+                            title="En este campo solo puedes escribir números, por ejemplo: 689 00 00 00">
+                            <span class="help-block"><?php echo $telefonoErr;?></span>
                         </div>
-                        <!-- Fecha-->
+                    <!-- Fecha-->
                         <div class="form-group <?php echo (!empty($fechaErr)) ? 'error: ' : ''; ?>">
-                        <label>Fecha de Matriculación</label>
+                        <label>Fecha de alta de usuario</label>
                             <input type="date" required name="fecha" value="<?php echo date('Y-m-d', strtotime(str_replace('/', '-', $fecha)));?>"></input><div>
                             <span class="help-block"><?php echo $fechaErr;?></span>
                         </div>
-                         <!-- Foto-->
+                    <!-- Foto-->
                          <div class="form-group <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>">
-                        <label>Fotografía</label>
-                        <!-- Solo acepto imagenes jpg -->
-                        <input type="file" required name="imagen" class="form-control-file" id="imagen" accept="image/jpeg">    
-                        <span class="help-block"><?php echo $imagenErr;?></span>    
-                        </div>
-                        <!-- Botones --> 
+
+                    <!-- Botones --> 
                          <button type="submit" name= "aceptar" value="aceptar" class="btn btn-success"> <span class="glyphicon glyphicon-floppy-save"></span>  Aceptar</button>
                          <button type="reset" value="reset" class="btn btn-info"> <span class="glyphicon glyphicon-repeat"></span>  Limpiar</button>
-                        <a href="../index.php" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
+                        <a href="../administracion.php" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
                     </form>
                 </div>
             </div>        

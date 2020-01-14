@@ -1,10 +1,10 @@
 <?php
 
-require_once MODEL_PATH."Usuarios.php";
+require_once MODEL_PATH."usuarios.php";
 require_once CONTROLLER_PATH."ControladorBD.php";
 require_once UTILITY_PATH."funciones.php";
 
-class ControladorUsuarios {
+class ControladorUsuario {
 
      // Variable instancia para Singleton
     static private $instancia = null;
@@ -17,7 +17,7 @@ class ControladorUsuarios {
     //Patrón Singleton. Contiene una instancia del Manejador de la BD
     public static function getControlador() {
         if (self::$instancia == null) {
-            self::$instancia = new ControladorUsuarios();
+            self::$instancia = new ControladorUsuario();
         }
         return self::$instancia;
     }

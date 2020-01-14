@@ -1,11 +1,11 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT']."/iaw/dbz/dirs.php";
-require_once CONTROLLER_PATH."ControladorAlumno.php";
+require_once $_SERVER['DOCUMENT_ROOT']."/iaw/tienda2020/dirs.php";
+require_once CONTROLLER_PATH."ControladorUsuarios.php";
 require_once CONTROLLER_PATH."ControladorImagen.php";
 require_once UTILITY_PATH."funciones.php";
  
-$dni = $nombre = $email = $password = $idioma = $matricula = $lenguaje = $fecha = $imagen ="";
-$dniErr = $nombreErr = $emailErr = $passwordErr = $idiomaErr= $matriculaErr = $fechaErr = $imagenErr= "";
+$dni = $nombre = $apellidos = $email = $password = $admin = $telefono = $fecha = $imagen ="";
+$dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr = $fechaErr = $imagenErr= "";
 $imagenAnterior = "";
 
 $errores=[];
@@ -18,9 +18,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
    $dniVal = filtrado($_POST["dni"]);
    if(empty($dniVal)){
        $dniErr = "Por favor introduzca un DNI válido.";
-   }elseif(!filter_var($dniVal, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/[0-9]{8}[A-Za-z]{1}/")))){
-           $dniErr = "Por favor introduzca un DNI con formato válido XXXXXXXXL, donde X es un dígito y L una letra.";
-           $errores[]= $dniErr;
+   $errores[]= $dniErr;
    } else{
        $dni= $dniVal;
    }
@@ -29,12 +27,19 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
    $nombreVal = filtrado(($_POST["nombre"]));
    if(empty($nombreVal)){
        $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos.";
-   } elseif(!preg_match("/([^\s][A-zÀ-ž\s]+$)/", $nombreVal)) { 
-       $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos.";
-       $errores[]= $nombreErr;
+   $errores[]= $nombreErr;
    } else{
        $nombre= $nombreVal;
    }
+
+    // Procesamos los apellidos
+    $nombreVal = filtrado(($_POST["apellidos"]));
+    if(empty($apellidosVal)){
+        $apellidosErr = "Por favor introduzca un apellido válido con solo carácteres alfabéticos.";
+    $errores[]= $apellidosErr;
+    } else{
+        $apellidos= $apellidosVal;
+    }
    
    // Procesamos el email
    $emailVal = filtrado($_POST["email"]);
@@ -54,24 +59,21 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
        $password= $passwordVal;
    }
 
-   // Procsamos idiomas
-    if(isset($_POST["idioma"])){
-        $idioma = filtrado(implode(", ", $_POST["idioma"]));
+   // Procsamos admin
+    if(isset($_POST["admin"])){
+        $admin = filtrado(implode(", ", $_POST["admin"]));
     }else{
-        $idiomaErr = "Debe elegir al menos un idioma";
-        $errores[]=  $idiomaErr;
+        $adminErr = "Debe elegir si vas a ser Administrador o no";
+        $errores[]=  $adminErr;
     }
 
-    // Procesamos matrícula
-    if(isset($_POST["matricula"])){
-        $matricula = filtrado($_POST["matricula"]);
+    // Procesamos telefono
+    if(isset($_POST["telefono"])){
+        $telefono = filtrado($_POST["telefono"]);
     }else{
-        $matriculaErr = "Debe elegir al menos una matricula";
-        $errores[]= $matriculaErr;
+        $telefonoErr = "Tienes que escribir tu número de teléfono";
+        $errores[]= $telefonoErr;
     }
-
-    // Procesamos lenguaje
-    $lenguaje = filtrado($_POST["lenguaje"]);
 
     // Procesamos fecha
     $fecha = date("d-m-Y", strtotime(filtrado($_POST["fecha"])));
@@ -90,25 +92,11 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $fecha = date("d/m/Y",strtotime($fecha));
     }
 
-
-
     // Procesamos la imagen
    if($_FILES['imagen']['size']>0 && count($errores)==0){
         $propiedades = explode("/", $_FILES['imagen']['type']);
         $extension = $propiedades[1];
-        $tam_max = 50000; // 50 KBytes
-        $tam = $_FILES['imagen']['size'];
         $mod = true;
-        // Si no coicide la extensión
-        if($extension != "jpg" && $extension != "jpeg"){
-            $mod = false;
-            $imagenErr= "Formato debe ser jpg/jpeg";
-        }
-        // si no tiene el tamaño
-        if($tam>$tam_max){
-            $mod = false;
-            $imagenErr= "Tamaño superior al limite de: ". ($tam_max/1000). " KBytes";
-        }
 
         // Si todo es correcto, mod = true
         if($mod){
@@ -136,14 +124,13 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     }
 
     
-     // Chequeamos los errores 
-    if(empty($dniErr) && empty($nombreErr) && empty($passwordErr) && empty($emailErr) && 
-        empty($idiomaErr) && empty($matriculaErr) && empty($fechaErr) && empty($imagenErr)){
-        $controlador = ControladorAlumno::getControlador();
-        $estado = $controlador->actualizarAlumno($id, $dni, $nombre, $email, $password, $idioma, $matricula, $lenguaje, $fecha, $imagen);
+    // Chequeamos los errores 
+    if(empty($dniErr) && empty($nombreErr) && empty($apellidosErr) && empty($passwordErr) && empty($emailErr) && 
+        empty($adminErr) && empty($telefonoErr) && empty($fechaErr) && empty($imagenErr)){
+        $controlador = ControladorUsuario::getControlador();
+        $estado = $controlador->almacenarUsuario($dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen);
         if($estado){
-            $errores=[];
-            header("location: ../index.php");
+            header("location: ../administración.php");
             exit();
         }else{
             header("location: error.php");
@@ -152,24 +139,24 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     }else{
         alerta("Hay errores al procesar el formulario revise los errores");
     }
-    
+
 }
     
     // Comprobamos que existe el id antes de ir más lejos
     if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
         $id =  decode($_GET["id"]);
-        $controlador = ControladorAlumno::getControlador();
-        $alumno = $controlador->buscarAlumno($id);
-        if (!is_null($alumno)) {
-            $dni = $alumno->getDni();
-            $nombre = $alumno->getNombre();
-            $email = $alumno->getEmail();
-            $password = $alumno->getPassword();
-            $idioma = $alumno->getIdioma();
-            $matricula = $alumno->getMatricula();
-            $lenguaje = $alumno->getLenguaje();
-            $fecha = $alumno->getFecha();
-            $imagen = $alumno->getImagen();
+        $controlador = ControladorUsuario::getControlador();
+        $usuario = $controlador->buscarUsuario($id);
+        if (!is_null($usuario)) {
+            $dni = $usuario->getDni();
+            $nombre = $usuario->getNombre();
+            $apellidos = $usuario->getApellidos();
+            $email = $usuario->getEmail();
+            $password = $usuario->getPassword();
+            $admin = $usuario->getAdmin();
+            $telefono = $usuario->getTelefono();
+            $fecha = $usuario->getFecha();
+            $imagen = $usuario->getImagen();
             $imagenAnterior = $imagen;
         }else{
             header("location: error.php");
@@ -189,7 +176,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h2>Modificar Alumno/a</h2>
+                        <h2>Modificar Usuario</h2>
                     </div>
                     <p>Por favor edite la nueva información para actualizar la ficha.</p>
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" enctype="multipart/form-data">
@@ -204,19 +191,24 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                     <span class="help-block"><?php echo $dniErr;?></span>
                                 </div>
                             </td>
-                            <!-- Fotogrsfía -->
+                            <!-- Fotografía -->
                             <td class="align-left">
                                 <label>Fotografía</label><br>
-                                <img src='<?php echo "../imagenes/" . $alumno->getImagen() ?>' class='rounded' class='img-thumbnail' width='48' height='auto'>
+                                <img src='<?php echo "../imagenes/" . $usuario->getImagen() ?>' class='rounded' class='img-thumbnail' width='48' height='auto'>
                             </td>
                         </tr>
                     </table>
                         <!-- Nombre-->
                         <div class="form-group <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>">
-                            <!-- Nombre-->
                             <label>Nombre</label>
                             <input type="text" name="nombre" class="form-control" value="<?php echo $nombre; ?>">
                             <span class="help-block"><?php echo $nombreErr;?></span>
+                        </div>
+                        <!-- Apellidos-->
+                            <div class="form-group <?php echo (!empty($apellidosErr)) ? 'error: ' : ''; ?>">
+                            <label>Apellidos</label>
+                            <input type="text" required name="apellidos" class="form-control" value="<?php echo $apellidos; ?>" minlength="3">
+                            <span class="help-block"><?php echo $apellidosErr;?></span>
                         </div>
                         <!-- Email -->
                         <div class="form-group <?php echo (!empty($emailErr)) ? 'error: ' : ''; ?>">
@@ -231,30 +223,19 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                 readonly>
                             <span class="help-block"><?php echo $passwordErr;?></span>
                         </div>
-                        <div class="form-group <?php echo (!empty($idiomaErr)) ? 'error: ' : ''; ?>">
-                            <label>Idiomas</label>
-                            <input type="checkbox" name="idioma[]" value="castellano" <?php echo (strstr($idioma, 'castellano')) ? 'checked' : ''; ?>>Castellano</input>
-                            <input type="checkbox" name="idioma[]" value="ingles" <?php echo (strstr($idioma, 'ingles')) ? 'checked' : ''; ?>>Inglés</input>
-                            <input type="checkbox" name="idioma[]" value="frances" <?php echo (strstr($idioma, 'frances')) ? 'checked' : ''; ?>>Francés</input>
-                            <input type="checkbox" name="idioma[]" value="chino" <?php echo (strstr($idioma, 'chino')) ? 'checked' : ''; ?>>Chino</input>
-                            <span class="help-block"><?php echo $idiomaErr;?></span>
-                        </div>
-                        <!-- Matrícula -->
-                        <div class="form-group <?php echo (!empty($matriculaErr)) ? 'error: ' : ''; ?>">
-                            <label>Matrícula</label>
-                            <input type="radio" name="matricula" value="modular" <?php echo (strstr($matricula, 'modular')) ? 'checked' : ''; ?>>Modular</input>
-                            <input type="radio" name="matricula" value="completa" <?php echo (strstr($matricula, 'completa')) ? 'checked' : ''; ?>>Completa</input><br>
+                        <!-- Administrador -->
+                        <div class="form-group <?php echo (!empty($adminErr)) ? 'error: ' : ''; ?>">
+                            <label>¿Administrador?</label>
+                            <input type="radio" name="admin" value="si" <?php echo (strstr($matricula, 'si')) ? 'checked' : ''; ?>>Si</input>
+                            <input type="radio" name="admin" value="no" <?php echo (strstr($matricula, 'no')) ? 'checked' : ''; ?>>No</input><br>
                             <span class="help-block"><?php echo $matriculaErr;?></span>
                         </div>
-                        <!-- Lenguaje-->
-                        <div class="form-group">
-                        <label>Lenguaje</label>
-                            <select name="lenguaje">
-                                <option value="PHP" <?php echo (strstr($lenguaje, 'PHP')) ? 'selected' : ''; ?>>PHP</option>
-                                <option value="JAVA" <?php echo (strstr($lenguaje, 'JAVA')) ? 'selected' : ''; ?>>JAVA</option>
-                                <option value="C#" <?php echo (strstr($lenguaje, 'C#')) ? 'selected' : ''; ?>>C#</option>
-                                <option value="PYTHON" <?php echo (strstr($lenguaje, 'PYTHON')) ? 'selected' : ''; ?>>PYTHON</option>
-                            </select>
+                        <!-- Telefono-->
+                        <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
+                            <label>Telefono de Contacto</label>
+                            <input type="text" required name="telefono" class="form-control" value="<?php echo $telefono;?>" pattern="[0-9]{9}" 
+                            title="En este campo solo puedes escribir números, por ejemplo: 689 00 00 00">
+                            <span class="help-block"><?php echo $telefonoErr;?></span>
                         </div>
                         <!-- Fecha-->
                         <div class="form-group <?php echo (!empty($fechaErr)) ? 'error: ' : ''; ?>">
@@ -266,13 +247,14 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                          <div class="form-group <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>">
                         <label>Fotografía</label>
                         <!-- Solo acepto imagenes jpg -->
-                        <input type="file" name="imagen" class="form-control-file" id="imagen" accept="image/jpeg">    
+                        <!-- <input type="file" name="imagen" class="form-control-file" id="imagen" accept="image/jpeg">   -->
                         <span class="help-block"><?php echo $imagenErr;?></span>    
                         </div>
                         <input type="hidden" name="id" value="<?php echo $id; ?>"/>
                         <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>"/>
+                        <!-- Botones --> 
                         <button type="submit" value="aceptar" class="btn btn-warning"> <span class="glyphicon glyphicon-refresh"></span>  Modificar</button>
-                        <a href="../index.php" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
+                        <a href="../administracion.php" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
                     </form>
                 </div>
             </div>        
