@@ -18,9 +18,9 @@ echo "------------------------------------------------------------------</h1>";
 </head>
 <body>
     
-<h3><a href="productos/listado.php">Pincha aqui</a> para gestión de productos</h3>
+<h3><a href="/iaw/tienda2020/admin/productos/listado.php">Pincha aqui</a> para gestión de productos</h3>
 
-<h3><a href="usuarios/listado.php">Pincha aqui</a> para gestión de usuarios</h3>
+<h3><a href="/iaw/tienda2020/admin/usuarios/listado.php">Pincha aqui</a> para gestión de usuarios</h3>
 
 </body>
 </html>
