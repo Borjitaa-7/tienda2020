@@ -121,7 +121,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
 
  
 <!-- ---------------------------------------------------------------FORMULARIO -->
-<?php require_once VIEW_PATH."cabecera.php"; ?>
+<?php require_once VIEW_PATH."/usuarios/cabecera.php"; ?>
     <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
@@ -136,7 +136,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
                         <div class="form-group <?php echo (!empty($dniErr)) ? 'error: ' : ''; ?>">
                             <label>DNI</label>
                             <input type="text" required name="dni" class="form-control" value="<?php echo $dni; ?>"
-                            pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra">>
+                            pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra">
                             <span class="help-block"><?php echo $dniErr;?></span>
                         </div>
                     <!-- Nombre-->
@@ -167,9 +167,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
                     <!-- Administrador -->
                         <div class="form-group <?php echo (!empty($adminErr)) ? 'error: ' : ''; ?>">
                             <label>¿Administrador?</label>
-                            <input type="radio" name="admin" value="si" <?php echo (strstr($matricula, 'si')) ? 'checked' : ''; ?>>Si</input>
-                            <input type="radio" name="admin" value="no" <?php echo (strstr($matricula, 'no')) ? 'checked' : ''; ?>>No</input><br>
-                            <span class="help-block"><?php echo $matriculaErr;?></span>
+                            <input type="radio" name="admin" value="si" <?php echo (strstr($admin, 'si')) ? 'checked' : ''; ?>>Si</input>
+                            <input type="radio" name="admin" value="no" <?php echo (strstr($admin, 'no')) ? 'checked' : ''; ?>>No</input><br>
+                            <span class="help-block"><?php echo $adminErr;?></span>
                         </div>
                     <!-- Telefono-->
                         <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">

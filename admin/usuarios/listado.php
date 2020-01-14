@@ -20,7 +20,7 @@
                     <a href="utilidades/descargar.php?opcion=PDF" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  PDF</a>
                     <a href="utilidades/descargar.php?opcion=XML" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  XML</a>
                     <a href="utilidades/descargar.php?opcion=JSON" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  JSON</a>
-                    <a href="vistas/create.php" class="btn btn-success pull-right"><span class="glyphicon glyphicon-user"></span>  Añadir Usuario</a>
+                    <a href="create.php" class="btn btn-success pull-right"><span class="glyphicon glyphicon-user"></span>  Añadir Usuario</a>
                 </form>
             </div>
             <div class="page-header clearfix">        
@@ -28,6 +28,7 @@
     <!-- ---------------------------------------------------------Opciones del navbar -->
             <?php
             require_once CONTROLLER_PATH."ControladorUsuarios.php";
+            require_once CONTROLLER_PATH . "Paginador.php";
             require_once UTILITY_PATH."funciones.php";
 
             if (!isset($_POST["usuario"])) {
@@ -39,6 +40,18 @@
             }
 
             $controlador = ControladorUsuarios::getControlador();
+
+            //-------------------------------------------------------------paginador
+            $pagina = ( isset($_GET['page']) ) ? $_GET['page'] : 1;
+            $enlaces = ( isset($_GET['enlaces']) ) ? $_GET['enlaces'] : 10;
+
+
+            $consulta = "SELECT * FROM alumnos WHERE nombre LIKE :nombre OR dni LIKE :dni";
+            $parametros = array(':nombre' => "%".$nombre."%", ':nombre' => "%".$nombre."%", ':dni' => "%".$dni."%");
+            $limite = 2; // Limite del paginador
+            $paginador  = new Paginador($consulta, $parametros, $limite);
+            $resultados = $paginador->getDatos($pagina);
+            //-------------------------------------------------------------paginador
 
             //-------------------------------------------------------------TABLA
             if(count($resultados->datos)>0){
