@@ -41,7 +41,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
     // Procesamos el email
     $emailVal = filtrado($_POST["email"]);
     if(empty($emailVal)){
-        $emailsErr = "Por favor introduzca email válido.";
+        $emailErr = "Por favor introduzca email válido.";
     } else{
         $email= $emailVal;
     }
@@ -54,11 +54,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
         $password= hash('md5',$passwordVal);
     }
 
-    // Procsamos admin
-    if(isset($_POST["admin"])){
-        $admin = filtrado(implode(", ", $_POST["admin"]));
-    }else{
-        $adminErr = "Debe elegir si vas a ser Administrador o no";
+    // Procesamos el email
+    $adminVal = filtrado($_POST["admin"]);
+    if(empty($adminVal)){
+        $adminErr = "Por favor introduzca admin válido.";
+    } else{
+        $admin= $adminVal;
     }
 
     // Procesamos matrícula
@@ -101,7 +102,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
     // Chequeamos los errores 
     if(empty($dniErr) && empty($nombreErr) && empty($apellidosErr) && empty($passwordErr) && empty($emailErr) && 
         empty($adminErr) && empty($telefonoErr) && empty($fechaErr) && empty($imagenErr)){
-        $controlador = ControladorUsuario::getControlador();
+        $controlador = ControladorUsuarios::getControlador();
         $estado = $controlador->almacenarUsuario($dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen);
         if($estado){
             header("location: ../administración.php");
@@ -186,8 +187,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
                             <span class="help-block"><?php echo $fechaErr;?></span>
                         </div>
                     <!-- Foto-->
-                         <div class="form-group <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>">
-
+                    <div class="form-group <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>">
+                        <label>Fotografía</label>
+                        <!-- Solo acepto imagenes jpg -->
+                        <input type="file" required name="imagen" class="form-control-file" id="imagen" accept="image/jpeg">    
+                        <span class="help-block"><?php echo $imagenErr;?></span>    
+                    </div>
                     <!-- Botones --> 
                          <button type="submit" name= "aceptar" value="aceptar" class="btn btn-success"> <span class="glyphicon glyphicon-floppy-save"></span>  Aceptar</button>
                          <button type="reset" value="reset" class="btn btn-info"> <span class="glyphicon glyphicon-repeat"></span>  Limpiar</button>

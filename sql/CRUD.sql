@@ -28,6 +28,7 @@ USE `tienda2020`;
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
+  `dni` text COLLATE utf8_spanish_ci NOT NULL,
   `nombre` text COLLATE utf8_spanish_ci NOT NULL,
   `apellidos` text COLLATE utf8_spanish_ci NOT NULL,
   `email` text COLLATE utf8_spanish_ci NOT NULL,
