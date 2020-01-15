@@ -145,7 +145,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Comprobamos que existe el id antes de ir más lejos
     if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
         $id =  decode($_GET["id"]);
-        $controlador = ControladorUsuario::getControlador();
+        $controlador = ControladorUsuarios::getControlador();
         $usuario = $controlador->buscarUsuario($id);
         if (!is_null($usuario)) {
             $dni = $usuario->getDni();
@@ -169,7 +169,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
 
 ?>
  
-<?php require_once VIEW_PATH."cabecera.php"; ?>
+<?php require_once VIEW_PATH."/usuarios/cabecera.php"; ?>
 
     <div class="wrapper">
         <div class="container-fluid">
@@ -226,9 +226,9 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         <!-- Administrador -->
                         <div class="form-group <?php echo (!empty($adminErr)) ? 'error: ' : ''; ?>">
                             <label>¿Administrador?</label>
-                            <input type="radio" name="admin" value="si" <?php echo (strstr($matricula, 'si')) ? 'checked' : ''; ?>>Si</input>
-                            <input type="radio" name="admin" value="no" <?php echo (strstr($matricula, 'no')) ? 'checked' : ''; ?>>No</input><br>
-                            <span class="help-block"><?php echo $matriculaErr;?></span>
+                            <input type="radio" name="admin" value="si" <?php echo (strstr($admin, 'si')) ? 'checked' : ''; ?>>Si</input>
+                            <input type="radio" name="admin" value="no" <?php echo (strstr($admin, 'no')) ? 'checked' : ''; ?>>No</input><br>
+                            <span class="help-block"><?php echo $adminErr;?></span>
                         </div>
                         <!-- Telefono-->
                         <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
@@ -254,7 +254,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>"/>
                         <!-- Botones --> 
                         <button type="submit" value="aceptar" class="btn btn-warning"> <span class="glyphicon glyphicon-refresh"></span>  Modificar</button>
-                        <a href="../administracion.php" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
+                        <a href="listado.php" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
                     </form>
                 </div>
             </div>        
