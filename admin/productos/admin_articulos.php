@@ -74,11 +74,11 @@ if (count($resultados->datos) > 0) {
             echo "<td>" . $Articulo->getDescuento() . "</td>";
             echo "<td>" . $Articulo->getUnidades() . "</td>";
             //echo "<td>" . str_repeat("*",strlen($Articulo->getpassword())) . "</td>";
-            echo "<td><img src='imagenes/fotos/" . $Articulo->getimagen() . "' width='48px' height='48px'></td>";
+            echo "<td><img src='/iaw/tienda2020/imagenes/" . $Articulo->getimagen() . "' width='48px' height='48px'></td>";
             echo "<td>";
-                echo "<a href='vistas/read_articulo.php?id=" . encode($Articulo->getid()) . "' title='Ver Articulo AQUI' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                echo "<a href='vistas/update_articulo.php?id=" . encode($Articulo->getid()) . "' title='Actualizar Articulo AQUI' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                echo "<a href='vistas/delete_articulos.php?id=" . encode($Articulo->getid()) . "' title='Borrar Articulo' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                echo "<a href='/iaw/tienda2020/admin/productos/read_articulo.php?id=" . encode($Articulo->getid()) . "' title='Ver Articulo AQUI' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                echo "<a href='/iaw/tienda2020/admin/productos/update_articulo.php?id=" . encode($Articulo->getid()) . "' title='Actualizar Articulo AQUI' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                echo "<a href='/iaw/tienda2020/admin/productos/delete_articulos.php?id=" . encode($Articulo->getid()) . "' title='Borrar Articulo' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
             echo "</td>";
         echo "</tr>";
     }

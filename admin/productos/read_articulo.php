@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/floristeria/dirs.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 require_once CONTROLLER_PATH . "ControladorArticulo.php";
 require_once UTILITY_PATH . "funciones.php";
 
@@ -15,7 +15,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 }
 ?>
 
-<?php require_once VIEW_PATH . "cabecera.php"; ?>
+<?php require_once VIEW_PATH . "/productos/cabecera.php"; ?>
 
 <h1>Ficha del Articulo</h1>
 <table>
@@ -26,7 +26,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
         </td>
         <td>
             <label>Fotografía</label><br>
-            <img src='<?php echo "../imagenes/fotos/" . $Articulo->getimagen() ?>' class='rounded' class='img-thumbnail' width='48' height='auto'>
+            <img src='<?php echo "/iaw/tienda2020/imagenes/" . $Articulo->getimagen() ?>' class='rounded' class='img-thumbnail' width='48' height='auto'>
         </td>
     </tr>
 </table>
@@ -48,5 +48,5 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 <label>Unidades</label>
 <p><?php echo $Articulo->getUnidades(); ?></p>
 
-<p><a href="../index.php"> Aceptar</a></p>
+<p><a href="index.php"> Aceptar</a></p>
 <br><br><br>

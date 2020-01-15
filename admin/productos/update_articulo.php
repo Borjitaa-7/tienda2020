@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/floristeria/dirs.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 require_once CONTROLLER_PATH . "ControladorArticulo.php";
 require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once UTILITY_PATH . "funciones.php";
@@ -149,7 +149,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 
 ?>
 
-<?php require_once VIEW_PATH . "cabecera.php"; ?>
+<?php require_once VIEW_PATH . "/productos/cabecera.php"; ?>
 
 <h2>Modificar Articulo</h2>
 
