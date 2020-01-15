@@ -105,7 +105,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
         $controlador = ControladorUsuarios::getControlador();
         $estado = $controlador->almacenarUsuario($dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen);
         if($estado){
-            header("location: ../administración.php");
+            header("location: listado.php");
             exit();
         }else{
             header("location: error.php");

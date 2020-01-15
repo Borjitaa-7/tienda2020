@@ -1,7 +1,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <ul class="nav navbar-nav">
-      <li class="active"><a href=<?php echo "/admin/administracion.php"; ?>>TIENDA BOTÁNICA Y FLORISTERÍA</a></li>
+      <li class="active"><a href=<?php echo "admin_articulos.php"; ?>>TIENDA BOTÁNICA Y FLORISTERÍA</a></li>
     <li><a href="#">Horario de apertura</a></li>
     <li><a href="#">Usuarios</a></li>
     <li><a href="#">Productos</a></li>

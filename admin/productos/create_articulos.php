@@ -122,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
        
         if ($estado) {
             alerta("Se ha creado correctamente el articulo". var_dump($estado) );
-             header("location: ../index.php");
+             header("location: index.php");
              exit();
         } else {
              header("location: error.php");
