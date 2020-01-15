@@ -13,9 +13,10 @@ $dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $t
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
 
      // Procesamos DNI
-     $controlador = ControladorUsuario::getControlador();
-     $usuario = $controlador->buscarUsuarioDni($dniVal);
-    if(isset($usuario)){
+     //$controlador = ControladorUsuario::getControlador();
+     //$usuario = $controlador->buscarUsuarioDni($dniVal);
+    $dniVal = filtrado(($_POST["dni"]));
+    if(empty($dniVal)){
         $dniErr = "Ya existe un usuario con DNI:" .$dniVal. " en la Base de Datos";
     }else{
         $dni= $dniVal;

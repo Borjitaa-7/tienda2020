@@ -85,6 +85,8 @@
                     echo "<td><img src='imagenes/".$usuario->getImagen()."' width='48px' height='48px'></td>";
                     echo "<td>";
                     echo "<a href='vistas/read.php?id=" . encode($usuario->getId()) . "' title='Ver Usuario' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                    echo "<a href='vistas/update.php?id=" . encode($usuario->getId()) . "' title='Actualizar Usuario' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                    echo "<a href='vistas/delete.php?id=" . encode($usuario->getId()) . "' title='Borrar Usuario' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                     echo "</td>";
                     echo "</tr>";
                 }
