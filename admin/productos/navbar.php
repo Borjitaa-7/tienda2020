@@ -3,7 +3,6 @@
     <ul class="nav navbar-nav">
       <li class="active"><a href=<?php echo "index.php"; ?>>TIENDA BOTÁNICA Y FLORISTERÍA</a></li>
     <li><a href="/iaw/tienda2020/admin/administracion.php">Menu principal</a></li>
-    <li><a href="#">Horario de apertura</a></li>
     <li><a href="/iaw/tienda2020/admin/usuarios/listado.php">Usuarios</a></li>
     </ul>
       <ul class="nav navbar-nav navbar-right">
