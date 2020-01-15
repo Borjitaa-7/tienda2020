@@ -8,7 +8,7 @@ require_once UTILITY_PATH."funciones.php";
 // Obtenemos los datos del usuario que nos vienen de la página anterior
 if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     $id = decode($_GET["id"]);
-    $controlador = ControladorUsuario::getControlador();
+    $controlador = ControladorUsuarios::getControlador();
     $usuario = $controlador->buscarUsuario($id);
     if (is_null($usuario)) {
         header("location: error.php");
@@ -17,7 +17,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 }
 
 if (isset($_POST["id"]) && !empty($_POST["id"])) {
-    $controlador = ControladorUsuario::getControlador();
+    $controlador = ControladorUsuarios::getControlador();
     $usuario = $controlador->buscarUsuario($_POST["id"]);
     if ($controlador->borrarUsuario($_POST["id"])) {
        $controlador = ControladorImagen::getControlador();
@@ -33,7 +33,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
 ?>
 
-<?php require_once VIEW_PATH."cabecera.php"; ?>
+<?php require_once VIEW_PATH."/usuarios/cabecera.php"; ?>
 
 <div class="wrapper">
     <div class="container-fluid">
@@ -93,7 +93,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
                         <p>¿Está seguro que desea borrar este usuario?</p><br>
                         <p>
                             <button type="submit" class="btn btn-danger"> <span class="glyphicon glyphicon-trash"></span>  Borrar</button>
-                            <a href="../administracion.php" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
+                            <a href="listado.php".php" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
                         </p>
                     </div>
                 </form>

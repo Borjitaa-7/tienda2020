@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/dbz/dirs.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 require_once CONTROLLER_PATH . "ControladorDescarga.php";
 $opcion = $_GET["opcion"];
 $fichero = ControladorDescarga::getControlador();

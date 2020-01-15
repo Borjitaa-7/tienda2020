@@ -17,9 +17,9 @@
                     </div>
                     <button type="submit" class="btn btn-primary mb-2"> <span class="glyphicon glyphicon-search"></span>  Buscar</button>
                     <a href="javascript:window.print()" class="btn pull-right"> <span class="glyphicon glyphicon-print"></span> IMPRIMIR</a>
-                    <a href="utilidades/descargar.php?opcion=PDF" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  PDF</a>
-                    <a href="utilidades/descargar.php?opcion=XML" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  XML</a>
-                    <a href="utilidades/descargar.php?opcion=JSON" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  JSON</a>
+                    <a href="/iaw/tienda2020/utilidades/descargar.php?opcion=PDF" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  PDF</a>
+                    <a href="/iaw/tienda2020/utilidades/descargar.php?opcion=XML" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  XML</a>
+                    <a href="/iaw/tienda2020/utilidades/descargar.php?opcion=JSON" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  JSON</a>
                     <a href="create.php" class="btn btn-success pull-right"><span class="glyphicon glyphicon-user"></span>  Añadir Usuario</a>
                 </form>
             </div>
@@ -84,9 +84,9 @@
                     echo "<td>" . $usuario->getFecha() . "</td>";
                     echo "<td><img src='imagenes/".$usuario->getImagen()."' width='48px' height='48px'></td>";
                     echo "<td>";
-                    echo "<a href='vistas/read.php?id=" . encode($usuario->getId()) . "' title='Ver Usuario' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                    echo "<a href='vistas/update.php?id=" . encode($usuario->getId()) . "' title='Actualizar Usuario' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                    echo "<a href='vistas/delete.php?id=" . encode($usuario->getId()) . "' title='Borrar Usuario' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                    echo "<a href='read.php?id=" . encode($usuario->getId()) . "' title='Ver Usuario' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                    echo "<a href='update.php?id=" . encode($usuario->getId()) . "' title='Actualizar Usuario' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                    echo "<a href='delete.php?id=" . encode($usuario->getId()) . "' title='Borrar Usuario' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                     echo "</td>";
                     echo "</tr>";
                 }

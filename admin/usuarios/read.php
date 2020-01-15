@@ -5,7 +5,7 @@ require_once UTILITY_PATH."funciones.php";
 
 if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     $id = decode($_GET["id"]);
-    $controlador = ControladorUsario::getControlador();
+    $controlador = ControladorUsuarios::getControlador();
     $usuario= $controlador->buscarUsuario($id);
     if (is_null($usuario)){
         header("location: error.php");
@@ -14,7 +14,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
 }
 ?>
 
-<?php require_once VIEW_PATH."cabecera.php"; ?>
+<?php require_once VIEW_PATH."/usuarios/cabecera.php"; ?>
 
     <div class="wrapper">
         <div class="container-fluid">
@@ -66,7 +66,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                         <label>Fecha</label>
                             <p class="form-control-static"><?php echo $usuario->getFecha(); ?></p>
                     </div>
-                    <p><a href="../administracion.php" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Aceptar</a></p>
+                    <p><a href="listado.php" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Aceptar</a></p>
                 </div>
             </div>        
         </div>
