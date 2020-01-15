@@ -116,7 +116,7 @@ class ControladorBD {
 
     private function consultarBDParametros($consulta, $parametros) {
         $this->st = $this->bd->prepare($consulta);
-        //$this->st->execute($parametros);
+        $this->st->execute($parametros);
         return $this->st;
     }
 

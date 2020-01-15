@@ -59,7 +59,7 @@ public function __construct($id, $dni, $nombre, $apellidos, $email, $password, $
         return $this->telefono;
     }
 
-    function getFecha_alta() {
+    function getFecha() {
         return $this->fecha;
     }
 
