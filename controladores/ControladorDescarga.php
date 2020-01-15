@@ -41,7 +41,7 @@ class ControladorDescarga
                 echo "DNI: " . $usuario->getDni() . 
                 " -- Nombre: " . $usuario->getNombre() . 
                 " -- Apellidos: " . $usuario->getApellidos() . 
-                "  -- Email: " . $usuario->getEmail() .
+                " -- Email: " . $usuario->getEmail() .
                 " -- Administrador: " . $usuario->getAdmin() . 
                 " -- Telefono: " . $usuario->getTelefono() . 
                 " -- Fecha: " . $usuario->getFecha() . "\r\n";
