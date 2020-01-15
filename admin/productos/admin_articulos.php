@@ -20,7 +20,7 @@
     <a href="utilidades/descargar.php?opcion=PDF" target="_blank"> PDF</a>
     <a href="utilidades/descargar.php?opcion=XML" target="_blank"> XML</a>
     <a href="utilidades/descargar.php?opcion=JSON" target="_blank"> JSON</a>
-    <a href="vistas/create_articulos.php"> Añadir Articulo</a>
+    <a href="create_articulos.php"> Añadir Articulo</a>
 </form>
 
 <?php
@@ -91,14 +91,5 @@ if (count($resultados->datos) > 0) {
     echo "<p><em>No se ha encontrado datos de Articulos/as.</em></p>";
 }
 ?>
-<div id="no_imprimir">
-    <?php
-    if (isset($_COOKIE['CONTADOR'])) {
-        echo $contador;
-        echo $acceso;
-    } else {
-        echo "Es tu primera visita hoy";
-    }
-    ?>
 </div>
 <br><br><br>

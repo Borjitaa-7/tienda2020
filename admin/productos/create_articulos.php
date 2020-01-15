@@ -8,7 +8,7 @@
 //     exit();
 // }
 
-require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/floristeria/dirs.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 require_once CONTROLLER_PATH . "ControladorArticulo.php";
 require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once UTILITY_PATH . "funciones.php";
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
         $nombre = $nombreVal;
     }
 
-       //Procesamos el tipo
+    //Procesamos el tipo
        if (isset($_POST["tipo"])) {
         $tipo = filtrado(implode(", ", $_POST["tipo"]));
     } else {
@@ -50,8 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
     } else {
         $distribuidorErr = "Debe elegir al menos un distribuidor";
     }
-
-
 
     // Procesamos precio
     if (isset($_POST["precio"])) {
@@ -139,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
 }
 ?>
 
-<?php require_once VIEW_PATH . "cabecera.php"; ?>
+<?php require_once VIEW_PATH . "/productos/cabecera.php"; ?>
 
 <h2>Crear Articulo</h2>
 
@@ -205,7 +203,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
     <!-- Botones -->
     <button type="submit" name="aceptar" value="aceptar" > Aceptar</button>
     <button type="reset" value="reset" > Limpiar</button>
-    <a href="../index.php" > Volver</a>
+    <a href="../administracion.php" > Volver</a>
 </form>
 <br><br><br>
 <?php
