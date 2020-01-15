@@ -46,7 +46,7 @@
             $enlaces = ( isset($_GET['enlaces']) ) ? $_GET['enlaces'] : 10;
 
 
-            $consulta = "SELECT * FROM alumnos WHERE nombre LIKE :nombre OR dni LIKE :dni";
+            $consulta = "SELECT * FROM usuarios WHERE nombre LIKE :nombre OR dni LIKE :dni";
             $parametros = array(':nombre' => "%".$nombre."%", ':nombre' => "%".$nombre."%", ':dni' => "%".$dni."%");
             $limite = 2; // Limite del paginador
             $paginador  = new Paginador($consulta, $parametros, $limite);

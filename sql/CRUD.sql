@@ -41,8 +41,8 @@ CREATE TABLE `usuarios` (
 --
 -- Estructura de tabla para la tabla `productos`
 --
-DROP TABLE IF EXISTS `productos`;
-CREATE TABLE `productos` (
+DROP TABLE IF EXISTS `articulos`;
+CREATE TABLE `articulos` (
   `id` int(11) NOT NULL,
   `nombre` text COLLATE utf8_spanish_ci NOT NULL,
   `tipo` text COLLATE utf8_spanish_ci NOT NULL,
@@ -63,7 +63,7 @@ ALTER TABLE `usuarios`
 
 --
 -- Indices de la tabla `productos`
-ALTER TABLE `productos`
+ALTER TABLE `articulos`
   ADD PRIMARY KEY (`id`),
 
 --
@@ -74,6 +74,6 @@ COMMIT;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
-ALTER TABLE `usuarios`
+ALTER TABLE `articulos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
