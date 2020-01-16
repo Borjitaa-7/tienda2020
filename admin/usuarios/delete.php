@@ -54,7 +54,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
                         </td>
                         <td class="align-left">
                             <label>Fotografía</label><br>
-                            <img src='<?php echo "../imagenes/" . $usuario->getImagen() ?>' class='rounded' class='img-thumbnail' width='48' height='auto'>
+                            <img src='<?php echo "/iaw/tienda2020/imagenes/" . $usuario->getImagen() ?>' class='rounded' class='img-thumbnail' width='48' height='auto'>
                         </td>
                     </tr>
                 </table>

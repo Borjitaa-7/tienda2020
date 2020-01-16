@@ -82,7 +82,7 @@
                     echo "<td>" . $usuario->getAdmin() . "</td>";
                     echo "<td>" . $usuario->getTelefono() . "</td>";
                     echo "<td>" . $usuario->getFecha() . "</td>";
-                    echo "<td><img src='imagenes/".$usuario->getImagen()."' width='48px' height='48px'></td>";
+                    echo "<td><img src='/iaw/tienda2020/imagenes/".$usuario->getImagen()."' width='48px' height='48px'></td>";
                     echo "<td>";
                     echo "<a href='read.php?id=" . encode($usuario->getId()) . "' title='Ver Usuario' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
                     echo "<a href='update.php?id=" . encode($usuario->getId()) . "' title='Actualizar Usuario' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
