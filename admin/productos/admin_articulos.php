@@ -16,10 +16,10 @@
     <button type="submit">Buscar</button>
     <!-- Botones-->
     <a href="javascript:window.print()"> IMPRIMIR</a>
-    <a href="utilidades/descargar.php?opcion=TXT" target="_blank"> TXT</a>
-    <a href="utilidades/descargar.php?opcion=PDF" target="_blank"> PDF</a>
-    <a href="utilidades/descargar.php?opcion=XML" target="_blank"> XML</a>
-    <a href="utilidades/descargar.php?opcion=JSON" target="_blank"> JSON</a>
+    <a href="/iaw/tienda2020/utilidades/descargar_pro.php?opcion=TXT" target="_blank"> TXT</a>
+    <a href="/iaw/tienda2020/utilidades/descargar_pro.php?opcion=PDF" target="_blank"> PDF</a>
+    <a href="/iaw/tienda2020/utilidades/descargar_pro.php?opcion=XML" target="_blank"> XML</a>
+    <a href="/iaw/tienda2020/utilidades/descargar_pro.php?opcion=JSON" target="_blank"> JSON</a>
     <a href="create_articulos.php"> Añadir Articulo</a>
 </form>
 

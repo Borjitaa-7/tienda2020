@@ -23,7 +23,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
         $controlador = ControladorImagen::getControlador();
         if ($controlador->eliminarImagen($Articulo->getimagen())) {
-            header("location: ../index.php");
+            header("location: index.php");
             exit();
         } else {
             alerta("Error linea 30");
@@ -39,7 +39,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
 ?>
 
-<?php require_once VIEW_PATH . "cabecera.php"; ?>
+<?php require_once VIEW_PATH . "productos/cabecera.php"; ?>
 
 <h1>Borrar Articulo</h1>
 
@@ -84,7 +84,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         <p>¿Está seguro que desea borrar este Articulo?</p><br>
         <p>
             <button type="submit"> Borrar</button>
-            <a href="../index.php"> Volver</a>
+            <a href="index.php"> Volver</a>
         </p>
     </div>
 </form>
