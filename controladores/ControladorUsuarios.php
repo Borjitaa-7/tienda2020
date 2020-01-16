@@ -123,7 +123,7 @@ class ControladorUsuarios {
              telefono=:telefono, fecha=:fecha, imagen=:imagen 
              WHERE id=:id";
          $parametros= array(':id' => $id, ':dni'=>$dni, ':nombre'=>$nombre, ':apellidos'=>$apellidos, ':email'=>$email,':password'=>$password,
-                             ':admin'=>$admin, ':telefoon'=>$telefono,':fecha'=>$fecha,':imagen'=>$imagen);
+                             ':admin'=>$admin, ':telefono'=>$telefono,':fecha'=>$fecha,':imagen'=>$imagen);
          $estado = $bd->actualizarBD($consulta,$parametros);
          $bd->cerrarBD();
          return $estado;
