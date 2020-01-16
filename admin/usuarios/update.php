@@ -247,7 +247,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                          <div class="form-group <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>">
                         <label>Fotografía</label>
                         <!-- Solo acepto imagenes jpg -->
-                        <!-- <input type="file" name="imagen" class="form-control-file" id="imagen" accept="image/jpeg">   -->
+                        <input type="file" name="imagen" class="form-control-file" id="imagen" accept="image/jpeg">
                         <span class="help-block"><?php echo $imagenErr;?></span>    
                         </div>
                         <input type="hidden" name="id" value="<?php echo $id; ?>"/>

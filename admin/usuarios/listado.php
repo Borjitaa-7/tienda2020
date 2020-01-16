@@ -48,7 +48,7 @@
 
             $consulta = "SELECT * FROM usuarios WHERE nombre LIKE :nombre OR dni LIKE :dni";
             $parametros = array(':nombre' => "%".$nombre."%", ':nombre' => "%".$nombre."%", ':dni' => "%".$dni."%");
-            $limite = 2; // Limite del paginador
+            $limite = 4; // Limite del paginador
             $paginador  = new Paginador($consulta, $parametros, $limite);
             $resultados = $paginador->getDatos($pagina);
             //-------------------------------------------------------------paginador
@@ -93,6 +93,7 @@
                 echo "</tbody>";
                 echo "</table>";
                 echo "<ul class='pager' id='no_imprimir'>"; 
+                echo $paginador->crearLinks($enlaces);
                 echo "</ul>";
             } else {
                 echo "<p class='lead'><em>No se ha encontrado datos de usuarios.</em></p>";
