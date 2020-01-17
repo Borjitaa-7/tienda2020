@@ -33,7 +33,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
    }
 
     // Procesamos los apellidos
-    $nombreVal = filtrado(($_POST["apellidos"]));
+    $apellidosVal = filtrado(($_POST["apellidos"]));
     if(empty($apellidosVal)){
         $apellidosErr = "Por favor introduzca un apellido válido con solo carácteres alfabéticos.";
     $errores[]= $apellidosErr;
@@ -44,7 +44,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
    // Procesamos el email
    $emailVal = filtrado($_POST["email"]);
    if(empty($emailVal)){
-       $emailsErr = "Por favor introduzca email válido.";
+       $emailErr = "Por favor introduzca email válido.";
    $errores[]= $emailErr;
    } else{
        $email= $emailVal;
@@ -127,10 +127,10 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Chequeamos los errores 
     if(empty($dniErr) && empty($nombreErr) && empty($apellidosErr) && empty($passwordErr) && empty($emailErr) && 
         empty($adminErr) && empty($telefonoErr) && empty($fechaErr) && empty($imagenErr)){
-        $controlador = ControladorUsuario::getControlador();
+        $controlador = ControladorUsuarios::getControlador();
         $estado = $controlador->almacenarUsuario($dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen);
         if($estado){
-            header("location: ../administración.php");
+            header("location: listado.php");
             exit();
         }else{
             header("location: error.php");
