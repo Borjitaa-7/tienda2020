@@ -54,18 +54,17 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
    $passwordVal = filtrado($_POST["password"]);
    if(empty($passwordVal) || strlen($passwordVal)<5){
        $passwordErr = "Por favor introduzca password válido y que sea mayor que 5 caracteres.";
-       $errores[]= $apsswordErr;
+       $errores[]= $passwordErr;
    } else{
        $password= $passwordVal;
    }
 
    // Procsamos admin
-    if(isset($_POST["admin"])){
-        $admin = filtrado(implode(", ", $_POST["admin"]));
-    }else{
-        $adminErr = "Debe elegir si vas a ser Administrador o no";
-        $errores[]=  $adminErr;
-    }
+   if (isset($_POST["admin"])) {
+    $admin = filtrado($_POST["admin"]);
+} else {
+    $adminErr = "¿Eres administrador o no?";
+}
 
     // Procesamos telefono
     if(isset($_POST["telefono"])){
@@ -128,7 +127,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     if(empty($dniErr) && empty($nombreErr) && empty($apellidosErr) && empty($passwordErr) && empty($emailErr) && 
         empty($adminErr) && empty($telefonoErr) && empty($fechaErr) && empty($imagenErr)){
         $controlador = ControladorUsuarios::getControlador();
-        $estado = $controlador->almacenarUsuario($dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen);
+        $estado = $controlador->actualizarUsuario($id, $dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen);
         if($estado){
             header("location: listado.php");
             exit();

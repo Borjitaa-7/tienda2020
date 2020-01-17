@@ -111,7 +111,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         $controlador = ControladorArticulo::getControlador();
         $estado = $controlador->actualizarArticulo($id, $nombre, $tipo, $distribuidor, $precio, $descuento, $unidades, $imagen);
         if ($estado) {
-            header("location: ../index.php");
+            header("location: index.php");
             exit();
         } else {
             alerta("Hay algo mal en la linea 124");
@@ -168,7 +168,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
             <!-- Foto -->
             <td>
                 <label>Fotografía</label><br>
-                <img src='<?php echo "../imagenes/fotos/" . $Articulo->getimagen() ?>' class='rounded' class='img-thumbnail' width='48' height='auto'>
+                <img src='<?php echo "/iaw/tienda2020/imagenes/" . $Articulo->getimagen() ?>' class='rounded' class='img-thumbnail' width='48' height='auto'>
             </td>
         </tr>
     </table>

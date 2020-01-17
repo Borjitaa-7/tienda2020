@@ -7,7 +7,7 @@
 //     exit();
 // }
 ?>
-
+<?php require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php"; ?>
 <h2>Fichas de Articulos</h2>
 
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="no_imprimir">
