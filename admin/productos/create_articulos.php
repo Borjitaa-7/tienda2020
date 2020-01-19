@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
     // Procesamos la foto
     $propiedades = explode("/", $_FILES['imagen']['type']);
     $extension = $propiedades[1];
-    $tam_max = 50000; // 50 KBytes
+    $tam_max = 500000; // 500 KBytes
     $tam = $_FILES['imagen']['size'];
     $mod = true; // para modificar
 
@@ -102,17 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
             $imagenErr = "Error al procesar la imagen y subirla al servidor";
         }
     }
-/*
-    //COMPROBAR SOLO ESTOS FILTROS PARA VER SI PASAN LOS DATOS
 
-    echo $nombreVal = filtrado(($_POST["nombre"])).  "<br>";
-    echo $tipo = filtrado(implode(", ", $_POST["tipo"])) .  "<br>";
-    echo $distribuidor = filtrado($_POST["distribuidor"]) .  "<br>";
-    echo $precio = filtrado($_POST["precio"]) .  "<br>";
-    echo $descuento = filtrado($_POST["descuento"]).  "<br>"; 
-    echo $unidades = filtrado($_POST["stock"]) .  "<br>";
-    echo $imagen = filtrado(($_POST["imagen"]));
-*/
 
     if (empty($nombreErr)       && empty($tipoErr)      && empty($distribuidorErr)
      && empty($descuentoErr)    && empty($precioErr)    && empty($unidadesErr) && empty($imagenErr)) {
@@ -153,10 +143,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
      <!-- Tipo -->
      <div <?php echo (!empty($tipoErr)) ? 'error: ' : ''; ?>>
         <label>Tipo</label>
-        <input type="checkbox" name="tipo[]" value="decoracion" <?php echo (strstr($tipo, 'decoracion')) ? 'checked' : ''; ?>>Decoracion</input>
-        <input type="checkbox" name="tipo[]" value="alucinante" <?php echo (strstr($tipo, 'alucinante')) ? 'checked' : ''; ?>>Alucinante</input>
-        <input type="checkbox" name="tipo[]" value="formal" <?php echo (strstr($tipo, 'formal')) ? 'checked' : ''; ?>>Formal</input>
-        <input type="checkbox" name="tipo[]" value="kaotico" <?php echo (strstr($tipo, 'kaotico')) ? 'checked' : ''; ?>>Kaotico</input>
+        <input type="checkbox" name="tipo[]" value="Decoracion" <?php echo (strstr($tipo, 'Decoracion')) ? 'checked' : ''; ?>>Decoracion</input>
+        <input type="checkbox" name="tipo[]" value="Alucinante" <?php echo (strstr($tipo, 'Alucinante')) ? 'checked' : ''; ?>>Alucinante</input>
+        <input type="checkbox" name="tipo[]" value="Formal" <?php echo (strstr($tipo, 'Formal')) ? 'checked' : ''; ?>>Formal</input>
+        <input type="checkbox" name="tipo[]" value="Kaotico" <?php echo (strstr($tipo, 'Kaotico')) ? 'checked' : ''; ?>>Kaotico</input>
         <?php echo $tipoErr; ?>
     </div>
 
@@ -179,10 +169,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
     <!-- descuento -->
       <div <?php echo (!empty($descuentoErr)) ? 'error: ' : ''; ?>>
         <label>Descuento</label>
-        <input type="radio" name="descuento" value="5%" <?php echo (strstr($descuento, '5')) ? 'checked' : ''; ?>>5%</input>
-        <input type="radio" name="descuento" value="10%" <?php echo (strstr($descuento, '10')) ? 'checked' : ''; ?>>10%</input>
-        <input type="radio" name="descuento" value="20%" <?php echo (strstr($descuento, '20')) ? 'checked' : ''; ?>>20%</input>
-        <input type="radio" name="descuento" value="50%" <?php echo (strstr($descuento, '50')) ? 'checked' : ''; ?>>50%</input>
+        <input type="radio" name="descuento" value="5" <?php echo (strstr($descuento, '5')) ? 'checked' : ''; ?>>5%</input>
+        <input type="radio" name="descuento" value="10" <?php echo (strstr($descuento, '10')) ? 'checked' : ''; ?>>10%</input>
+        <input type="radio" name="descuento" value="20" <?php echo (strstr($descuento, '20')) ? 'checked' : ''; ?>>20%</input>
+        <input type="radio" name="descuento" value="50" <?php echo (strstr($descuento, '50')) ? 'checked' : ''; ?>>50%</input>
         <?php echo $descuentoErr; ?>
     </div>
    

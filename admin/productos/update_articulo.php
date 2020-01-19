@@ -176,10 +176,10 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
      <!-- Tipo -->
      <div <?php echo (!empty($tipoErr)) ? 'error: ' : ''; ?>>
         <label>Tipo</label>
-        <input type="checkbox" name="tipo[]" value="decoracion" <?php echo (strstr($tipo, 'decoracion')) ? 'checked' : ''; ?>>Decoracion</input>
-        <input type="checkbox" name="tipo[]" value="alucinante" <?php echo (strstr($tipo, 'alucinante')) ? 'checked' : ''; ?>>Alucinante</input>
-        <input type="checkbox" name="tipo[]" value="formal" <?php echo (strstr($tipo, 'formal')) ? 'checked' : ''; ?>>Formal</input>
-        <input type="checkbox" name="tipo[]" value="kaotico" <?php echo (strstr($tipo, 'kaotico')) ? 'checked' : ''; ?>>Kaotico</input>
+        <input type="checkbox" name="tipo[]" value="Decoracion" <?php echo (strstr($tipo, 'Decoracion')) ? 'checked' : ''; ?>>Decoracion</input>
+        <input type="checkbox" name="tipo[]" value="Alucinante" <?php echo (strstr($tipo, 'Alucinante')) ? 'checked' : ''; ?>>Alucinante</input>
+        <input type="checkbox" name="tipo[]" value="Formal" <?php echo (strstr($tipo, 'Formal')) ? 'checked' : ''; ?>>Formal</input>
+        <input type="checkbox" name="tipo[]" value="Kaotico" <?php echo (strstr($tipo, 'Kaotico')) ? 'checked' : ''; ?>>Kaotico</input>
         <?php echo $tipoErr; ?>
     </div>
 
@@ -203,10 +203,10 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 <!-- Descuento -->
     <div <?php echo (!empty($descuentoErr)) ? 'error: ' : ''; ?>>
         <label>Descuento</label>
-        <input type="radio" name="descuento" value="5%" <?php echo (strstr($descuento, '5%')) ? 'checked' : ''; ?>>5%</input>
-        <input type="radio" name="descuento" value="10%" <?php echo (strstr($descuento, '10%')) ? 'checked' : ''; ?>>10%</input>
-        <input type="radio" name="descuento" value="20%" <?php echo (strstr($descuento, '20%')) ? 'checked' : ''; ?>>20%</input>
-        <input type="radio" name="descuento" value="50%" <?php echo (strstr($descuento, '50%')) ? 'checked' : ''; ?>>50%</input>
+        <input type="radio" name="descuento" value="5" <?php echo (strstr($descuento, '5%')) ? 'checked' : ''; ?>>5%</input>
+        <input type="radio" name="descuento" value="10" <?php echo (strstr($descuento, '10%')) ? 'checked' : ''; ?>>10%</input>
+        <input type="radio" name="descuento" value="20" <?php echo (strstr($descuento, '20%')) ? 'checked' : ''; ?>>20%</input>
+        <input type="radio" name="descuento" value="50" <?php echo (strstr($descuento, '50%')) ? 'checked' : ''; ?>>50%</input>
         <?php echo $descuentoErr; ?>
     </div>
 

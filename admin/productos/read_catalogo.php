@@ -16,17 +16,20 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 ?>
 
 <?php require_once VIEW_PATH . "/productos/cabecera.php"; ?>
-
-<h1>Ficha del Articulo</h1>
+<div class='container'>
 <table>
     <tr>
         <td>
-            <label>Nombre</label>
-            <p><?php echo $Articulo->getnombre(); ?></p>
+            <h2><p><?php echo $Articulo->getnombre(); ?> </p></h2>
         </td>
+    </tr>
+    <tr>
         <td>
-            <label>Fotografía</label><br>
-            <img src='<?php echo "/iaw/tienda2020/imagenes/" . $Articulo->getimagen() ?>' class='rounded' class='img-thumbnail' width='48' height='auto'>
+            <br>
+            <br>
+            <img src='<?php echo "/iaw/tienda2020/imagenes/" . $Articulo->getimagen() ?>' class='rounded' class='img-thumbnail' width='250' height='250'>
+            <br>
+            <br>
         </td>
     </tr>
 </table>
@@ -37,16 +40,18 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 <label>Distribuidor</label>
 <p><?php echo $Articulo->getDistribuidor(); ?></p>
 
-<label>Precio</label>
+<label>Precio x Unidad</label>
 
-<p><?php echo $Articulo->getPrecio(); ?></p>
+<p><?php echo $Articulo->getPrecio(); ?>€</p>
 
 <label>Descuento</label>
-<p><?php echo $Articulo->getDescuento();?>%</p>
+<p><?php echo $Articulo->getDescuento(); ?>%</p>
 
 
-<label>Unidades</label>
-<p><?php echo $Articulo->getUnidades(); ?></p>
+<br><br>
+<button type='button' class='btn btn-danger'><a href="catalogo_articulos.php"> Atras</a>
+</a>
+</button>
 
-<p><a href="index.php"> Aceptar</a></p>
-<br><br><br>
+
+<div class='container'>

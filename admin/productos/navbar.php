@@ -1,9 +1,10 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <ul class="nav navbar-nav">
-      <li class="active"><a href=<?php echo "index.php"; ?>>TIENDA BOTÁNICA Y FLORISTERÍA</a></li>
+      <li class="active"><a href=<?php echo "catalogo_articulos.php"; ?>>TIENDA BOTÁNICA Y FLORISTERÍA</a></li>
     <li><a href="/iaw/tienda2020/admin/administracion.php">Menu principal</a></li>
     <li><a href="/iaw/tienda2020/admin/usuarios/listado.php">Usuarios</a></li>
+    <li><a href="/iaw/tienda2020/admin/productos/catalogo_articulos.php">Catalogo</a></li>
     </ul>
       <ul class="nav navbar-nav navbar-right">
         <?php

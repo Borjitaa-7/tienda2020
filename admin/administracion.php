@@ -23,5 +23,7 @@ echo "------------------------------------------------------------------</h1>";
 
 <h3><a href="/iaw/tienda2020/admin/usuarios/listado.php">Pincha aqui</a> para gestión de usuarios</h3>
 
+<h3><a href="/iaw/tienda2020/admin/productos/catalogo_articulos.php">Pincha aqui</a> para ver el catalogo</h3>
+
 </body>
 </html>

@@ -70,8 +70,8 @@ if (count($resultados->datos) > 0) {
             echo "<td>" . $Articulo->getnombre() . "</td>";
             echo "<td>" . $Articulo->getTipo() . "</td>";
             echo "<td>" . $Articulo->getDistribuidor() . "</td>";
-            echo "<td>" . $Articulo->getPrecio() . "</td>";
-            echo "<td>" . $Articulo->getDescuento() . "</td>";
+            echo "<td>" . $Articulo->getPrecio() ."€". "</td>";
+            echo "<td>" . $Articulo->getDescuento() ."%". "</td>";
             echo "<td>" . $Articulo->getUnidades() . "</td>";
             //echo "<td>" . str_repeat("*",strlen($Articulo->getpassword())) . "</td>";
             echo "<td><img src='/iaw/tienda2020/imagenes/" . $Articulo->getimagen() . "' width='48px' height='48px'></td>";
