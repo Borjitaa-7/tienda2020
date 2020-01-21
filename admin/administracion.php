@@ -1,27 +1,39 @@
-<?php 
+<?php
+//Directorios
 require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 
-echo "<h1>------------------------------------------------------------------";
-echo "<br>";
-echo "Tienda Botánica y floristería";
-echo "<br>";
-echo "------------------------------------------------------------------</h1>";
-
+//Cabecera
+require_once VIEW_PATH."cabecera.php";
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tienda Botánica y floristeria</title>
+    <title>Tienda</title>
 </head>
+<style type="text/css">
+body {
+  background: url(fondotienda.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+}
+</style>
 <body>
     
-<h3><a href="/iaw/tienda2020/admin/productos/index.php">Pincha aqui</a> para gestión de productos</h3>
+<h1>------------------------------------------------------------------
+<br>
+Tienda Botánica y Floristería
+<br>
+------------------------------------------------------------------</h1>
 
-<h3><a href="/iaw/tienda2020/admin/usuarios/listado.php">Pincha aqui</a> para gestión de usuarios</h3>
 
 </body>
 </html>
+
+<?php //Pie 
+require_once VIEW_PATH."pie.php"; ?>
