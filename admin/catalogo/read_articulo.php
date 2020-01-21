@@ -17,38 +17,53 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 
 <?php require_once VIEW_PATH . "catalogo/cabecera2.php"; ?>
 
-<h1>Ficha del Articulo</h1>
-<table>
-    <tr>
-        <td>
-            <label>Nombre</label>
-            <p><?php echo $Articulo->getnombre(); ?></p>
-        </td>
-        <td>
-            <label>Fotografía</label><br>
-            <img src='<?php echo "/iaw/tienda2020/imagenes/" . $Articulo->getimagen() ?>' class='rounded' class='img-thumbnail' width='48' height='auto'>
-        </td>
-    </tr>
-</table>
-
-<label>Tipo</label>
-<p><?php echo $Articulo->getTipo(); ?></p>
-
-<label>Distribuidor</label>
-<p><?php echo $Articulo->getDistribuidor(); ?></p>
-
-<label>Precio</label>
-
-<p><?php echo $Articulo->getPrecio(); ?></p>
-
-<label>Descuento</label>
-<p><?php echo $Articulo->getDescuento();?></p>
-
-
-<label>Unidades</label>
-<p><?php echo $Articulo->getUnidades(); ?></p>
-
-<p><a href="catalogo_articulos.php"> Aceptar</a></p>
+<div class="wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-header">
+                        <h1>Ficha del Articulo</h1>
+                    </div>
+                    <table>
+                        <tr>
+                            <td class="col-xs-11" class="align-left">
+                                <div class="form-group" class="align-left">
+                                    <label>Nombre</label>
+                                    <p class="form-control-static"><?php echo $Articulo->getnombre(); ?></p>
+                                </div>
+                            </td>
+                            <td class="align-left">
+                                <label>Fotografía</label><br>
+                                <img src='<?php echo "/iaw/tienda2020/imagenes/" . $Articulo->getImagen() ?>' class='rounded' class='img-thumbnail' width='170'>
+                            </td>
+                        </tr>
+                    </table>
+                
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <p class="form-control-static"><?php echo $Articulo->getTipo(); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Distribuidor</label>
+                        <p class="form-control-static"><?php echo $Articulo->getDistribuidor(); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Precio</label>
+                            <p class="form-control-static"><?php echo $Articulo->getPrecio(); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Descuento</label>
+                        <p class="form-control-static"><?php echo $Articulo->getDescuento(); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Unidades</label>
+                            <p class="form-control-static"><?php echo $Articulo->getUnidades(); ?></p>
+                    </div>
+                    <p><a href="catalogo_articulos.php" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Aceptar</a></p>
+                </div>
+            </div>        
+        </div>
+    </div>
 <br><br><br>
 
 <?php require_once VIEW_PATH . "catalogo/pie2.php"; ?>
