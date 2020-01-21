@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-01-2020 a las 23:18:11
+-- Tiempo de generación: 21-01-2020 a las 20:31:47
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.3.11
 
@@ -27,6 +27,9 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `articulos`
 --
+-- Creación: 16-01-2020 a las 22:15:03
+-- Última actualización: 21-01-2020 a las 17:21:05
+--
 
 CREATE TABLE `articulos` (
   `id` int(11) NOT NULL,
@@ -39,10 +42,22 @@ CREATE TABLE `articulos` (
   `imagen` text COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `articulos`
+--
+
+INSERT INTO `articulos` (`id`, `nombre`, `tipo`, `distribuidor`, `precio`, `descuento`, `unidades`, `imagen`) VALUES
+(6, 'manzanilla', 'decoracion', 'Internacional', '10', '5%', '1', 'cd5bf0f92e3e4f52a0412048a8c28807.jpeg'),
+(7, 'pasiflora', 'decoracion', 'Internacional', '12', '10%', '4', 'c035b51efd8b264a1becfd642df0455c.jpeg'),
+(8, 'Marihuana', 'alucinante', 'Internacional', '5', '5%', '5', '3895b28a504a69c00fa1d907bf944498.jpeg');
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `usuarios`
+--
+-- Creación: 16-01-2020 a las 22:08:32
+-- Última actualización: 21-01-2020 a las 16:47:31
 --
 
 CREATE TABLE `usuarios` (
@@ -82,13 +97,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `articulos`
 --
 ALTER TABLE `articulos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
