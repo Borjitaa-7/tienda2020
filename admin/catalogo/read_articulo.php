@@ -49,7 +49,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                     </div>
                     <div class="form-group">
                         <label>Precio</label>
-                            <p class="form-control-static"><?php echo $Articulo->getPrecio(); ?></p>
+                            <p class="form-control-static"><?php echo $Articulo->getPrecio(); ?>€</p>
                     </div>
                     <div class="form-group">
                         <label>Descuento</label>

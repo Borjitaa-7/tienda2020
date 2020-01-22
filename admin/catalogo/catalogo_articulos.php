@@ -58,7 +58,7 @@ echo "<div class='container'>";
 
 echo"<h1 class='display-1' align='center'>Catalogo de Articulos</h1>";
 
-echo "<table border='0' width='1000px' class='table table-striped table-dark' >";
+echo "<table border='0' width='1000px' class='table' >";
 
 
 $num="";
@@ -77,7 +77,7 @@ foreach ($resultados->datos as $a){
   
 
     echo "</br>";
-    echo  "<h5>"."<b>Precio</b>: ". $Articulo->getPrecio() ."€ x Unidad</h5>";
+    echo  "<h5>"."<b>Precio</b>: ". $Articulo->getPrecio() ."€ &nbspx &nbspUnidad</h5>";
 
     echo "<button type='button' class='btn btn-success'>Agregar ";
     echo "<span class='glyphicon glyphicon-plus'></span></a>";
