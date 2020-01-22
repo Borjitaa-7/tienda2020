@@ -9,6 +9,25 @@
 ?>
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php"; ?>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tienda</title>
+</head>
+<style type="text/css">
+body {
+  background: url(/iaw/tienda2020/admin/fondotienda.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+}
+</style>
+<body>
+
 <?php
 require_once CONTROLLER_PATH . "ControladorArticulo.php";
 require_once CONTROLLER_PATH . "Paginador.php";
@@ -58,7 +77,7 @@ foreach ($resultados->datos as $a){
   
 
     echo "</br>";
-    echo  "<h5>"."Precio  ". $Articulo->getPrecio() ." € x Unidad</h5>";
+    echo  "<h5>"."<b>Precio</b>: ". $Articulo->getPrecio() ."€ x Unidad</h5>";
 
     echo "<button type='button' class='btn btn-success'>Agregar ";
     echo "<span class='glyphicon glyphicon-plus'></span></a>";
