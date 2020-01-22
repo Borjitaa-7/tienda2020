@@ -124,16 +124,16 @@ class ControladorDescarga
             $sal.="</tr>";
             $sal.="</thead>";
             $sal.="<tbody>";
-            foreach ($lista as $usuario) {
+            foreach ($lista as $Usuario) {
                 $sal.="<tr>";
-                $sal.="<td>" . $usuario->getDni() . "</td>";
-                $sal.="<td>" . $usuario->getNombre() . "</td>";
-                $sal.="<td>" . $usuario->getApellidos() . "</td>";
-                $sal.="<td>" . $usuario->getEmail() . "</td>";
-                $sal.="<td>" . $usuario->getAdmin() . "</td>";
-                $sal.="<td>" . $usuario->getTelefono() . "</td>";
-                $sal.="<td>" . $usuario->getFecha() . "</td>";
-                $sal.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/iaw/dbz/imagenes/".$usuario->getImagen()."'  style='max-width: 12mm; max-height: 12mm'></td>";
+                $sal.="<td>" . $Usuario->getDni() . "</td>";
+                $sal.="<td>" . $Usuario->getNombre() . "</td>";
+                $sal.="<td>" . $Usuario->getApellidos() . "</td>";
+                $sal.="<td>" . $Usuario->getEmail() . "</td>";
+                $sal.="<td>" . $Usuario->getAdmin() . "</td>";
+                $sal.="<td>" . $Usuario->getTelefono() . "</td>";
+                $sal.="<td>" . $Usuario->getFecha() . "</td>";
+                $sal.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/imagenes/".$Usuario->getImagen()."'  style='max-width: 12mm; max-height: 12mm'></td>";
                 $sal.="</tr>";
             }
             $sal.="</tbody>";

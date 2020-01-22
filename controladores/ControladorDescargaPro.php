@@ -104,36 +104,36 @@ class ControladorDescarga
     }
 
     public function descargarPDF(){
-        $sal ='<h2 class="pull-left">Fichas del Articulo</h2>';
+        $sal ='<h2 align="center">Ficha de los Articulos</h2>' . '<hr>';
         $lista = $controlador = ControladorArticulo::getControlador();
         $lista = $controlador->listarArticulos("", "");
         if (!is_null($lista) && count($lista) > 0) {
-            $sal.="<table class='table table-bordered table-striped'>";
+            $sal.="<table class='table table-bordered table-striped' align='center'>";
             $sal.="<thead>";
             $sal.="<tr>";
             $sal.="<th>Nombre</th>";
             $sal.="<th>Tipo</th>";
             $sal.="<th>Distribuidor</th>";
-            $sal.="<th>Precio</th>";
-            $sal.="<th>Descuento</th>";
-            $sal.="<th>Unidad</th>";
-            $sal.="<th>Imagen</th>";
+            $sal.="<th>Precio </th>";
+            $sal.="<th>Descuento </th>";
+            $sal.="<th> Unidades </th>";
+            $sal.="<th> Imagen </th>";
             $sal.="</tr>";
             $sal.="</thead>";
             $sal.="<tbody>";
-            foreach ($lista as $usuario) {
+            foreach ($lista as $Articulo) {
                 $sal.="<tr>";
-                $sal.="<td>" . $usuario->getnombre() . "</td>";
-                $sal.="<td>" . $usuario->getTipo() . "</td>";
-                $sal.="<td>" . $usuario->getDistribuidor() . "</td>";
-                $sal.="<td>" . $usuario->getPrecio() . "</td>";
-                $sal.="<td>" . $usuario->getDescuento() . "</td>";
-                $sal.="<td>" . $usuario->getUnidades() . "</td>";
-                $sal.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/imagenes/".$usuario->getImagen()."'  style='max-width: 12mm; max-height: 12mm'></td>";
+                $sal.="<td>" . $Articulo->getnombre() . "</td>";
+                $sal.="<td>" . $Articulo->getTipo() . "</td>";
+                $sal.="<td>" . $Articulo->getDistribuidor() . "</td>";
+                $sal.="<td>" . $Articulo->getPrecio() . "</td>";
+                $sal.="<td>" . $Articulo->getDescuento() . "</td>";
+                $sal.="<td>" . $Articulo->getUnidades() . "</td>";
+                $sal.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/imagenes/".$Articulo->getimagen()."'  style='max-width: 12mm; max-height: 12mm'></td>";
                 $sal.="</tr>";
             }
             $sal.="</tbody>";
-            $sal.="</table>";
+            $sal.="</table>". '<hr>';
         } else {
             $sal.="<p class='lead'><em>No se ha encontrado datos de usuarios.</em></p>";
         }

@@ -27,20 +27,20 @@ class ControladorArticulo {
      * 
      */
 //----------------------------------------------------------------------------------------------------
-    public function listarArticulos($nombre, $distribuidor){
+    public function listarArticulos($nombre, $tipo){
         $lista=[];
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
 
-        $consulta = "SELECT * FROM articulos WHERE nombre LIKE :nombre OR distribuidor LIKE :distribuidor";
-        $parametros = array(':nombre' => "%".$nombre."%", ':distribuidor' => "%".$distribuidor."%");
+        $consulta = "SELECT * FROM articulos WHERE nombre LIKE :nombre OR tipo LIKE :tipo";
+        $parametros = array(':nombre' => "%".$nombre."%", ':tipo' => "%".$tipo."%");
 
         $res = $bd->consultarBD($consulta,$parametros);
         $filas=$res->fetchAll(PDO::FETCH_OBJ);
 
         if (count($filas) > 0) {
             foreach ($filas as $a) {
-                $articulo = new Articulo($a->id, $a->nombre, $a->tipo, $a->distribuidor, $a->precio, $a->descuento, $a->tipo, $a->unidades,  $a->imagen);
+                $articulo = new Articulo($a->id, $a->nombre, $a->tipo, $a->distribuidor, $a->precio, $a->descuento, $a->unidades,  $a->imagen);
                 $lista[] = $articulo;
             }
             $bd->cerrarBD();
