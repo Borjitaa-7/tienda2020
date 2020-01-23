@@ -15,21 +15,16 @@ require_once VIEW_PATH."cabecera.php";
     <title>Tienda</title>
 </head>
 <style type="text/css">
-body {
-  background: url(fondotienda.jpg) no-repeat center center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-}
 </style>
 <body>
     
-<h1>------------------------------------------------------------------
+
 <br>
-Tienda Botánica y Floristería
+<hr>
+<h1 align='center'>Administracion de Botánica y Floristería</h1>
+<hr>
+
 <br>
-------------------------------------------------------------------</h1>
 
 
 </body>
