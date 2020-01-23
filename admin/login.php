@@ -3,14 +3,14 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 require_once VIEW_PATH . "cabecera.php";
 require_once UTILITY_PATH."funciones.php";
+require_once CONTROLLER_PATH."ControladorAcceso.php";
+require_once CONTROLLER_PATH."ControladorSesion.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST["email"]) && isset($_POST["password"])) {
 
-    $email = $_POST['email'];
-    $password = md5($_POST['password']); // codificamos la contraseña con md5
-
+  
     $controlador = ControladorAcceso::getControlador();
-    $usuario = $controlador->login($email, $pass);
+    $controlador->procesarIdentificacion($_POST['email'], $_POST['password']);
 
 
     // si no encuentra el usuario te indica que son incorrectos los datos
@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        <input id="pass" type="password" class="form-control" name="pass" placeholder="password"
+                        <input id="pass" type="password" class="form-control" name="password" placeholder="password"
                                required="" placeholder="Direccion">
                     </div>
 

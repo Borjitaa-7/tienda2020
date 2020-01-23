@@ -31,12 +31,12 @@ class ControladorAcceso {
             $password = md5($password);
             $bd = ControladorBD::getControlador();
             $bd->abrirBD();
-            $consulta = "SELECT * FROM admin WHERE email=:email and password=:password";
+            $consulta = "SELECT * FROM usuarios WHERE email=:email and password=:password";
             $parametros = array(':email' => $email, ':password' => $password);
             $res = $bd->consultarBD($consulta,$parametros);
             $filas=$res->fetchAll(PDO::FETCH_OBJ);
             if (count($filas) > 0) {
-                 $_SESSION['USUARIO']['email']=$email;
+                 $_SESSION['USUARIO']['email'] = $email;
                  header("location: ../index.php"); 
                  exit();              
             } else {
