@@ -1,3 +1,12 @@
+<?php
+header("Content-Type: text/html; charset=utf-8");
+// Incluimos los directorios a trabajar
+require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
+
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -34,5 +43,3 @@
         </script>
     </head>
     <body>
-
-<?php require_once "navbar.php"; ?>

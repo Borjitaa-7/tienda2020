@@ -129,5 +129,5 @@ class ControladorUsuarios {
          return $estado;
      }
     //---------------------------------------------------------------ACTUALIZAR
-    
+ 
 }
