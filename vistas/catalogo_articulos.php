@@ -7,8 +7,9 @@
 //     exit();
 // }
 ?>
-<?php require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php"; ?>
-
+<?php require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php"; 
+require_once VIEW_PATH . "cabecera.php"
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,7 +20,7 @@
 </head>
 <style type="text/css">
 body {
-  background: url(/iaw/tienda2020/admin/fondotienda.jpg) no-repeat center center fixed;
+  background: url(/iaw/tienda2020/imagenes/fondotienda.jpg) no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -32,7 +33,6 @@ body {
 require_once CONTROLLER_PATH . "ControladorArticulo.php";
 require_once CONTROLLER_PATH . "Paginador.php";
 require_once UTILITY_PATH . "funciones.php";
-require_once VIEW_PATH. "cabecera.php";
 
 if (!isset($_POST["articulo"])) {
     $nombre = "";
@@ -83,7 +83,7 @@ foreach ($resultados->datos as $a){
     echo "<span class='glyphicon glyphicon-plus'></span></a>";
     echo "</button>&nbsp ";
 
-    echo "<a href='read_articulo.php?id=" . encode($Articulo->getid()) . "'<button type='button' class='btn btn-primary'> Ver </buttom></a>";
+    echo "<a href='/iaw/tienda2020/vistas/read_articulos.php?id=" . encode($Articulo->getid()) . "'<button type='button' class='btn btn-primary'> Ver </buttom></a>";
 
     echo "</div>";
 }
@@ -94,11 +94,12 @@ echo "</div>";
 
 
 
+
  } else {
      echo "<p><em>No se ha encontrado datos de Articulos/as.</em></p>";
 }
 ?>
 </div>
-<?php require_once VIEW_PATH. "catalogo/pie.php"; ?>
+<?php require_once VIEW_PATH. "pie.php"; ?>
 <br><br><br>
 

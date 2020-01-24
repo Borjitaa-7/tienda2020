@@ -1,6 +1,6 @@
 
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php"; ?>
-<?php require_once VIEW_PATH."/usuarios/cabecera.php"; ?>
+<?php require_once VIEW_PATH."cabecera.php"; ?>
 
 
     <!-- ---------------------------------------------------------Opciones del navbar -->
@@ -20,7 +20,7 @@
                     <a href="/iaw/tienda2020/utilidades/descargar.php?opcion=PDF" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  PDF</a>
                     <a href="/iaw/tienda2020/utilidades/descargar.php?opcion=XML" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  XML</a>
                     <a href="/iaw/tienda2020/utilidades/descargar.php?opcion=JSON" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  JSON</a>
-                    <a href="create.php" class="btn btn-success pull-right"><span class="glyphicon glyphicon-user"></span>  Añadir Usuario</a>
+                    <a href="create_usuarios.php" class="btn btn-success pull-right"><span class="glyphicon glyphicon-user"></span>  Añadir Usuario</a>
                 </form>
             </div>
             <div class="page-header clearfix">        
@@ -84,9 +84,9 @@
                     echo "<td>" . $usuario->getFecha() . "</td>";
                     echo "<td><img src='/iaw/tienda2020/imagenes/".$usuario->getImagen()."' width='48px' height='48px'></td>";
                     echo "<td>";
-                    echo "<a href='read.php?id=" . encode($usuario->getId()) . "' title='Ver Usuario' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                    echo "<a href='update.php?id=" . encode($usuario->getId()) . "' title='Actualizar Usuario' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                    echo "<a href='delete.php?id=" . encode($usuario->getId()) . "' title='Borrar Usuario' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                    echo "<a href='read_usuarios.php?id=" . encode($usuario->getId()) . "' title='Ver Usuario' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                    echo "<a href='update_usuarios.php?id=" . encode($usuario->getId()) . "' title='Actualizar Usuario' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                    echo "<a href='delete_usuarios.php?id=" . encode($usuario->getId()) . "' title='Borrar Usuario' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                     echo "</td>";
                     echo "</tr>";
                 }

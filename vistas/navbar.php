@@ -6,7 +6,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
     <div class="container-fluid">
     <ul class="nav navbar-nav">
       <li class="active"><a href=<?php echo '/iaw/tienda2020/index.php'; ?>>TIENDA BOTÁNICA Y FLORISTERÍA</a></li>
-      <li><a href="/iaw/tienda2020/admin/catalogo_articulos.php">NUESTRO CATÁLOGO</a></li>
+      <li><a href="/iaw/tienda2020/vistas/catalogo_articulos.php">NUESTRO CATÁLOGO</a></li>
     </ul>
             <?php
             // Si el usuario se ha autenticado y es administrador, mostrarmos panel de productos
@@ -14,7 +14,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
                 ?>
                     <div class="container-fluid">
                     <ul class="nav navbar-nav">
-                      <li><a href="/iaw/tienda2020/admin/usuarios/listado.php">Gestión de Usuarios</a></li>
+                      <li><a href="/iaw/tienda2020/admin/listado.php">Gestión de Usuarios</a></li>
                       <li><a href="/iaw/tienda2020/admin/productos/index.php">Gestión de Productos</a></li>
                     </ul>
             <?php } ?>

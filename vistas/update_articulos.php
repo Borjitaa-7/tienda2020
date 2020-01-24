@@ -111,7 +111,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         $controlador = ControladorArticulo::getControlador();
         $estado = $controlador->actualizarArticulo($id, $nombre, $tipo, $distribuidor, $precio, $descuento, $unidades, $imagen);
         if ($estado) {
-            header("location: index.php");
+            header("location: admin_articulos.php");
             exit();
         } else {
             alerta("Hay algo mal en la linea 124");
@@ -149,7 +149,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 
 ?>
 
-<?php require_once VIEW_PATH . "/productos/cabecera.php"; ?>
+<?php require_once VIEW_PATH . "cabecera.php"; ?>
 
 <h2>Modificar Articulo</h2>
 
@@ -227,6 +227,6 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
         <input type="hidden" name="id" value="<?php echo $id; ?>" />
         <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>" />
         <button type="submit" value="aceptar"> Modificar</button>
-        <a href="index.php"> Volver</a>
+        <a onclick="history.back()"> Volver</a>
 </form>
 <br><br><br>

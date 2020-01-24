@@ -4,9 +4,9 @@
 <?php
 session_start();
 if(isset($_SESSION['USUARIO']['email']) && $_SESSION['USUARIO']['email'] == "admin@admin.com"){
-    require_once VIEW_PATH . "administracion.php";
+    header('Location: vistas/admin_articulos.php');
 }else{
-    require_once VIEW_PATH . "catalogo_articulos.php";
+    header('Location: vistas/catalogo_articulos.php');
 }
 
 ?>

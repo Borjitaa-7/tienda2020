@@ -129,7 +129,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $controlador = ControladorUsuarios::getControlador();
         $estado = $controlador->actualizarUsuario($id, $dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen);
         if($estado){
-            header("location: listado.php");
+            header("location: admin_usuarios.php");
             exit();
         }else{
             header("location: error.php");
@@ -168,7 +168,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
 
 ?>
  
-<?php require_once VIEW_PATH."/usuarios/cabecera.php"; ?>
+<?php require_once VIEW_PATH."cabecera.php"; ?>
 
     <div class="wrapper">
         <div class="container-fluid">
@@ -253,7 +253,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>"/>
                         <!-- Botones --> 
                         <button type="submit" value="aceptar" class="btn btn-warning"> <span class="glyphicon glyphicon-refresh"></span>  Modificar</button>
-                        <a href="listado.php" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
+                        <a onclick="history.back()" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
                     </form>
                 </div>
             </div>        

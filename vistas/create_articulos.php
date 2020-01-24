@@ -137,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
 }
 ?>
 
-<?php require_once VIEW_PATH . "/productos/cabecera.php"; ?>
+<?php require_once VIEW_PATH . "cabecera.php"; ?>
 
 <h2>Crear Articulo</h2>
 
@@ -203,11 +203,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
     <!-- Botones -->
     <button type="submit" name="aceptar" value="aceptar" > Aceptar</button>
     <button type="reset" value="reset" > Limpiar</button>
-    <a href="../administracion.php" > Volver</a>
+    <a onclick="history.back()" > Volver</a>
 </form>
 <br><br><br>
-<?php
-var_dump($_POST); 
-echo "</br>";
-
-?>;

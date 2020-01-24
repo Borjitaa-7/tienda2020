@@ -33,7 +33,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
 ?>
 
-<?php require_once VIEW_PATH."/usuarios/cabecera.php"; ?>
+<?php require_once VIEW_PATH."cabecera.php"; ?>
 
 <div class="wrapper">
     <div class="container-fluid">
@@ -93,7 +93,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
                         <p>¿Está seguro que desea borrar este usuario?</p><br>
                         <p>
                             <button type="submit" class="btn btn-danger"> <span class="glyphicon glyphicon-trash"></span>  Borrar</button>
-                            <a href="listado.php".php" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
+                            <a onclick="history.back()" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
                         </p>
                     </div>
                 </form>

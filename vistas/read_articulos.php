@@ -59,7 +59,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                         <label>Stock Disponible</label>
                             <p class="form-control-static"><?php echo $Articulo->getUnidades(); ?></p>
                     </div>
-                    <p><a href="catalogo_articulos.php" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Aceptar</a></p>
+                    <p><a onclick="history.back()" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Aceptar</a></p>
                 </div>
             </div>        
         </div>

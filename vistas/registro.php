@@ -91,10 +91,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
         $controlador = ControladorUsuarios::getControlador();
         $estado = $controlador->almacenarUsuario($dni, $nombre, $apellidos, $email, $password, no, $telefono, $fecha, $imagen);
         if($estado){
-            header("location: administracion.php");
+            header("location: admin_usuarios.php");
             exit();
         }else{
-            header("location: error.php");
+            alerta("location: error.php");
             exit();
         }
     }else{
@@ -109,7 +109,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
 
  
 <!-- ---------------------------------------------------------------FORMULARIO -->
-<?php require_once VIEW_PATH."/usuarios/cabecera.php"; ?>
+<?php require_once VIEW_PATH."cabecera.php"; ?>
     <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
@@ -175,7 +175,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
                     <!-- Botones --> 
                          <button type="submit" name= "aceptar" value="aceptar" class="btn btn-success"> <span class="glyphicon glyphicon-floppy-save"></span>  Aceptar</button>
                          <button type="reset" value="reset" class="btn btn-info"> <span class="glyphicon glyphicon-repeat"></span>  Limpiar</button>
-                        <a href="administracion.php" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
+                        <a onclick="history.back()" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
                     </form>
                 </div>
             </div>        

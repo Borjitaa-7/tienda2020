@@ -39,7 +39,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
 ?>
 
-<?php require_once VIEW_PATH . "productos/cabecera.php"; ?>
+<?php require_once VIEW_PATH . "cabecera.php"; ?>
 
 <h1>Borrar Articulo</h1>
 
@@ -53,7 +53,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         </td>
         <td>
             <label>Fotografía</label><br>
-            <img src='<?php echo "../imagenes/fotos/" . $Articulo->getimagen() ?>' width='48' height='auto'>
+            <img src='<?php echo "/iaw/tienda2020/imagenes/" . $Articulo->getimagen() ?>' width='48' height='auto'>
         </td>
     </tr>
 </table>
@@ -84,7 +84,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         <p>¿Está seguro que desea borrar este Articulo?</p><br>
         <p>
             <button type="submit"> Borrar</button>
-            <a href="index.php"> Volver</a>
+            <a onclick="history.back()"> Volver</a>
         </p>
     </div>
 </form>
