@@ -1,6 +1,8 @@
 <!-- Cabecera de la página web -->
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
+require_once CONTROLLER_PATH . "ControladorImagen";
+require_once CONTROLLER_PATH . "ControladorUsuarios";
 require_once VIEW_PATH . "cabecera.php";
 require_once UTILITY_PATH . "funciones.php";
 
