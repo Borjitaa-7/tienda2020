@@ -12,21 +12,28 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 require_once VIEW_PATH . "cabecera.php" 
 ?>
-<h2>Fichas de Articulos</h2>
-
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="no_imprimir">
-    <label for="articulos">Nombre</label>
-    <input type="text" id="buscar" name="articulos" placeholder="Nombre">
-    <button type="submit">Buscar</button>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-header clearfix">
+                    <h2 class="pull-left">Fichas de productos</h2>
+                </div>
+                <form class="form-inline" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="no_imprimir">
+                    <div class="form-group mx-sm-5 mb-2">
+                        <label for="usuario" class="sr-only">Nombre </label>
+                        <input type="text" class="form-control" id="buscar" name="usuario" placeholder="Nombre">
+                    </div>
     <!-- Botones-->
-    <a href="javascript:window.print()"> IMPRIMIR</a>
-    <a href="/iaw/tienda2020/utilidades/descargar_pro.php?opcion=TXT" target="_blank"> TXT</a>
-    <a href="/iaw/tienda2020/utilidades/descargar_pro.php?opcion=PDF" target="_blank"> PDF</a>
-    <a href="/iaw/tienda2020/utilidades/descargar_pro.php?opcion=XML" target="_blank"> XML</a>
-    <a href="/iaw/tienda2020/utilidades/descargar_pro.php?opcion=JSON" target="_blank"> JSON</a>
-    <a href="create_articulos.php"> Añadir Articulo</a>
-</form>
-
+                    <button type="submit" class="btn btn-primary mb-2"> <span class="glyphicon glyphicon-search"></span>  Buscar</button>
+                    <a href="javascript:window.print()" class="btn pull-right"> <span class="glyphicon glyphicon-print"></span> IMPRIMIR</a>
+                    <a href="/iaw/tienda2020/utilidades/descargar_pro.php?opcion=PDF" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  PDF</a>
+                    <a href="/iaw/tienda2020/utilidades/descargar_pro.php?opcion=XML" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  XML</a>
+                    <a href="/iaw/tienda2020/utilidades/descargar_pro.php?opcion=JSON" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  JSON</a>
+                    <a href="create_articulos.php" class="btn btn-success pull-right"><span class="glyphicon glyphicon-user"></span>  Añadir Producto</a>
+                    </form>
+            </div>
+            <div class="page-header clearfix">        
+            </div>
 <?php
 require_once CONTROLLER_PATH . "ControladorArticulo.php";
 require_once CONTROLLER_PATH . "Paginador.php";
@@ -95,8 +102,9 @@ if (count($resultados->datos) > 0) {
     echo "<p><em>No se ha encontrado datos de Articulos/as.</em></p>";
 }
 ?>
+</div>
+    </div>
+<br><br><br>
 <?php
 require_once VIEW_PATH . "pie.php"
 ?>
-</div>
-<br><br><br>

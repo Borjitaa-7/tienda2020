@@ -40,12 +40,16 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 ?>
 
 <?php require_once VIEW_PATH . "cabecera.php"; ?>
-
-<h1>Borrar Articulo</h1>
-
+<div class="wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-header">
+                        <h1>Borrar Articulo </h1>
+                    </div>
 <table>
     <tr>
-        <td>
+        <td class="col-xs-11" class="align-left">
             <div>
                 <label>Nombre</label>
                 <p><?php echo $Articulo->getnombre(); ?></p>
@@ -53,7 +57,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         </td>
         <td>
             <label>Fotografía</label><br>
-            <img src='<?php echo "/iaw/tienda2020/imagenes/" . $Articulo->getimagen() ?>' width='48' height='auto'>
+            <img src='<?php echo "/iaw/tienda2020/imagenes/" . $Articulo->getimagen() ?>'class='rounded' class='img-thumbnail' width='170'>
         </td>
     </tr>
 </table>
@@ -83,9 +87,13 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         <input type="hidden" name="id" value="<?php echo trim($id); ?>" />
         <p>¿Está seguro que desea borrar este Articulo?</p><br>
         <p>
-            <button type="submit"> Borrar</button>
-            <a onclick="history.back()"> Volver</a>
+            <button type="submit" class="btn btn-danger"> <span class="glyphicon glyphicon-trash"></span>  Borrar</button>
+            <a onclick="history.back()" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
         </p>
     </div>
 </form>
+    </div>
+    </div>        
+    </div>
+    </div>
 <br><br><br>

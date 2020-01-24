@@ -122,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
        
         if ($estado) {
             alerta("Se ha creado correctamente el articulo". var_dump($estado) );
-             header("location: index.php");
+             header("location: admin_articulos.php");
              exit();
         } else {
              header("location: error.php");
@@ -138,20 +138,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
 ?>
 
 <?php require_once VIEW_PATH . "cabecera.php"; ?>
+<div class="wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-header">
+                        <h2>Crear Articulo</h2>
 
-<h2>Crear Articulo</h2>
-
-<p>Por favor rellene este formulario para añadir un nuevo articulo a la base de datos de la clase.</p>
-<!-- Formulario-->
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
-    <!-- Nombre-->
-    <div <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>>
-        <label>Nombre</label>
-        <input type="text" required name="nombre" pattern="([^\s][A-zÀ-ž\s]+)" title="El nombre no puede contener números" value="<?php echo $nombre; ?>">
-       <?php echo $nombreErr; ?>
-    </div>
-     <!-- Tipo -->
-     <div <?php echo (!empty($tipoErr)) ? 'error: ' : ''; ?>>
+            <p>Por favor rellene este formulario para añadir un nuevo articulo a la base de datos de la clase.</p>
+            <!-- Formulario-->
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
+                <!-- Nombre-->
+                <div <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>>
+                <label>Nombre</label>
+                <input type="text" required name="nombre" pattern="([^\s][A-zÀ-ž\s]+)" title="El nombre no puede contener números" value="<?php echo $nombre; ?>">
+            <?php echo $nombreErr; ?>
+            </div>
+            <!-- Tipo -->
+            <div <?php echo (!empty($tipoErr)) ? 'error: ' : ''; ?>>
         <label>Tipo</label>
         <input type="checkbox" name="tipo[]" value="decoracion" <?php echo (strstr($tipo, 'decoracion')) ? 'checked' : ''; ?>>Decoracion</input>
         <input type="checkbox" name="tipo[]" value="alucinante" <?php echo (strstr($tipo, 'alucinante')) ? 'checked' : ''; ?>>Alucinante</input>
@@ -204,5 +208,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
     <button type="submit" name="aceptar" value="aceptar" > Aceptar</button>
     <button type="reset" value="reset" > Limpiar</button>
     <a onclick="history.back()" > Volver</a>
+
 </form>
+                </div>
+            </div>        
+        </div>
+    </div>
 <br><br><br>

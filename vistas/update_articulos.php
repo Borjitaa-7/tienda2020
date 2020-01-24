@@ -150,31 +150,38 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 ?>
 
 <?php require_once VIEW_PATH . "cabecera.php"; ?>
-
-<h2>Modificar Articulo</h2>
+<div class="wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-header">
+                    <h2>Modificar Articulo</h2>
+                    </div>
+                    
 
 <p>Por favor edite la nueva información para actualizar la ficha.</p>
 <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" enctype="multipart/form-data">
     <table>
         <tr>
-            <td>
+        <td class="col-xs-11" class="align-top">
                 <!-- Nombre-->
-                <div <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>>
+                <div class="form-group <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>">
                     <label>Nombre</label>
                     <input type="text" name="nombre" value="<?php echo $nombre; ?>">
                     <?php echo $nombreErr; ?>
                 </div>
             </td>
             <!-- Foto -->
-            <td>
+            <td class="align-left">
                 <label>Fotografía</label><br>
-                <img src='<?php echo "/iaw/tienda2020/imagenes/" . $Articulo->getimagen() ?>' class='rounded' class='img-thumbnail' width='48' height='auto'>
+                <img src='<?php echo "/iaw/tienda2020/imagenes/" . $Articulo->getimagen() ?>'class='rounded' class='img-thumbnail' width='48' height='auto'>
             </td>
         </tr>
     </table>
 
      <!-- Tipo -->
-     <div <?php echo (!empty($tipoErr)) ? 'error: ' : ''; ?>>
+   
+     <div class="form-group <?php echo (!empty($tipoErr)) ? 'error: ' : ''; ?>">
         <label>Tipo</label>
         <input type="checkbox" name="tipo[]" value="decoracion" <?php echo (strstr($tipo, 'decoracion')) ? 'checked' : ''; ?>>Decoracion</input>
         <input type="checkbox" name="tipo[]" value="alucinante" <?php echo (strstr($tipo, 'alucinante')) ? 'checked' : ''; ?>>Alucinante</input>
@@ -186,7 +193,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 
 
     <!-- Distribuidor -->
-    <div <?php echo (!empty($distribuidorErr)) ? 'error: ' : ''; ?>>
+    <div class="form-group <?php echo (!empty($distribuidorErr)) ? 'error: ' : ''; ?>">
     <label>Distribuidor</label>
         <select name="distribuidor">
             <option value="Internacional" <?php echo (strstr($distribuidor, 'Internacional')) ? 'selected' : ''; ?>>Internacional</option>
@@ -194,14 +201,14 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
         </select>
     </div>
   <!-- Precio -->
-  <div <?php echo (!empty($precioErr)) ? 'error: ' : ''; ?>>
+  <div class="form-group <?php echo (!empty($precioErr)) ? 'error: ' : ''; ?>">
         <label>Precio</label>
         <input type="number" min="0.01" step="0.01" max="2500" required name="precio" pattern="[0-9]+([\.][0-9]{0,2})?"  title="Inserte un numero desde el 0.01 hasta el 999.99" value="<?php echo $precio; ?>">
         <?php echo $precioErr; ?>
     </div>
 
 <!-- Descuento -->
-    <div <?php echo (!empty($descuentoErr)) ? 'error: ' : ''; ?>>
+<div class="form-group <?php echo (!empty($descuentoErr)) ? 'error: ' : ''; ?>">
         <label>Descuento</label>
         <input type="radio" name="descuento" value="5%" <?php echo (strstr($descuento, '5%')) ? 'checked' : ''; ?>>5%</input>
         <input type="radio" name="descuento" value="10%" <?php echo (strstr($descuento, '10%')) ? 'checked' : ''; ?>>10%</input>
@@ -211,14 +218,14 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     </div>
 
    <!-- Unidades -->
-   <div <?php echo (!empty($unidadesErr)) ? 'error: ' : ''; ?>>
+   <div class="form-group <?php echo (!empty($unidadesErr)) ? 'error: ' : ''; ?>">
         <label>Unidades</label>
         <input type="number" required name="unidades" pattern="([1-9])" maxlength="2" title="Inserte un numero desde el 1 hasta el 99" value="<?php echo $unidades; ?>">
         <?php echo $unidadesErr; ?>
     </div>
 
 <!-- Foto-->
-        <div <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>>
+<div class="form-group <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>">
             <label>Imagen</label>
             <input type="file" name="imagen" id="imagen" accept="image/jpeg">
             <?php echo $imagenErr; ?>
@@ -226,7 +233,11 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 <!-- Botones -->
         <input type="hidden" name="id" value="<?php echo $id; ?>" />
         <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>" />
-        <button type="submit" value="aceptar"> Modificar</button>
-        <a onclick="history.back()"> Volver</a>
+        <button type="submit" value="aceptar" class="btn btn-warning"> <span class="glyphicon glyphicon-refresh"></span>  Modificar</button>
+        <a onclick="history.back()" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
+            </div>
+        </div>        
+    </div>
+</div>
 </form>
 <br><br><br>
