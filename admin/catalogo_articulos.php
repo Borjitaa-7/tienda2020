@@ -32,7 +32,7 @@ body {
 require_once CONTROLLER_PATH . "ControladorArticulo.php";
 require_once CONTROLLER_PATH . "Paginador.php";
 require_once UTILITY_PATH . "funciones.php";
-require_once VIEW_PATH. "catalogo/cabecera2.php";
+require_once VIEW_PATH. "cabecera.php";
 
 if (!isset($_POST["articulo"])) {
     $nombre = "";
@@ -101,4 +101,4 @@ echo "</div>";
 </div>
 <br><br><br>
 
-<?php require_once VIEW_PATH. "catalogo/pie2.php"; ?>
+<?php require_once VIEW_PATH. "catalogo/pie.php"; ?>

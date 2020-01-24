@@ -15,7 +15,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 }
 ?>
 
-<?php require_once VIEW_PATH . "catalogo/cabecera2.php"; ?>
+<?php require_once VIEW_PATH . "cabecera.php"; ?>
 
 <div class="wrapper">
         <div class="container-fluid">
@@ -66,4 +66,4 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     </div>
 <br><br><br>
 
-<?php require_once VIEW_PATH . "catalogo/pie2.php"; ?>
+<?php require_once VIEW_PATH . "pie.php"; ?>
