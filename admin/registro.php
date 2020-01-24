@@ -89,7 +89,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
     if(empty($dniErr) && empty($nombreErr) && empty($apellidosErr) && empty($passwordErr) && empty($emailErr) && 
          empty($telefonoErr) && empty($fechaErr) && empty($imagenErr)){
         $controlador = ControladorUsuarios::getControlador();
-        $estado = $controlador->almacenarUsuario($dni, $nombre, $apellidos, $email, $password, $telefono, $fecha, $imagen);
+        $estado = $controlador->almacenarUsuario($dni, $nombre, $apellidos, $email, $password, no, $telefono, $fecha, $imagen);
         if($estado){
             header("location: administracion.php");
             exit();
