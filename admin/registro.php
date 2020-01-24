@@ -1,13 +1,14 @@
+<!-- Cabecera de la página web -->
 <?php
-
 require_once $_SERVER['DOCUMENT_ROOT']."/iaw/tienda2020/dirs.php";
-require_once CONTROLLER_PATH."ControladorUsuarios.php";
 require_once CONTROLLER_PATH."ControladorImagen.php";
+require_once CONTROLLER_PATH."ControladorUsuarios.php";
+require_once VIEW_PATH."cabecera.php";
 require_once UTILITY_PATH."funciones.php";
 
 //-----------------------------------------------------------------PROCESAR FORMULARIO
-$dni = $nombre = $apellidos = $email = $password = $admin = $telefono = $fecha = $imagen ="";
-$dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr = $fechaErr = $imagenErr= "";
+$dni = $nombre = $apellidos = $email = $password = $telefono = $fecha = $imagen ="";
+$dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $telefonoErr = $fechaErr = $imagenErr= "";
  
 // Procesamos el formulario 
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
@@ -53,15 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
     } else{
         $password= hash('md5',$passwordVal);
     }
-
-    // Procesamos el admin
-    $adminVal = filtrado($_POST["admin"]);
-    if(empty($adminVal)){
-        $adminErr = "Por favor introduzca admin válido.";
-    } else{
-        $admin= $adminVal;
-    }
-
+    
     // Procesamos telefono
     if(isset($_POST["telefono"])){
         $telefono = filtrado($_POST["telefono"]);
@@ -94,11 +87,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
 
     // Chequeamos los errores 
     if(empty($dniErr) && empty($nombreErr) && empty($apellidosErr) && empty($passwordErr) && empty($emailErr) && 
-        empty($adminErr) && empty($telefonoErr) && empty($fechaErr) && empty($imagenErr)){
+         empty($telefonoErr) && empty($fechaErr) && empty($imagenErr)){
         $controlador = ControladorUsuarios::getControlador();
-        $estado = $controlador->almacenarUsuario($dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen);
+        $estado = $controlador->almacenarUsuario($dni, $nombre, $apellidos, $email, $password, no, $telefono, $fecha, $imagen);
         if($estado){
-            header("location: listado.php");
+            header("location: administracion.php");
             exit();
         }else{
             header("location: error.php");
@@ -159,13 +152,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
                                 minlength="5">
                             <span class="help-block"><?php echo $passwordErr;?></span>
                         </div>
-                    <!-- Administrador -->
-                        <div class="form-group <?php echo (!empty($adminErr)) ? 'error: ' : ''; ?>">
-                            <label>¿Administrador?</label>
-                            <input type="radio" name="admin" value="si" <?php echo (strstr($admin, 'si')) ? 'checked' : ''; ?>>Si</input>
-                            <input type="radio" name="admin" value="no" <?php echo (strstr($admin, 'no')) ? 'checked' : ''; ?>>No</input><br>
-                            <span class="help-block"><?php echo $adminErr;?></span>
-                        </div>
                     <!-- Telefono-->
                         <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
                             <label>Telefono de Contacto</label>
@@ -189,7 +175,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
                     <!-- Botones --> 
                          <button type="submit" name= "aceptar" value="aceptar" class="btn btn-success"> <span class="glyphicon glyphicon-floppy-save"></span>  Aceptar</button>
                          <button type="reset" value="reset" class="btn btn-info"> <span class="glyphicon glyphicon-repeat"></span>  Limpiar</button>
-                        <a href="listado.php" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
+                        <a href="administracion.php" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
                     </form>
                 </div>
             </div>        
@@ -197,3 +183,5 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
     </div>
 <!-- ---------------------------------------------------------------FORMULARIO -->
 <br><br><br>
+<!-- Pie de la página web -->
+<?php require_once VIEW_PATH . "pie.php"; ?>
