@@ -3,14 +3,16 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 require_once VIEW_PATH . "cabecera.php";
 require_once UTILITY_PATH."funciones.php";
-require_once CONTROLLER_PATH."ControladorAcceso.php";
+require_once CONTROLLER_PATH."ControladorUsuarios.php";
 require_once CONTROLLER_PATH."ControladorSesion.php";
 
 if (isset($_POST["email"]) && isset($_POST["password"])) {
 
+    $email = $_POST['email'];
+    $pass = md5($_POST['password']); 
   
-    $controlador = ControladorAcceso::getControlador();
-    $controlador->procesarIdentificacion($_POST['email'], $_POST['password']);
+    $controlador = ControladorUsuarios::getControlador();
+    $usuario = $controlador->login($email, $pass);
 
 
     // si no encuentra el usuario te indica que son incorrectos los datos

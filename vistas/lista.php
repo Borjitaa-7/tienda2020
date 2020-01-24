@@ -6,7 +6,7 @@ session_start();
 if(isset($_SESSION['USUARIO']['email']) && $_SESSION['USUARIO']['email'] == "admin@admin.com"){
     require_once VIEW_PATH . "administracion.php";
 }else{
-    require_once VIEW_PATH . "catalogo/catalogo_articulos.php";
+    require_once VIEW_PATH . "catalogo_articulos.php";
 }
 
 ?>

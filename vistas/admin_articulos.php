@@ -6,8 +6,12 @@
 //     header("location: login.php");
 //     exit();
 // }
+
 ?>
-<?php require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php"; ?>
+<?php 
+require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
+require_once VIEW_PATH . "cabecera.php" 
+?>
 <h2>Fichas de Articulos</h2>
 
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="no_imprimir">
@@ -76,9 +80,9 @@ if (count($resultados->datos) > 0) {
             //echo "<td>" . str_repeat("*",strlen($Articulo->getpassword())) . "</td>";
             echo "<td><img src='/iaw/tienda2020/imagenes/" . $Articulo->getimagen() . "' width='48px' height='48px'></td>";
             echo "<td>";
-                echo "<a href='/iaw/tienda2020/admin/productos/read_articulo.php?id=" . encode($Articulo->getid()) . "' title='Ver Articulo AQUI' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                echo "<a href='/iaw/tienda2020/admin/productos/update_articulo.php?id=" . encode($Articulo->getid()) . "' title='Actualizar Articulo AQUI' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                echo "<a href='/iaw/tienda2020/admin/productos/delete_articulos.php?id=" . encode($Articulo->getid()) . "' title='Borrar Articulo' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                echo "<a href='/iaw/tienda2020/vistas/read_articulos.php?id=" . encode($Articulo->getid()) . "' title='Ver Articulo AQUI' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                echo "<a href='/iaw/tienda2020/vistas/update_articulos.php?id=" . encode($Articulo->getid()) . "' title='Actualizar Articulo AQUI' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                echo "<a href='/iaw/tienda2020/vistas/delete_articulos.php?id=" . encode($Articulo->getid()) . "' title='Borrar Articulo' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
             echo "</td>";
         echo "</tr>";
     }
@@ -90,6 +94,9 @@ if (count($resultados->datos) > 0) {
 } else {
     echo "<p><em>No se ha encontrado datos de Articulos/as.</em></p>";
 }
+?>
+<?php
+require_once VIEW_PATH . "pie.php"
 ?>
 </div>
 <br><br><br>

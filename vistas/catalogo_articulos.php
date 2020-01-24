@@ -99,6 +99,6 @@ echo "</div>";
 }
 ?>
 </div>
+<?php require_once VIEW_PATH. "catalogo/pie.php"; ?>
 <br><br><br>
 
-<?php require_once VIEW_PATH. "catalogo/pie.php"; ?>
