@@ -1,11 +1,10 @@
 <?php
-// session_start();
-// if (!isset($_SESSION['USUARIO']['email'])) {
-//     //echo $_SESSION['USUARIO']['email'];
-//     //exit();
-//     header("location: login.php");
-//     exit();
-// }
+ session_start();
+ if (!isset($_SESSION['USUARIO']['email']) || in_array("no",$_SESSION['USUARIO']['email'])) {
+ 
+     header("location: login1.php");
+     exit();
+ }
 
 ?>
 <?php 

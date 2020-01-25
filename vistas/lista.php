@@ -3,10 +3,11 @@
 
 <?php
 session_start();
-if(isset($_SESSION['USUARIO']['email']) && $_SESSION['USUARIO']['email'] == "admin@admin.com"){
+if(isset($_SESSION['USUARIO']['email']) && in_array("si",$_SESSION['USUARIO']['email'])){
     header('Location: vistas/admin_articulos.php');
 }else{
     header('Location: vistas/catalogo_articulos.php');
 }
+
 
 ?>
