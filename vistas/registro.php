@@ -115,9 +115,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h2>Crear Usuario</h2>
+                        <h2>Registro de usuario</h2>
                     </div>
-                    <p>Por favor, rellene este formulario para añadir un nuevo usuario a la base de datos de la Tienda Botánica y Floristería</p>
+                    <p>Por favor, rellene este formulario para crear su nueva cuenta.</p>
                     <!-- Formulario-->
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
                      <!-- DNI-->

@@ -22,7 +22,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     if ($controlador->borrarUsuario($_POST["id"])) {
        $controlador = ControladorImagen::getControlador();
        if($controlador->eliminarImagen($usuario->getImagen())){
-            header("location: admin_articulos.php");
+            header("location: admin_usuarios.php");
             exit();
        }else{
             header("location: error.php");

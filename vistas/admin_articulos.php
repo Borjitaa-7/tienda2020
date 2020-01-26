@@ -19,15 +19,15 @@ error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
                 </div>
                 <form class="form-inline" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="no_imprimir">
                     <div class="form-group mx-sm-5 mb-2">
-                        <label for="usuario" class="sr-only">Nombre</label>
-                        <input type="text" class="form-control" id="buscar" name="usuario" placeholder="Nombre">
+                        <label for="nombre" class="sr-only">Nombre</label>
+                        <input type="text" class="form-control" id="buscar" name="nombre" placeholder="Nombre">
                     </div>
                     <button type="submit" class="btn btn-primary mb-2"> <span class="glyphicon glyphicon-search"></span>  Buscar</button>
                     <a href="javascript:window.print()" class="btn pull-right"> <span class="glyphicon glyphicon-print"></span> IMPRIMIR</a>
-                    <a href="/iaw/tienda2020/utilidades/descargar.php?opcion=PDF" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  PDF</a>
-                    <a href="/iaw/tienda2020/utilidades/descargar.php?opcion=XML" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  XML</a>
-                    <a href="/iaw/tienda2020/utilidades/descargar.php?opcion=JSON" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  JSON</a>
-                    <a href="create_usuarios.php" class="btn btn-success pull-right"><span class="glyphicon glyphicon-user"></span>  Añadir articulo</a>
+                    <a href="/iaw/tienda2020/utilidades/descargar_pro.php?opcion=PDF" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  PDF</a>
+                    <a href="/iaw/tienda2020/utilidades/descargar_pro.php?opcion=XML" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  XML</a>
+                    <a href="/iaw/tienda2020/utilidades/descargar_pro.php?opcion=JSON" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  JSON</a>
+                    <a href="create_articulos.php" class="btn btn-success pull-right"><span class="glyphicon glyphicon-user"></span>  Añadir articulo</a>
                 </form>
             </div>
             <div class="page-header clearfix">        
@@ -61,7 +61,7 @@ error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
 
             //-------------------------------------------------------------TABLA
             if (count($resultados->datos) > 0) {
-                echo "<table class='table table-bordered table-striped'>";
+                echo "<table class='table table-bordered table-striped table-condensed'>";
                 echo "<thead>";
                 echo "<tr>";
                 echo "<th>Nombre</th>";

@@ -63,7 +63,7 @@ error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
 
             //-------------------------------------------------------------TABLA
             if(count($resultados->datos)>0){
-                echo "<table class='table table-bordered table-striped'>";
+                echo "<table class='table table-bordered table-striped table-condensed'>";
                 echo "<thead>";
                 echo "<tr>";
                 echo "<th>DNI</th>";

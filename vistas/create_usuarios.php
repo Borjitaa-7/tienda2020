@@ -132,7 +132,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
                     <div class="page-header">
                         <h2>Crear Usuario</h2>
                     </div>
-                    <p>Por favor, rellene este formulario para añadir un nuevo usuario a la base de datos de la Tienda Botánica y Floristería</p>
+                    <p>Por favor, rellene este formulario para añadir un nuevo usuario a la base de datos de la Tienda Botánica y Floristería.</p>
                     <!-- Formulario-->
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
                      <!-- DNI-->
@@ -194,6 +194,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
                         <input type="file" required name="imagen" class="form-control-file" id="imagen" accept="image/jpeg">    
                         <span class="help-block"><?php echo $imagenErr;?></span>    
                     </div>
+
                     <!-- Botones --> 
                          <button type="submit" name= "aceptar" value="aceptar" class="btn btn-success"> <span class="glyphicon glyphicon-floppy-save"></span>  Aceptar</button>
                          <button type="reset" value="reset" class="btn btn-info"> <span class="glyphicon glyphicon-repeat"></span>  Limpiar</button>

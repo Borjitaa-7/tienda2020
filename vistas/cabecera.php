@@ -28,9 +28,6 @@
             li {
                 padding: 10px 0 0 6px;
             }
-            .active {
-    
-            }
     </style>
 
     <script type="text/javascript">

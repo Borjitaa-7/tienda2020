@@ -143,74 +143,72 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
                 <div class="col-md-12">
                     <div class="page-header">
                         <h2>Crear Articulo</h2>
+                    </div>
+                    <p>Por favor rellene este formulario para añadir un nuevo articulo a la base de datos de la Tienda Botánica y Floristería.</p>
+                    <!-- Formulario-->
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
+                    <!-- Nombre-->
+                    <div class="form-group <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>">
+                        <label>Nombre</label>
+                        <input type="text" required name="nombre" class="form-control" pattern="([^\s][A-zÀ-ž\s]+)" title="El nombre no puede contener números" value="<?php echo $nombre; ?>">
+                        <span class="help-block"><?php echo $nombreErr;?></span>
+                    </div>
+                    <!-- Tipo -->
+                    <div class="form-group <?php echo (!empty($tipoErr)) ? 'error: ' : ''; ?>">
+                        <label>Tipo</label>
+                        <input type="checkbox" name="tipo[]" value="decoracion" <?php echo (strstr($tipo, 'decoracion')) ? 'checked' : ''; ?>>Decoracion</input>
+                        <input type="checkbox" name="tipo[]" value="alucinante" <?php echo (strstr($tipo, 'alucinante')) ? 'checked' : ''; ?>>Alucinante</input>
+                        <input type="checkbox" name="tipo[]" value="formal" <?php echo (strstr($tipo, 'formal')) ? 'checked' : ''; ?>>Formal</input>
+                        <input type="checkbox" name="tipo[]" value="kaotico" <?php echo (strstr($tipo, 'kaotico')) ? 'checked' : ''; ?>>Kaotico</input>
+                        <span class="help-block"><?php echo $tipoErr; ?></span>
+                    </div>
+                    <!-- Distribuidor -->
+                    <div class="form-group <?php echo (!empty($distribuidorErr)) ? 'error: ' : ''; ?>">
+                    <label>Distribuidor</label>
+                        <select name="distribuidor">
+                            <option value="Internacional" <?php echo (strstr($distribuidor, 'Internacional')) ? 'selected' : ''; ?>>Internacional</option>
+                            <option value="Local" <?php echo (strstr($distribuidor, 'Local')) ? 'selected' : ''; ?>>Local</option>
+                        </select>
+                    </div>
+                    <!-- Precio -->
+                    <div class="form-group <?php echo (!empty($precioErr)) ? 'error: ' : ''; ?>">
+                        <label>Precio</label>
+                        <input type="number" min="0.01" class="form-control" step="0.01" max="1000" pattern="[0-9]{1,3}+([\.][0-9]{0,2})?"  required name="precio"  title="Inserte un numero desde el 1 hasta el 99" value="<?php echo $precio; ?>">
+                        <span class="help-block"><?php echo $precioErr; ?></span>
+                    </div>
 
-            <p>Por favor rellene este formulario para añadir un nuevo articulo a la base de datos de la clase.</p>
-            <!-- Formulario-->
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
-                <!-- Nombre-->
-                <div <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>>
-                <label>Nombre</label>
-                <input type="text" required name="nombre" pattern="([^\s][A-zÀ-ž\s]+)" title="El nombre no puede contener números" value="<?php echo $nombre; ?>">
-            <?php echo $nombreErr; ?>
-            </div>
-            <!-- Tipo -->
-            <div <?php echo (!empty($tipoErr)) ? 'error: ' : ''; ?>>
-        <label>Tipo</label>
-        <input type="checkbox" name="tipo[]" value="decoracion" <?php echo (strstr($tipo, 'decoracion')) ? 'checked' : ''; ?>>Decoracion</input>
-        <input type="checkbox" name="tipo[]" value="alucinante" <?php echo (strstr($tipo, 'alucinante')) ? 'checked' : ''; ?>>Alucinante</input>
-        <input type="checkbox" name="tipo[]" value="formal" <?php echo (strstr($tipo, 'formal')) ? 'checked' : ''; ?>>Formal</input>
-        <input type="checkbox" name="tipo[]" value="kaotico" <?php echo (strstr($tipo, 'kaotico')) ? 'checked' : ''; ?>>Kaotico</input>
-        <?php echo $tipoErr; ?>
-    </div>
+                    <!-- descuento -->
+                    <div class="form-group <?php echo (!empty($descuentoErr)) ? 'error: ' : ''; ?>">
+                        <label>Descuento</label>
+                        <input type="radio" name="descuento"  value="5%" <?php echo (strstr($descuento, '5')) ? 'checked' : ''; ?>>5%</input>
+                        <input type="radio" name="descuento" value="10%" <?php echo (strstr($descuento, '10')) ? 'checked' : ''; ?>>10%</input>
+                        <input type="radio" name="descuento" value="20%" <?php echo (strstr($descuento, '20')) ? 'checked' : ''; ?>>20%</input>
+                        <input type="radio" name="descuento" value="50%" <?php echo (strstr($descuento, '50')) ? 'checked' : ''; ?>>50%</input>
+                        <span class="help-block"><?php echo $descuentoErr; ?></span>
+                    </div>
+                
+                    <!-- Unidades -->
+                    <div class="form-group <?php echo (!empty($unidadesErr)) ? 'error: ' : ''; ?>">
+                        <label>Unidades</label>
+                        <input type="number" name="unidades" class="form-control" pattern="([1-9]){2}" maxlength="2" title="Inserte un numero desde el 1 hasta el 99" required value="<?php echo $unidades; ?>">
+                        <span class="help-block"><?php echo $unidadesErr; ?></span>
+                    </div>
 
-    <!-- Distribuidor -->
-    <div <?php echo (!empty($distribuidorErr)) ? 'error: ' : ''; ?>>
-    <label>Distribuidor</label>
-        <select name="distribuidor">
-            <option value="Internacional" <?php echo (strstr($distribuidor, 'Internacional')) ? 'selected' : ''; ?>>Internacional</option>
-            <option value="Local" <?php echo (strstr($distribuidor, 'Local')) ? 'selected' : ''; ?>>Local</option>
-        </select>
-    </div>
+                    <!-- Foto-->
+                    <div class="form-group <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>">
+                        <label>Imagen</label>
+                        <input type="file" required name="imagen"  class="form-control-file" id="imagen" accept="image/jpeg">
+                        <span class="help-block"><?php echo $imagenErr; ?></span>
+                    </div>
 
-    <!-- Precio -->
-    <div <?php echo (!empty($precioErr)) ? 'error: ' : ''; ?>>
-        <label>Precio</label>
-        <input type="number" min="0.01" step="0.01" max="1000" pattern="[0-9]{1,3}+([\.][0-9]{0,2})?"  required name="precio"  title="Inserte un numero desde el 1 hasta el 99" value="<?php echo $precio; ?>">
-        <?php echo $precioErr; ?>
-    </div>
-
-    <!-- descuento -->
-      <div <?php echo (!empty($descuentoErr)) ? 'error: ' : ''; ?>>
-        <label>Descuento</label>
-        <input type="radio" name="descuento" value="5%" <?php echo (strstr($descuento, '5')) ? 'checked' : ''; ?>>5%</input>
-        <input type="radio" name="descuento" value="10%" <?php echo (strstr($descuento, '10')) ? 'checked' : ''; ?>>10%</input>
-        <input type="radio" name="descuento" value="20%" <?php echo (strstr($descuento, '20')) ? 'checked' : ''; ?>>20%</input>
-        <input type="radio" name="descuento" value="50%" <?php echo (strstr($descuento, '50')) ? 'checked' : ''; ?>>50%</input>
-        <?php echo $descuentoErr; ?>
-    </div>
-   
-    <!-- Unidades -->
-    <div <?php echo (!empty($unidadesErr)) ? 'error: ' : ''; ?>>
-        <label>Unidades</label>
-        <input type="number" name="unidades" pattern="([1-9]){2}" maxlength="2" title="Inserte un numero desde el 1 hasta el 99" required value="<?php echo $unidades; ?>">
-        <?php echo $unidadesErr; ?>
-    </div>
-
-    <!-- Foto-->
-    <div <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>>
-        <label>Imagen</label>
-        <input type="file" required name="imagen" id="imagen" accept="image/jpeg">
-        <?php echo $imagenErr; ?>
-    </div>
-
-    <!-- Botones -->
-    <button type="submit" name="aceptar" value="aceptar" > Aceptar</button>
-    <button type="reset" value="reset" > Limpiar</button>
-    <a onclick="history.back()" > Volver</a>
-
-</form>
+                    <!-- Botones -->
+                        <button type="submit" name="aceptar" value="aceptar" class="btn btn-success"><span class="glyphicon glyphicon-floppy-save"></span> > Aceptar</button>
+                        <button type="reset" value="reset" class="btn btn-info"> <span class="glyphicon glyphicon-repeat"></span> > Limpiar</button>
+                        <a onclick="history.back()" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> > Volver</a>
+                    </form>
                 </div>
             </div>        
         </div>
     </div>
+<!-- ---------------------------------------------------------------FORMULARIO -->
 <br><br><br>

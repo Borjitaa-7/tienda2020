@@ -15,27 +15,20 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     }
 }
 
-
 if (isset($_POST["id"]) && !empty($_POST["id"])) {
     $controlador = ControladorArticulo::getControlador();
     $Articulo = $controlador->buscarArticuloid($_POST["id"]);
     if ($controlador->borrarArticulo($_POST["id"])) {
-
         $controlador = ControladorImagen::getControlador();
         if ($controlador->eliminarImagen($Articulo->getimagen())) {
-            header("location: index.php");
+            header("location: admin_articulos.php");
             exit();
-        } else {
-            alerta("Error linea 30");
-            // header("location: error.php");
-            // exit();
+        }else{
+            header("location: error.php");
+            exit();
         }
-    } else {
-        alerta("Error linea 34");
-        // header("location: error.php");
-        // exit();
     }
-}
+} 
 
 ?>
 

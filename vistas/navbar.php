@@ -11,12 +11,12 @@
       session_start();
       if(isset($_SESSION['USUARIO']['email']) && in_array("si",$_SESSION['USUARIO']['email'])){
         // administrador
-        echo '<li><a href="/iaw/tienda2020/vistas/catalogo_articulos.php">Nuestro Catalogo</a></li>';
-        echo '<li class="active"><a href="/iaw/tienda2020/vistas/admin_articulos.php">Administracion Productos</a></li>';
-        echo '<li class="active"><a href="/iaw/tienda2020/vistas/admin_usuarios.php">Administracion Usuarios</a></li>';
+        echo '<li><a href="/iaw/tienda2020/vistas/catalogo_articulos.php">Nuestro Catálogo</a></li>';
+        echo '<li class="active"><a href="/iaw/tienda2020/vistas/admin_articulos.php">Administración Productos</a></li>';
+        echo '<li class="active"><a href="/iaw/tienda2020/vistas/admin_usuarios.php">Administración Usuarios</a></li>';
     } else{
         // normal
-        echo '<li class="active"><a href="/iaw/tienda2020/vistas/catalogo_articulos.php">Nuestro Catalalogo</a></li>';
+        echo '<li class="active"><a href="/iaw/tienda2020/vistas/catalogo_articulos.php">Nuestro Catálogo</a></li>';
   }
   ?>
   </ul>
