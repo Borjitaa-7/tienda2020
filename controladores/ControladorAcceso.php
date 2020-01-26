@@ -61,13 +61,15 @@ class ControladorAcceso
                 exit();
 
             }else {
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
             alerta("El usuario no existe").'<br>';
-            echo "<h1>Usuario/a incorrecto</h1>";
+            echo "<h2>Usuario/a incorrecto</h2>";
 
-            echo "<p>Lo siento, el email o password es incorrecto. Por favor <a href='login1.php' class='alert-link'>regresa</a> e inténtelo de nuevo.</p>";
+            echo "<p>Lo siento, el email o password es incorrecto. Por favor <!-- <a href='login1.php' class='alert-link'>regresa</a> e--> inténtelo de nuevo.</p>";
+
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
         }
     }
 }

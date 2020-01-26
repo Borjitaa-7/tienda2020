@@ -21,13 +21,13 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
     <!-- Nombre-->
     <div>
         <label>Email:</label>
-        <input type="email" required name="email" value="admin@admin.com">
+        <input type="email" required name="email" value="" placeholder="Introduce tu correo">
     </div>
     <!-- Contraseña -->
     <div>
         <label>Contraseña:</label>
-        <input type="password" required name="password" value="admin">
+        <input type="password" required name="password" value="" placeholder="Introduce tu contraseña">
     </div>
     <button type="submit"> Entrar</button>
-    <a href="../index.php">Cancelar</a>
+    <a href="../index.php">Volver atrás</a>
 </form>

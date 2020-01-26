@@ -3,7 +3,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/iaw/tienda2020/index.php">PDO-Floristeria</a>
+      <a href=/iaw/tienda2020/index.php><image src="/iaw/tienda2020/imagenes/logo.jpg" width="125" height="70"></a>
     </div>
     <ul class="nav navbar-nav">
       <!-- Si el usuario es admin o no se pintara una cosa u otra -->
@@ -11,16 +11,12 @@
       session_start();
       if(isset($_SESSION['USUARIO']['email']) && in_array("si",$_SESSION['USUARIO']['email'])){
         // administrador
-        echo '<li><a href="/iaw/tienda2020/vistas/catalogo_articulos.php">Catalalogo</a></li>';
+        echo '<li><a href="/iaw/tienda2020/vistas/catalogo_articulos.php">Nuestro Catalogo</a></li>';
         echo '<li class="active"><a href="/iaw/tienda2020/vistas/admin_articulos.php">Administracion Productos</a></li>';
         echo '<li class="active"><a href="/iaw/tienda2020/vistas/admin_usuarios.php">Administracion Usuarios</a></li>';
-
-        echo '<li><a href="#">Admin 3</a></li>';
     } else{
         // normal
-        echo '<li class="active"><a href="/iaw/tienda2020/vistas/catalogo_articulos.php">Catalalogo</a></li>';
-        echo '<li><a href="#">No Admin 1</a></li>';
-        echo '<li><a href="#">No Admin 2</a></li>';
+        echo '<li class="active"><a href="/iaw/tienda2020/vistas/catalogo_articulos.php">Nuestro Catalalogo</a></li>';
   }
   ?>
   </ul>
@@ -40,5 +36,7 @@
     </ul>
   </div>
 </nav>
+
+
 <br><br>
 <br><br>

@@ -113,3 +113,6 @@ error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
     <div id="no_imprimir">
     </div>
     <br><br><br> 
+    <?php
+        require_once VIEW_PATH . "pie.php"
+    ?>
