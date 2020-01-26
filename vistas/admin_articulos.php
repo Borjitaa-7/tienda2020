@@ -10,11 +10,30 @@ error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php"; ?>
 <?php require_once VIEW_PATH."cabecera.php"; ?>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sesión</title>
+</head>
+<style type="text/css">
+body {
+  background: url(/iaw/tienda2020/imagenes/fondo.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+}
+</style>
+
+
     <!-- ---------------------------------------------------------Opciones del navbar -->
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="page-header clearfix">
+                <div class="page-header clearfix" >
                     <h2 class="pull-left">Gestión de Productos</h2>
                 </div>
                 <form class="form-inline" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="no_imprimir">
@@ -29,9 +48,7 @@ error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
                     <a href="/iaw/tienda2020/utilidades/descargar_pro.php?opcion=JSON" class="btn pull-right" target="_blank"><span class="glyphicon glyphicon-download"></span>  JSON</a>
                     <a href="create_articulos.php" class="btn btn-success pull-right"><span class="glyphicon glyphicon-user"></span>  Añadir articulo</a>
                 </form>
-            </div>
-            <div class="page-header clearfix">        
-            </div>
+           <hr>
     <!-- ---------------------------------------------------------Opciones del navbar -->
 
             <?php

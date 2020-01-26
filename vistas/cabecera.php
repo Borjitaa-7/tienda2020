@@ -28,6 +28,12 @@
             li {
                 padding: 10px 0 0 6px;
             }
+            table {
+                background-color: rgba(255,255,255,0.5);  
+            }
+            .table-bordered {
+                background: white;
+            }
     </style>
 
     <script type="text/javascript">

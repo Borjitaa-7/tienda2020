@@ -56,7 +56,7 @@ $resultados = $paginador->getDatos($pagina);
 if (count($resultados->datos) > 0) {
 echo "<div class='container'>";
 
-echo"<h1 class='display-1' align='center'>Botánica y Floristería</h1>";
+echo"<h1 class='display-1' align='center'>Botánica y Floristería®</h1>";
 
 echo "<table border='0' width='1000px' class='table' >";
 

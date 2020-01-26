@@ -10,7 +10,7 @@
                 <a style="color:#9d9d9d"; href="#">Contacto</a>
             </div>
 
-            <div class="footer-copyright text-center py-3" style="color:#9d9d9d";>Todos los derechos se encuentran reservados. 2019-2020 Implantación de Aplicaciones Web
+            <div class="footer-copyright text-center py-3" style="color:#9d9d9d";>Todos los derechos reservados. 2019-2020 - Implantación de Aplicaciones Web
             </div>
             <!-- Copyright -->
         </div>

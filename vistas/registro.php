@@ -110,6 +110,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
  
 <!-- ---------------------------------------------------------------FORMULARIO -->
 <?php require_once VIEW_PATH."cabecera.php"; ?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sesión</title>
+</head>
+<style type="text/css">
+body {
+  background: url(/iaw/tienda2020/imagenes/fondo.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+}
+</style>
+
+<body>
     <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
