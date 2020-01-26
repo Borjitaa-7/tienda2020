@@ -1,11 +1,11 @@
-<?php 
-session_start();
-if (!isset($_SESSION['USUARIO']['email'])) {
-    //echo $_SESSION['USUARIO']['email'];
-    //exit();
-    header("location: login.php");
-    exit();
-}
+<?php
+error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+ session_start();
+ if (!isset($_SESSION['USUARIO']['email']) || in_array("no",$_SESSION['USUARIO']['email'])) {
+ 
+     header("location: login1.php");
+     exit();
+ }
 ?>
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php"; ?>
 <?php require_once VIEW_PATH."cabecera.php"; ?>
@@ -16,7 +16,7 @@ if (!isset($_SESSION['USUARIO']['email'])) {
         <div class="row">
             <div class="col-md-12">
                 <div class="page-header clearfix">
-                    <h2 class="pull-left">Fichas del Usuario</h2>
+                    <h2 class="pull-left">Fichas de Usuarios</h2>
                 </div>
                 <form class="form-inline" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="no_imprimir">
                     <div class="form-group mx-sm-5 mb-2">

@@ -1,13 +1,12 @@
 <?php
-// //error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
-// session_start();
-// if (!isset($_SESSION['USUARIO']['email'])) {
-//     //echo $_SESSION['USUARIO']['email'];
-//     //exit();
-//     header("location: login.php");
-//     exit();
-// }
-
+error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+ session_start();
+ if (!isset($_SESSION['USUARIO']['email']) || in_array("no",$_SESSION['USUARIO']['email'])) {
+ 
+     header("location: login1.php");
+     exit();
+ }
+ 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 require_once CONTROLLER_PATH . "ControladorArticulo.php";
 require_once CONTROLLER_PATH . "ControladorImagen.php";

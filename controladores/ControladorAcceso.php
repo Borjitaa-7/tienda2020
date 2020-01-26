@@ -44,17 +44,15 @@ class ControladorAcceso
         //Con esto traigo las filas si el usuario existe
 
         if (count($filas) > 0) {
-        //Ahora meto en un array lista, los campos del modelo usuario solo aquellos campos que necesito
+        //Ahora meto en un array lista, los campos del modelo usuario unicamente seleccionado aquellos campos que necesito
                 $lista=[];
-                foreach($filas as $a){
+                foreach($filas as $a){ //recorro las filas y las asocio al objeto Usuario
                     $usuario = new Usuario( $a->id, $a->dni, $a->nombre, $a->apellidos, $a->email, $a->password, $a->admin, $a->telefono, $a->fecha, $a->imagen);
-                    // alerta( $a->nombre ." ".   $a->email ." ".$a->admin);
+                    // Solo guardo los campos del correo y si es admin para posteriores comprobaciones de seguridad
                     $lista = array($a->email ,$a->admin);
-                    // alerta(var_dump($lista));
-        //Me guardo el array ahora para inicializar la sesion
                 }
-        $bd->cerrarBD();
-
+        $bd->cerrarBD(); //Me guardo el array ahora para inicializar la sesion
+        
         //Iniciamos sesion y asociamos el array con la sesion para ese user
             
             session_start();
@@ -69,7 +67,7 @@ class ControladorAcceso
             alerta("El usuario no existe").'<br>';
             echo "<h1>Usuario/a incorrecto</h1>";
 
-            echo "<p>Lo siento, el email o password es incorrecto. Por favor <a href='login.php' class='alert-link'>regresa</a> e inténtelo de nuevo.</p>";
+            echo "<p>Lo siento, el email o password es incorrecto. Por favor <a href='login1.php' class='alert-link'>regresa</a> e inténtelo de nuevo.</p>";
         }
     }
 }

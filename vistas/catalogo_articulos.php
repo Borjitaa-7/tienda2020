@@ -20,7 +20,7 @@ require_once VIEW_PATH . "cabecera.php"
 </head>
 <style type="text/css">
 body {
-  background: url(/iaw/tienda2020/imagenes/fondotienda.jpg) no-repeat center center fixed;
+  background: url(/iaw/tienda2020/imagenes/fondotiendo.jpg) no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
