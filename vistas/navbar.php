@@ -1,5 +1,7 @@
-<?php require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";?>
+<?php require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
+require_once UTILITY_PATH . "funciones.php";
 
+?>
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -27,9 +29,12 @@
             echo '<li><a href="/iaw/tienda2020/vistas/registro.php"><span class="glyphicon glyphicon-user"></span> Registrarse</a></li>';
             echo '<li><a href="/iaw/tienda2020/vistas/login1.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
           }else{ // Si esta logeado
-            $correito = implode(", ",$_SESSION['USUARIO']['email']);  // Implodeamos el array de Sesion
-            $correo = strstr($correito,",",true); // Sacamos el 1ºCampo que se corresponde con el correo y lo dibujamos
-            echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> '.$correo.'</a></li>';
+            $correito = $_SESSION['USUARIO']['email'];  // Implodeamos el array de Sesion
+            $correo =$correito[0]; // Sacamos el 1ºCampo que se corresponde con el correo y lo dibujamos
+            $id = $correito[2];
+            var_dump($id);
+            
+            echo "<li><a href='update.php?id=".encode($id)."'><span class='glyphicon glyphicon-user'></span>.$correo </a></li>";
             echo '<li><a href="login1.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>';
           }
         ?>

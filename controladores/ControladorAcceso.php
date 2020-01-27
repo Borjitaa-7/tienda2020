@@ -49,7 +49,7 @@ class ControladorAcceso
                 foreach($filas as $a){ //recorro las filas y las asocio al objeto Usuario
                     $usuario = new Usuario( $a->id, $a->dni, $a->nombre, $a->apellidos, $a->email, $a->password, $a->admin, $a->telefono, $a->fecha, $a->imagen);
                     // Solo guardo los campos del correo y si es admin para posteriores comprobaciones de seguridad
-                    $lista = array($a->email ,$a->admin);
+                    $lista = array($a->email ,$a->admin, $a->id);
                 }
         $bd->cerrarBD(); //Me guardo el array ahora para inicializar la sesion
         
