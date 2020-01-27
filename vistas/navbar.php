@@ -34,7 +34,7 @@ require_once UTILITY_PATH . "funciones.php";
             $id = $correito[2];
             var_dump($id);
             
-            echo "<li><a href='update.php?id=".encode($id)."'><span class='glyphicon glyphicon-user'></span>.$correo </a></li>";
+            echo "<li><a href='update.php?id=".encode($id)."'><span class='glyphicon glyphicon-user'></span> $correo </a></li>";
             echo '<li><a href="login1.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>';
           }
         ?>

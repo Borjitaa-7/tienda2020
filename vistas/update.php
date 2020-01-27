@@ -4,12 +4,38 @@ require_once CONTROLLER_PATH."ControladorUsuarios.php";
 require_once CONTROLLER_PATH."ControladorImagen.php";
 require_once UTILITY_PATH."funciones.php";
  
-$dni = $nombre = $apellidos = $email = $password = $telefono = $imagen ="";
-$dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $telefonoErr = $imagenErr= "";
+$dni = $nombre = $apellidos = $email = $password = $admin = $telefono = $fecha = $imagen ="";
+$dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr = $fechaErr = $imagenErr= "";
 $imagenAnterior = "";
 
 $errores=[];
+
+// Comprobamos que existe el id antes de ir más lejos
+    if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
+        $id =  decode($_GET["id"]);
+        $controlador = ControladorUsuarios::getControlador();
+        $usuario = $controlador->buscarUsuario($id);
+        if (!is_null($usuario)) {
+            $dni = $usuario->getDni();
+            $nombre = $usuario->getNombre();
+            $apellidos = $usuario->getApellidos();
+            $email = $usuario->getEmail();
+            $password = $usuario->getPassword();
+            $admin = $usuario->getAdmin();
+            $telefono = $usuario->getTelefono();
+            $fecha = $usuario->getFecha();
+            $imagen = $usuario->getImagen();
+            $imagenAnterior = $imagen;
+        }else{
+            header("location: error.php");
+            exit();
+        }
+    }else{
+            header("location: error.php");
+            exit();
+    }
  
+
 // Procesamos la información obtenida por el get
 if(isset($_POST["id"]) && !empty($_POST["id"])){
     $id = $_POST["id"];
@@ -58,13 +84,33 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
    } else{
        $password= $passwordVal;
    }
-
+   // Procsamos admin
+   if (isset($_POST["admin"])) {
+    $admin = filtrado($_POST["admin"]);
+} else 
     // Procesamos telefono
     if(isset($_POST["telefono"])){
         $telefono = filtrado($_POST["telefono"]);
     }else{
         $telefonoErr = "Tienes que escribir tu número de teléfono";
         $errores[]= $telefonoErr;
+    }
+
+    // Procesamos fecha
+    $fecha = date("d-m-Y", strtotime(filtrado($_POST["fecha"])));
+    $hoy = date("d-m-Y", time());
+
+    // Comparamos las fechas
+    $fecha_mat = new DateTime($fecha);
+    $fecha_hoy = new DateTime($hoy);
+    $interval = $fecha_hoy->diff($fecha_mat);
+
+    if($interval->format('%R%a días')>0){
+        $fechaErr = "La fecha no puede ser superior a la fecha actual";
+        $errores[]=  $fechaErr;
+
+    }else{
+        $fecha = date("d/m/Y",strtotime($fecha));
     }
 
     // Procesamos la imagen
@@ -98,46 +144,25 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $imagen=trim($_POST["imagenAnterior"]);
     }
 
-    
-    if (count($errores) == 0) {
-        $cu = ControladorUsuarios::getControlador();
-        // Recupero el pass para lamacenar el cambio
-        $usuario = $cu->buscarUsuario($id);
-        $usuario = new Usuario($id, $dni, $nombre, $apellidos, $email, $password, $telefono, $imagen);
-        if ($estado = $cu->actualizarUsuario2($usuario)) {
-            alerta("Usuario/a actualizado/a correctamente", "/iaw/tienda2020/index.php");
-            exit();
-        }
-    }else{
-        $imagen=trim($_POST["imagenAnterior"]);
-        alerta("Existen errores en el formulario: ".$errores[0],"usuarios_update.php?id=" . encode($id));
-    }
 
-}
-    
-    // Comprobamos que existe el id antes de ir más lejos
-    if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
-        $id =  decode($_GET["id"]);
+    // Chequeamos los errores 
+    if(empty($dniErr) && empty($nombreErr) && empty($apellidosErr) && empty($passwordErr) && empty($emailErr) && 
+        empty($adminErr) && empty($telefonoErr) && empty($fechaErr) && empty($imagenErr)){
         $controlador = ControladorUsuarios::getControlador();
-        $usuario = $controlador->buscarUsuario($id);
-        if (!is_null($usuario)) {
-            $dni = $usuario->getDni();
-            $nombre = $usuario->getNombre();
-            $apellidos = $usuario->getApellidos();
-            $email = $usuario->getEmail();
-            $password = $usuario->getPassword();
-            $telefono = $usuario->getTelefono();
-            $imagen = $usuario->getImagen();
-            $imagenAnterior = $imagen;
+        $estado = $controlador->actualizarUsuario($id, $dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen);
+        if($estado){
+            alerta("Modificado correctamente");
+            header("location: catalogo_articulos.php");
+            exit();
         }else{
             header("location: error.php");
             exit();
         }
     }else{
-            header("location: error.php");
-            exit();
+        alerta("Hay errores al procesar el formulario revise los errores");
     }
 
+}
 ?>
  
 <?php require_once VIEW_PATH."cabecera.php"; ?>
@@ -169,8 +194,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                             </td>
                         </tr>
                     </table>
-                        <!-- Nombre-->
-                        <div class="form-group <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>">
+                         <!-- Nombre-->
+                         <div class="form-group <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>">
                             <label>Nombre</label>
                             <input type="text" name="nombre" class="form-control" value="<?php echo $nombre; ?>">
                             <span class="help-block"><?php echo $nombreErr;?></span>
@@ -194,12 +219,24 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                 readonly>
                             <span class="help-block"><?php echo $passwordErr;?></span>
                         </div>
+                        <!-- Administrador -->
+                        <div <?php echo (!empty($adminErr)) ? 'error: ' : ''; ?>">
+                            <input type="radio" name="admin" value="si" hidden <?php echo (strstr($admin, 'si')) ?  : ''; ?>></input>
+                            <input type="radio" name="admin" value="no" hidden checked <?php echo (strstr($admin, 'no')) ?  : ''; ?>></input><br>
+                            <?php echo $adminErr;?>
+                        </div>
                         <!-- Telefono-->
                         <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
                             <label>Telefono de Contacto</label>
                             <input type="text" required name="telefono" class="form-control" value="<?php echo $telefono;?>" pattern="[0-9]{9}" 
                             title="En este campo solo puedes escribir números, por ejemplo: 689 00 00 00">
                             <span class="help-block"><?php echo $telefonoErr;?></span>
+                        </div>
+                        <!-- Fecha-->
+                        <div class="form-group <?php echo (!empty($fechaErr)) ? 'error: ' : ''; ?>">
+                        <label>Fecha de Matriculación</label>
+                            <input type="date" required name="fecha" value="<?php echo date('Y-m-d', strtotime(str_replace('/', '-', $fecha)));?>"readonly></input><div>
+                            <span class="help-block"><?php echo $fechaErr;?></span>
                         </div>
                          <!-- Foto-->
                          <div class="form-group <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>">
