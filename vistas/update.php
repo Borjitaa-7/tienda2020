@@ -9,9 +9,15 @@ $dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $t
 $imagenAnterior = "";
 
 $errores=[];
+error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+session_start();
+
+if($_SESSION['id'] == decode($_GET["id"])){
+
+
 
 // Comprobamos que existe el id antes de ir más lejos
-    if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
+    if(isset($_GET["id"]) && !empty(trim($_GET["id"] ))){
         $id =  decode($_GET["id"]);
         $controlador = ControladorUsuarios::getControlador();
         $usuario = $controlador->buscarUsuario($id);
@@ -35,7 +41,10 @@ $errores=[];
             exit();
     }
  
-
+}else{
+    header("location: error.php");
+            exit();
+}
 // Procesamos la información obtenida por el get
 if(isset($_POST["id"]) && !empty($_POST["id"])){
     $id = $_POST["id"];

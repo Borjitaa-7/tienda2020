@@ -1,11 +1,11 @@
 <?php
 error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
  session_start();
- if (!isset($_SESSION['USUARIO']['email']) || in_array("no",$_SESSION['USUARIO']['email'])) {
+ if (!isset($_SESSION['id']) || $_SESSION['administrador'] == 'no') {
  
-     header("location: login1.php");
-     exit();
- }
+    header("location: login1.php");
+    exit();
+}
 ?>
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php"; ?>
 <?php require_once VIEW_PATH."cabecera.php"; ?>

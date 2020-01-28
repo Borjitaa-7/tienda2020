@@ -42,7 +42,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
     // Procesamos el email
     $emailVal = filtrado($_POST["email"]);
     if(empty($emailVal)){
-        $emailErr = "Por favor introduzca email válido.";
+        $emailErr = "Por favor introduzca un email válido.";
     } else{
         $email= $emailVal;
     }
@@ -91,7 +91,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
         $controlador = ControladorUsuarios::getControlador();
         $estado = $controlador->almacenarUsuario($dni, $nombre, $apellidos, $email, $password, no, $telefono, $fecha, $imagen);
         if($estado){
-            header("location: admin_usuarios.php");
+            alerta("Te has regristrado con exito");
+            header("location: login1.php");
             exit();
         }else{
             alerta("location: error.php");
