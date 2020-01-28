@@ -86,7 +86,7 @@ class ControladorArticulo {
     public function buscarArticulo($nombre){ 
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
-        $consulta = "SELECT * FROM articulos  WHERE nombre = :nombre";
+        $consulta = "SELECT * FROM articulos WHERE nombre = :nombre";
         $parametros = array(':nombre' => $nombre);
         $filas = $bd->consultarBD($consulta, $parametros);
         $res = $bd->consultarBD($consulta,$parametros);

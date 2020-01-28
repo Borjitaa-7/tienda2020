@@ -1,63 +1,74 @@
 <?php
 
-require_once CONTROLLER_PATH."ControladorBD.php";
+require_once CONTROLLER_PATH . "ControladorBD.php";
+require_once CONTROLLER_PATH . "ControladorUsuarios.php";
+require_once UTILITY_PATH . "funciones.php";
 
-class ControladorAcceso {
-    // Variable instancia para Singleton
+class ControladorAcceso
+{
     static private $instancia = null;
-    
-    // constructor--> Private por el patrón Singleton
-    private function __construct() {
-    }
+    private function __construct()
+    { }
 
-    public static function getControlador() {
+    /**
+     * Patrón Singleton. Ontiene una instancia de controlador
+     * @return instancia del controlador
+     */
+    public static function getControlador()
+    {
         if (self::$instancia == null) {
             self::$instancia = new ControladorAcceso();
         }
         return self::$instancia;
     }
-    
-    public function salirSesion() {
-        session_start();
 
+    public function salirSesion()
+    {
+        session_start();
         unset($_SESSION['USUARIO']);
         session_unset();
         session_destroy();
     }
-    
-//---------------------------------------------------------------- IDENTIFICACION
-    public function procesarIdentificacion($email, $password){
 
-            $password = md5($password);
-            $bd = ControladorBD::getControlador();
-            $bd->abrirBD();
-            $consulta = "SELECT * FROM admin WHERE email=:email and password=:password";
-            $parametros = array(':email' => $email, ':password' => $password);
-            $res = $bd->consultarBD($consulta,$parametros);
-            $filas=$res->fetchAll(PDO::FETCH_OBJ);
-            if (count($filas) > 0) {
-                 $_SESSION['USUARIO']['email']=$email;
-                 header("location: ../index.php"); 
-                 exit();              
-            } else {
-                echo "<div class='wrapper'>";
-                    echo "<div class='container-fluid'>";
-                        echo "<div class='row'>";
-                            echo "<div class='col-md-12'>";
-                                echo "<div class='page-header'>";
-                                     echo "<h1>Usuario/a incorrecto</h1>";
-                                 echo "</div>";
-                                echo "<div class='alert alert-warning fade in'>";
-                                    echo "<p>Lo siento, el emial o password es incorrecto. Por favor <a href='login.php' class='alert-link'>regresa</a> e inténtelo de nuevo.</p>";
-                                echo "</div>";
-                            echo "</div>";
-                        echo "</div>";
-                    echo "</div>";
-                echo "</div>";
+    public function procesarIdentificacion($email, $password)
+    {
+
+        $password = hash('md5', $password);
+
+        $bd = ControladorBD::getControlador();
+        $bd->abrirBD();
+        $consulta = "SELECT * FROM usuarios WHERE email=:email and password=:password";
+        $parametros = array(':email' => $email, ':password' => $password);
+        $res = $bd->consultarBD($consulta, $parametros);
+        $filas = $res->fetchAll(PDO::FETCH_OBJ);
+        //Con esto traigo las filas si el usuario existe
+
+        if (count($filas) > 0) {
+
+              session_start();
+                //recorro las filas y las asocio al objeto Usuario
+
+                    $usuario = new Usuario( $filas[0]->id, $filas[0]->dni, $filas[0]->nombre, $filas[0]->apellidos, $filas[0]->email, $filas[0]->password, $filas[0]->admin, $filas[0]->telefono, $filas[0]->fecha, $filas[0]->imagen);
+                    $_SESSION['id'] = $usuario->getId();
+                    $_SESSION['nombre'] = $usuario->getNombre();
+                    $_SESSION['apellido'] = $usuario->getApellidos();
+                    $_SESSION['administrador'] = $usuario->getAdmin();
+                    $_SESSION['email'] = $usuario->getEmail();
+                    $_SESSION['USUARIO']['email'] = $email;
+
+                header("location: ../index.php");
                 exit();
-            }
-    }
-    
-    
 
+            }else {
+                alerta("El usuario no existe").'<br>';
+                echo "<h2>Usuario/a incorrecto</h2>";
+
+                echo "<p>Lo siento, el email o password es incorrecto. Por favor <!-- <a href='login1.php' class='alert-link'>regresa</a> e--> inténtelo de nuevo.</p>";
+
+                echo "<br>";
+                echo "<br>";
+                echo "<br>";
+                echo "<br>";
+            }
+        }
 }

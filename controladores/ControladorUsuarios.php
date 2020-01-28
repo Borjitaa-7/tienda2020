@@ -128,6 +128,47 @@ class ControladorUsuarios {
          $bd->cerrarBD();
          return $estado;
      }
+
+     public function actualizarUsuario2($id, $dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen){
+        $bd = ControladorBD::getControlador();
+        $bd->abrirBD();
+        $consulta = "UPDATE usuarios SET dni=:dni, nombre=:nombre, apellidos=:apellidos, email=:email, password=:password, admin=:admin, 
+            telefono=:telefono, fecha=:fecha, imagen=:imagen 
+            WHERE id=:id";
+        $parametros= array(':id' => $id, ':dni'=>$dni, ':nombre'=>$nombre, ':apellidos'=>$apellidos, ':email'=>$email,':password'=>$password,
+                            ':admin'=>$admin, ':telefono'=>$telefono,':fecha'=>$fecha,':imagen'=>$imagen);
+        $estado = $bd->actualizarBD($consulta,$parametros);
+        $bd->cerrarBD();
+        return $estado;
+    }
+     
     //---------------------------------------------------------------ACTUALIZAR
-    
+
+      /**
+     * Realiza el login buscando un usuario en una base de datos
+     * @param $email email de usuario
+     * @param $pass password
+     * @return Usuario|null
+     */
+  
+    // public function login($email, $pass)
+    // {
+    //     $bd = ControladorBD::getControlador();
+    //     $bd->abrirBD();
+
+    //     $consulta = "select * from usuarios where email = :email and password = :password";
+    //     $parametros = array(':email' => $email, ':password' => $pass);
+
+    //     $res = $bd->consultarBD($consulta, $parametros);
+    //     $filas = $res->fetchAll(PDO::FETCH_OBJ);
+
+    //     if (count($filas) > 0) {
+    //         $usuario = new Usuario($filas[0]->id, $filas[0]->dni, $filas[0]->nombre, $filas[0]->apellidos, $filas[0]->email, $filas[0]->password, $filas[0]->admin, $filas[0]->telefono,$filas[0]->fecha,$filas[0]->imagen);
+    //         $bd->cerrarBD();
+    //         return $usuario;
+    //     } else {
+    //         return null;
+    //     }
+    // }
+      //---------------------------------------------------------------LOGIN
 }

@@ -5,7 +5,7 @@ if ( !defined('ROOT_PATH') )
     define('ROOT_PATH', dirname(__FILE__)."/");
 
 if ( !defined('VIEW_PATH') )
-    define('VIEW_PATH', ROOT_PATH."admin/");
+    define('VIEW_PATH', ROOT_PATH."vistas/");
 
 if ( !defined('CONTROLLER_PATH') )
     define('CONTROLLER_PATH', ROOT_PATH."controladores/");
