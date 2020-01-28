@@ -11,7 +11,7 @@ require_once UTILITY_PATH . "funciones.php";
       <!-- Si el usuario es admin o no se pintara una cosa u otra -->
       <?php
       session_start();
-      if(isset($_SESSION['USUARIO']['email']) && in_array("si",$_SESSION['USUARIO']['email'])){
+      if(isset($_SESSION['id']) && $_SESSION['administrador'] == 'si'){
         // administrador
         echo '<li><a href="/iaw/tienda2020/vistas/catalogo_articulos.php">Nuestro Catálogo</a></li>';
         echo '<li class="active"><a href="/iaw/tienda2020/vistas/admin_articulos.php">Administración Productos</a></li>';
@@ -29,12 +29,9 @@ require_once UTILITY_PATH . "funciones.php";
             echo '<li><a href="/iaw/tienda2020/vistas/registro.php"><span class="glyphicon glyphicon-user"></span> Registrarse</a></li>';
             echo '<li><a href="/iaw/tienda2020/vistas/login1.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
           }else{ // Si esta logeado
-            $correito = $_SESSION['USUARIO']['email'];  // Implodeamos el array de Sesion
-            $correo =$correito[0]; // Sacamos el 1ºCampo que se corresponde con el correo y lo dibujamos
-            $id = $correito[2];
-            var_dump($id);
+            $correo = $_SESSION['email'];
             
-            echo "<li><a href='update.php?id=".encode($id)."'><span class='glyphicon glyphicon-user'></span> $correo </a></li>";
+            echo "<li><a href='update.php?id=".encode($_SESSION['id'])."'><span class='glyphicon glyphicon-user'></span> $correo</a></li>";
             echo '<li><a href="login1.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>';
           }
         ?>

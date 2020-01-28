@@ -44,19 +44,18 @@ class ControladorAcceso
         //Con esto traigo las filas si el usuario existe
 
         if (count($filas) > 0) {
-        //Ahora meto en un array lista, los campos del modelo usuario unicamente seleccionado aquellos campos que necesito
-                $lista=[];
-                foreach($filas as $a){ //recorro las filas y las asocio al objeto Usuario
-                    $usuario = new Usuario( $a->id, $a->dni, $a->nombre, $a->apellidos, $a->email, $a->password, $a->admin, $a->telefono, $a->fecha, $a->imagen);
-                    // Solo guardo los campos del correo y si es admin para posteriores comprobaciones de seguridad
-                    $lista = array($a->email ,$a->admin, $a->id);
-                }
-        $bd->cerrarBD(); //Me guardo el array ahora para inicializar la sesion
-        
-        //Iniciamos sesion y asociamos el array con la sesion para ese user
-            
-            session_start();
-                $_SESSION['USUARIO']['email'] = $lista;
+
+              session_start();
+                //recorro las filas y las asocio al objeto Usuario
+
+                    $usuario = new Usuario( $filas[0]->id, $filas[0]->dni, $filas[0]->nombre, $filas[0]->apellidos, $filas[0]->email, $filas[0]->password, $filas[0]->admin, $filas[0]->telefono, $filas[0]->fecha, $filas[0]->imagen);
+                    $_SESSION['id'] = $usuario->getId();
+                    $_SESSION['nombre'] = $usuario->getNombre();
+                    $_SESSION['apellido'] = $usuario->getApellidos();
+                    $_SESSION['administrador'] = $usuario->getAdmin();
+                    $_SESSION['email'] = $usuario->getEmail();
+                    $_SESSION['USUARIO']['email'] = $email;
+
                 header("location: ../index.php");
                 exit();
 

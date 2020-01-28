@@ -3,8 +3,8 @@
 
 <?php
 session_start();
-if(isset($_SESSION['USUARIO']['email']) && in_array("si",$_SESSION['USUARIO']['email'])){
-    header('Location: vistas/catalogo_articulos.php');
+if(isset($_SESSION['id']) && $_SESSION['administrador'] == 'si'){
+    header('Location: vistas/admin_articulos.php');
 }else{
     header('Location: vistas/catalogo_articulos.php');
 }
