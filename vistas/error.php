@@ -14,6 +14,15 @@ var_dump($_SESSION['email']);
 var_dump($_SESSION['nombre']);
 var_dump($_SESSION['apellido']);
 var_dump($_SESSION['administrador']);
+echo "<br>";
+echo "<br>";
+echo "<br>";
+var_dump($imagen);
+echo "<br>";
+var_dump($imagenErr);
+echo "<br>";
+var_dump($imagenAnterior);
+
 ?>
     <div class="wrapper">
         <div class="container-fluid">

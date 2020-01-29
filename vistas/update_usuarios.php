@@ -4,7 +4,7 @@ require_once CONTROLLER_PATH."ControladorUsuarios.php";
 require_once CONTROLLER_PATH."ControladorImagen.php";
 require_once UTILITY_PATH."funciones.php";
  
-$dni = $nombre = $apellidos = $email = $password = $admin = $telefono = $fecha = $imagen ="";
+$dni = $nombre = $apellidos = $email = $password = $admin = $telefono = $fecha = $imagen = $imageninfo ="";
 $dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr = $fechaErr = $imagenErr= "";
 $imagenAnterior = "";
 
@@ -110,7 +110,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             $imagenAnterior = trim($_POST["imagenAnterior"]);
             if($imagenAnterior!=$imagen){
                 if(!$controlador->eliminarImagen($imagenAnterior)){
-                    $imagenErr= "Error al borrar la antigua imagen en el servidor";
+                    
+                    $imageninfo= "No se encontró la imagen anterior en el servidor";
                 }
             }
         }else{
@@ -129,7 +130,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $controlador = ControladorUsuarios::getControlador();
         $estado = $controlador->actualizarUsuario($id, $dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen);
         if($estado){
-            header("location: admin_usuarios.php");
+            alerta("Usuario/a actualizado/a correctamente . $imageninfo", "catalogo_articulos.php");
+            
             exit();
         }else{
             header("location: error.php");

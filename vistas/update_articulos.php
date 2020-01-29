@@ -4,7 +4,8 @@ require_once CONTROLLER_PATH . "ControladorArticulo.php";
 require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once UTILITY_PATH . "funciones.php";
 
-$nombre = $tipo = $distribuidor = $precio = $descuento  = $unidades = $imagen = "";
+$nombre = $tipo = $distribuidor = $precio = $descuento  = $unidades = $imagen =  $imageninfo ="";
+"";
 $nombreVal = $tipoVal = $distribuidorVal = $precioVal = $descuentoVal  =  $unidadesVal = $imagenVal = "";
 $nombreErr = $tipoErr = $distribuidorErr = $precioErr = $descuentoErr  = $unidadesErr =  $imagenErr = "";
 $imagenAnterior = "";
@@ -91,8 +92,9 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
             // Borrar
             $imagenAnterior = trim($_POST["imagenAnterior"]);
             if ($imagenAnterior != $imagen) {
-                if (!$controlador->eliminarImagen($imagenAnterior)) {
-                    $imagenErr = "Error al borrar la antigua imagen en el servidor";
+                if(!$controlador->eliminarImagen($imagenAnterior)){
+                    
+                    $imageninfo= "No se encontró la imagen anterior en el servidor";
                 }
             }
         } else {
@@ -111,8 +113,8 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         $controlador = ControladorArticulo::getControlador();
         $estado = $controlador->actualizarArticulo($id, $nombre, $tipo, $distribuidor, $precio, $descuento, $unidades, $imagen);
         if ($estado) {
-            header("location: admin_articulos.php");
-            exit();
+            alerta("Usuario/a actualizado/a correctamente . $imageninfo", "catalogo_articulos.php");
+                exit();
         } else {
             alerta("Hay algo mal en la linea 124");
             // header("location: error.php");
