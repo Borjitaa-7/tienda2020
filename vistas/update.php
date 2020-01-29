@@ -3,7 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/iaw/tienda2020/dirs.php";
 require_once CONTROLLER_PATH."ControladorUsuarios.php";
 require_once CONTROLLER_PATH."ControladorImagen.php";
 require_once UTILITY_PATH."funciones.php";
- 
+
 $dni = $nombre = $apellidos = $email = $password = $admin = $telefono = $fecha = $imagen ="";
 $dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr = $fechaErr = $imagenErr= "";
 $imagenAnterior = "";
@@ -40,7 +40,7 @@ if($_SESSION['id'] == decode($_GET["id"])){
             header("location: error.php");
             exit();
     }
- 
+
 }else{
     header("location: error.php");
             exit();
@@ -48,7 +48,7 @@ if($_SESSION['id'] == decode($_GET["id"])){
 // Procesamos la información obtenida por el get
 if(isset($_POST["id"]) && !empty($_POST["id"])){
     $id = $_POST["id"];
-    
+
    // Procesamos el dni
    $dniVal = filtrado($_POST["dni"]);
    if(empty($dniVal)){
@@ -57,7 +57,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
    } else{
        $dni= $dniVal;
    }
-   
+
    // Procesamos el nombre
    $nombreVal = filtrado(($_POST["nombre"]));
    if(empty($nombreVal)){
@@ -75,7 +75,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     } else{
         $apellidos= $apellidosVal;
     }
-   
+
    // Procesamos el email
    $emailVal = filtrado($_POST["email"]);
    if(empty($emailVal)){
@@ -96,7 +96,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
    // Procsamos admin
    if (isset($_POST["admin"])) {
     $admin = filtrado($_POST["admin"]);
-} else 
+} else
     // Procesamos telefono
     if(isset($_POST["telefono"])){
         $telefono = filtrado($_POST["telefono"]);
@@ -154,15 +154,15 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     }
 
 
-    // Chequeamos los errores 
-    if(empty($dniErr) && empty($nombreErr) && empty($apellidosErr) && empty($passwordErr) && empty($emailErr) && 
+    // Chequeamos los errores
+    if(empty($dniErr) && empty($nombreErr) && empty($apellidosErr) && empty($passwordErr) && empty($emailErr) &&
         empty($adminErr) && empty($telefonoErr) && empty($fechaErr) && empty($imagenErr)){
         $controlador = ControladorUsuarios::getControlador();
         $estado = $controlador->actualizarUsuario($id, $dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen);
         if($estado){
-            alerta("Modificado correctamente");
-            header("location: catalogo_articulos.php");
-            exit();
+            alerta("Usuario/a actualizado/a correctamente", "catalogo_articulos.php");
+                exit();
+
         }else{
             header("location: error.php");
             exit();
@@ -173,7 +173,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
 
 }
 ?>
- 
+
 <?php require_once VIEW_PATH."cabecera.php"; ?>
 
     <div class="wrapper">
@@ -191,7 +191,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                 <!-- DNI-->
                                 <div class="form-group" class="align-left" <?php echo (!empty($dniErr)) ? 'error: ' : ''; ?>">
                                     <label>DNI</label>
-                                    <input type="text" required name="dni" class="form-control" value="<?php echo $dni; ?>" 
+                                    <input type="text" required name="dni" class="form-control" value="<?php echo $dni; ?>"
                                         pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra">
                                     <span class="help-block"><?php echo $dniErr;?></span>
                                 </div>
@@ -231,13 +231,13 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         <!-- Administrador -->
                         <div <?php echo (!empty($adminErr)) ? 'error: ' : ''; ?>">
                             <input type="radio" name="admin" value="si" hidden <?php echo (strstr($admin, 'si')) ?  : ''; ?>></input>
-                            <input type="radio" name="admin" value="no" hidden checked <?php echo (strstr($admin, 'no')) ?  : ''; ?>></input><br>
+                            <input type="radio" name="admin" value="no" hidden <?php echo (strstr($admin, 'no')) ?  : ''; ?>></input><br>
                             <?php echo $adminErr;?>
                         </div>
                         <!-- Telefono-->
                         <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
                             <label>Telefono de Contacto</label>
-                            <input type="text" required name="telefono" class="form-control" value="<?php echo $telefono;?>" pattern="[0-9]{9}" 
+                            <input type="text" required name="telefono" class="form-control" value="<?php echo $telefono;?>" pattern="[0-9]{9}"
                             title="En este campo solo puedes escribir números, por ejemplo: 689 00 00 00">
                             <span class="help-block"><?php echo $telefonoErr;?></span>
                         </div>
@@ -252,16 +252,16 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         <label>Fotografía</label>
                         <!-- Solo acepto imagenes jpg -->
                         <input type="file" name="imagen" class="form-control-file" id="imagen" accept="image/jpeg">
-                        <span class="help-block"><?php echo $imagenErr;?></span>    
+                        <span class="help-block"><?php echo $imagenErr;?></span>
                         </div>
                         <input type="hidden" name="id" value="<?php echo $id; ?>"/>
                         <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>"/>
-                        <!-- Botones --> 
+                        <!-- Botones -->
                         <button type="submit" value="aceptar" class="btn btn-warning"> <span class="glyphicon glyphicon-refresh"></span>  Modificar</button>
                         <a onclick="history.back()" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
                     </form>
                 </div>
-            </div>        
+            </div>
         </div>
     </div>
 <br><br><br>
