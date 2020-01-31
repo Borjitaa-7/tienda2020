@@ -20,16 +20,21 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     $Articulo = $controlador->buscarArticuloid($_POST["id"]);
     if ($controlador->borrarArticulo($_POST["id"])) {
         $controlador = ControladorImagen::getControlador();
-        if ($controlador->eliminarImagen($Articulo->getimagen())) {
+        if ($controlador->eliminarImagen($Articulo->getimagen()) ) {
             header("location: admin_articulos.php");
             exit();
+        
+        }elseif(!$controlador->eliminarImagen($Articulo->getimagen())){
+            alerta ("Articulo actualizado/a correctamente. No se encontró la imagen anterior en el servidor" , "admin_articulos.php");
+            exit();
+
         }else{
             header("location: error.php");
             exit();
         }
     }
-} 
 
+}
 ?>
 
 <?php require_once VIEW_PATH . "cabecera.php"; ?>

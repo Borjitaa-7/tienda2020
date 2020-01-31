@@ -24,7 +24,11 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
        if($controlador->eliminarImagen($usuario->getImagen())){
             header("location: admin_usuarios.php");
             exit();
-       }else{
+        }elseif(!$controlador->eliminarImagen($usuario->getimagen())){
+            alerta ("Usuario actualizado/a correctamente. No se encontró la imagen anterior en el servidor" , "admin_usuarios.php");
+            exit();
+
+        }else{
             header("location: error.php");
             exit();
         }
