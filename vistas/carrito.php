@@ -89,18 +89,13 @@ if (isset($_POST['id']) && isset($_POST['uds'])) {
                                     
                                 }
                                 $total+= $preciounidad * $cantidad
-
-                               
-                                
-                                
-                                // $total = $total - $descuento;
                                 ?>
                                 <!-- Inicio de fila -->
                                 <tr>
                                     <!-- Imagen -->
                                     <td class='col-sm-1 col-md-1'><img
                                                 src='../imagenes/<?php echo $articulo->getImagen(); ?>'
-                                                class='avatar img-thumbnail' alt='imagen' width='60'>
+                                                class='avatar img-thumbnail' alt='imagen' width='60px'>
                                         <!-- Nombre -->
                                     <td class='col-sm-8 col-md-6 text-left'>
                                         <h4><?php echo $articulo->getnombre(); ?></h4>
@@ -111,8 +106,8 @@ if (isset($_POST['id']) && isset($_POST['uds'])) {
                                             €</h5></td>
                                     <!-- Descuento -->
                                     <td class="col-sm-1 col-md-1 text-right">
-                                        <h5><?php echo $articulo->getDescuento(); ?>
-                                            %</h5></td>
+                                        <h5>
+                                           <?php if($articulo->getDescuento()!=0)echo $articulo->getDescuento()."%"; ?></h5></td>
                                     <!-- Cantidad -->
                                     <td class="col-sm-1 col-md-1 text-center">
                                         <!-- Para actualizar -->

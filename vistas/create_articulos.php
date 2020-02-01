@@ -180,6 +180,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
                     <!-- descuento -->
                     <div class="form-group <?php echo (!empty($descuentoErr)) ? 'error: ' : ''; ?>">
                         <label>Descuento</label>
+                        <input type="radio" name="descuento"  value=0 <?php echo (strstr($descuento, '0')) ? 'checked' : ''; ?>>Ninguno</input>
                         <input type="radio" name="descuento"  value="5" <?php echo (strstr($descuento, '5')) ? 'checked' : ''; ?>>5%</input>
                         <input type="radio" name="descuento" value="10" <?php echo (strstr($descuento, '10')) ? 'checked' : ''; ?>>10%</input>
                         <input type="radio" name="descuento" value="20" <?php echo (strstr($descuento, '20')) ? 'checked' : ''; ?>>20%</input>
