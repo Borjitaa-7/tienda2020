@@ -73,7 +73,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 </div>
 <div>
     <label>Descuento</label>
-    <p><?php echo $Articulo->getDescuento(); ?></p>
+    <p><?php echo $Articulo->getDescuento();?>%</p>
 </div>
 <div>
     <label>Unidades</label>

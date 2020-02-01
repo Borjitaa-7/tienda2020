@@ -130,7 +130,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $controlador = ControladorUsuarios::getControlador();
         $estado = $controlador->actualizarUsuario($id, $dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen);
         if($estado){
-            alerta("Usuario/a actualizado/a correctamente . $imageninfo", "catalogo_articulos.php");
+            alerta("Usuario/a actualizado/a correctamente. $imageninfo", "catalogo_articulos.php");
             
             exit();
         }else{

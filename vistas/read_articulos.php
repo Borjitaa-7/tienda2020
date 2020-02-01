@@ -8,9 +8,8 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     $controlador = ControladorArticulo::getControlador();
     $Articulo = $controlador->buscarArticuloid($id);
     if (is_null($Articulo)) {
-        alerta("error en la linea 11");
-        // header("location: error.php");
-        // exit();
+        alerta("error en la linea 11 ID","error.php");
+
     }
 }
 ?>
@@ -53,11 +52,21 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                     </div>
                     <div class="form-group">
                         <label>Descuento</label>
-                        <p class="form-control-static"><?php echo $Articulo->getDescuento(); ?></p>
+                        <p class="form-control-static"><?php echo $Articulo->getDescuento(); ?>%</p>
                     </div>
                     <div class="form-group">
-                        <label>Stock Disponible</label>
-                            <p class="form-control-static"><?php echo $Articulo->getUnidades(); ?></p>
+                        <label>Unidades Disponible</label>
+                        <!-- si el producto se agota lo mostramos en pantalla a traves de una session
+                         que se genera a la hora preguntar de llamar al controlador de carrito-->
+                        <?php 
+                        if(isset($_SESSION['id_agotado']) && ($_SESSION['id_agotado'] == $Articulo->getid())){
+                            echo "<p class='form-control-static'><p class='text-danger'>Producto Agotado. Disculpen las molestias</p></p>";
+                        }
+                        else{
+                            echo "<p class='form-control-static'>". $Articulo->getUnidades() ."</p>";
+                        }
+                        ?>
+                        
                     </div>
                     <p><a onclick="history.back()" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Aceptar</a></p>
                 </div>

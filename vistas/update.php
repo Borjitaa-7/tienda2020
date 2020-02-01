@@ -179,12 +179,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
 <?php
 echo "<br>";
 echo "<br>";
+
 echo "<br>";
-echo "imagen".var_dump($imagen);
-echo "<br>";
-echo "imagen error".var_dump($imagenErr);
-echo "<br>";
-echo "imagen anterior".var_dump($imagenAnterior)
 ?>
     <div class="wrapper">
         <div class="container-fluid">

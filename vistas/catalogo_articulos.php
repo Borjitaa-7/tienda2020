@@ -78,12 +78,13 @@ foreach ($resultados->datos as $a){
 
     echo "</br>";
     echo  "<h5>"."<b>Precio</b>: ". $Articulo->getPrecio() ."€ &nbspx &nbspUnidad</h5>";
-
-    echo "<button type='button' class='btn btn-success'>Agregar ";
+//MEJORA para las sesiones NECESARIA
+    echo "<a href='/iaw/tienda2020/vistas/carrito_añadir.php?id=" . encode($Articulo->getid()) . "&page=" . encode("catalogo_articulos.php") . "'<button type='button' class='btn btn-success'> Agregar ";
     echo "<span class='glyphicon glyphicon-plus'></span></a>";
     echo "</button>&nbsp ";
 
     echo "<a href='/iaw/tienda2020/vistas/read_articulos.php?id=" . encode($Articulo->getid()) . "'<button type='button' class='btn btn-primary'> Ver </buttom></a>";
+    
 
     echo "</div>";
 }
