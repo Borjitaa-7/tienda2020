@@ -81,10 +81,16 @@ if (isset($_POST['id']) && isset($_POST['uds'])) {
                             if ($value[0] != null) {
                                 $articulo = $value[0];
                                 $cantidad = $value[1];
-                                $total += $articulo->getPrecio() * $cantidad ;
-                                if($articulo->getDescuento()){
-                                    $total += $preciounidad * $cantidad ;
+
+                                if ($articulo->getDescuento() == null){
+                                    $preciounidad = $articulo->getPrecio() ;
+                                }else{
+                                    $preciounidad = ($articulo->getPrecio()) - (($articulo->getPrecio() * $articulo->getDescuento())/100);
+                                    
                                 }
+                                $total+= $preciounidad * $cantidad
+
+                               
                                 
                                 
                                 // $total = $total - $descuento;
