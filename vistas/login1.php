@@ -81,7 +81,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
                <form>
                   <div class="form-group">
                      <label>Email:</label>
-                     <input type="email" required name="email" class="form-control" value="admin@admin.com" placeholder="Introduce tu correo">
+                     <input type="email" required name="email" class="form-control" value="prueba@prueba.com" placeholder="Introduce tu correo">
                   </div>
                   <div class="form-group">
                      <label>Password</label>

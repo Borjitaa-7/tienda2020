@@ -202,9 +202,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
                     </div>
 
                     <!-- Botones -->
-                        <button type="submit" name="aceptar" value="aceptar" class="btn btn-success"><span class="glyphicon glyphicon-floppy-save"></span> > Aceptar</button>
-                        <button type="reset" value="reset" class="btn btn-info"> <span class="glyphicon glyphicon-repeat"></span> > Limpiar</button>
-                        <a onclick="history.back()" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> > Volver</a>
+                        <button type="submit" name="aceptar" value="aceptar" class="btn btn-success"><span class="glyphicon glyphicon-floppy-save"></span> Aceptar</button>
+                        <button type="reset" value="reset" class="btn btn-info"> <span class="glyphicon glyphicon-repeat"></span>  Limpiar</button>
+                        <a onclick="history.back()" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span>  Volver</a>
                     </form>
                 </div>
             </div>        
