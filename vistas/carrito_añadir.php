@@ -19,6 +19,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"])) && isset($_GET["page"]) && !
         // si es correcto recarga la página y actualizamos la cookie
         $sesion = ControladorSesion::getControlador();
         $sesion->crearCookie();
+       
         // Volvemos atras
         header("location:".$catalogo);
         exit();

@@ -4,12 +4,13 @@ require_once CONTROLLER_PATH . "ControladorAcceso.php";
 
 session_start();
 // var_dump($_SESSION['uds']);
-$carrito = $_SESSION['carrito'];
-// var_dump($carrito);
+// $carrito = $_SESSION['unidades'];
+var_dump($_SESSION['id_agotado']);
 
-
-$stock=$_SESSION['stock_restante'];
-var_dump($stock[1]);
+// var_dump($_SESSION['carrito']['15']);
+// var_dump($_SESSION['uds']);
+// $stock=$_SESSION['stock_restante'];
+// var_dump($sesion);
 // $email = $_SESSION['email'];
 // var_dump($email);
 // var_dump($_SESSION['email']);
