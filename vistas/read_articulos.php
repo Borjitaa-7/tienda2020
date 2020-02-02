@@ -61,10 +61,17 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                         <!-- si el producto se agota lo mostramos en pantalla a traves de una session
                          que se genera a la hora preguntar de llamar al controlador de carrito-->
                         <?php 
+                        $stock=$_SESSION['stock_restante'];
+                        $cantidad = $stock[0];
+                        $cantidad = (int)$cantidad ;
+                        $unidadesM = $Articulo->getUnidades();
+                        $unidadesM = (int)$unidadesM;
+                        $existencias = $unidadesM - $cantidad;
                         if(isset($_SESSION['id_agotado']) && ($_SESSION['id_agotado'] == $Articulo->getid())){
                             echo "<p class='form-control-static'><p class='text-danger'>Producto Agotado. Disculpen las molestias</p></p>";
-                        }
-                        else{
+                        }elseif(isset($_SESSION['stock_restante']) && ($stock[1] ==  $Articulo->getid())){
+                            echo "<h4>"."<p class='form-control-static'>". $existencias  ."</p>"."<h4>";
+                        }else{
                             echo "<h4>"."<p class='form-control-static'>". $Articulo->getUnidades() ."</p>"."<h4>";
                         }
                         ?>

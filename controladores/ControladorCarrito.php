@@ -127,6 +127,12 @@ class ControladorCarrito
         // el resto de cosas con esa condición. Arreglar más adelante :)
         unset($_SESSION['carrito'][$id]);
         $_SESSION['uds'] -= $uds;
+        if($_SESSION['uds'] == 0){
+            $_SESSION['uds'] = 0;
+        unset($_SESSION['id_agotado']);
+        unset($_SESSION['stock_restante']);
+
+        }
     }
 
     /**
@@ -158,6 +164,9 @@ class ControladorCarrito
         //eliminamos esa linea del array completa y restamos las uds al total uds carrito
         unset($_SESSION['carrito']);
         $_SESSION['uds'] = 0;
+        unset($_SESSION['id_agotado']);
+        unset($_SESSION['stock_restante']);
+
     }
 
 }

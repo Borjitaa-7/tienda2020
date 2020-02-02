@@ -114,9 +114,9 @@ if (isset($_POST['id']) && isset($_POST['uds'])) {
                                         <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>"
                                               method="post">
                                             <input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
-                                            <input type="number" name="uds" value="<?php echo $cantidad; ?>"
+                                            <input type="number" name="uds" value="<?php echo $cantidad; if ($cantidad != $articulo->getUnidades() )$_SESSION['stock_restante']=array($cantidad,$articulo->getid()); unset($_SESSION['id_agotado']);if($cantidad == $articulo->getUnidades())$_SESSION['id_agotado'] = $articulo->getid();?>"
                                                    step="1" min="1"
-                                                   max="<?php echo $articulo->getUnidades(); ?>"
+                                                   max="<?php echo $articulo->getUnidades() ; ?>"
                                                    onchange="submit()">
                                         </form>
                                     </td>
