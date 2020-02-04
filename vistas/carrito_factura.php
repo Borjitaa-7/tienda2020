@@ -2,14 +2,13 @@
 
 // Lo que necesitamos
 require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
-require_once CONTROLLER_PATH . "ControladorSesion.php";
-require_once UTILITY_PATH . "funciones2.php";
+require_once CONTROLLER_PATH . "ControladorAcceso.php";
 require_once CONTROLLER_PATH . "ControladorVenta.php";
 require_once VIEW_PATH . "cabecera.php";
 
-$cs = ControladorSesion::getControlador();
+$cs = ControladorAcceso::getControlador();
 $cs->reiniciarCarrito();
-//$cs->destruirCookie();
+// $cs->destruirCookie();
 
 
 // Solo entramos si somos el usuario y hay items
@@ -47,13 +46,13 @@ $lineas = $cv->buscarLineasID($idVenta);
 <div class="row">
     <div class="col-xs-6">
         <address>
-            <strong>Facturado a:</strong><br>
+        <h4><strong>Facturado a:</strong></h4><br>
             <?php echo $venta->getNombreTarjeta(); ?><br>
         </address>
     </div>
     <div class="col-xs-6 text-right">
         <address>
-            <strong>Enviado a:</strong><br>
+            <h4><strong>Enviado a:</strong></h4><br>
             <?php echo $venta->getNombre(); ?><br>
             <?php echo $venta->getEmail(); ?><br>
             <?php echo $venta->getDireccion(); ?><br>
@@ -63,13 +62,13 @@ $lineas = $cv->buscarLineasID($idVenta);
 <div class="row">
     <div class="col-xs-6">
         <address>
-            <strong>Método de pago:</strong><br>
+        <h4><strong>Método de pago:</strong></h4><br>
             Tarjeta de crédito/debito: **** <?php echo substr($venta->getNumTarjeta(),-4); ?><br>
         </address>
     </div>
     <div class="col-xs-6 text-right">
         <address>
-            <strong>Fecha de compra:</strong><br>
+        <h4><strong>Fecha de compra:</strong></h4><br>
             <?php
                 $date = new DateTime($venta->getFecha());
                 echo $date->format('d/m/Y'); ?><br><br>
@@ -90,10 +89,10 @@ $lineas = $cv->buscarLineasID($idVenta);
                     <table class="table table-condensed">
                         <thead>
                         <tr>
-                            <td><strong>Item</strong></td>
-                            <td class="text-center"><strong>Precio (PVP)</strong></td>
-                            <td class="text-center"><strong>Cantidad</strong></td>
-                            <td class="text-right"><strong>Total</strong></td>
+                            <td><h4><strong>Item</strong></td>
+                            <td class="text-center"><h4><strong>Precio (PVP)</strong></h4></td>
+                            <td class="text-center"><h4><strong>Cantidad</strong></h4></td>
+                            <td class="text-right"><h4><strong>Total</strong></h4></td>
                         </tr>
                         </thead>
                         <tbody>
@@ -124,7 +123,7 @@ $lineas = $cv->buscarLineasID($idVenta);
                             <td class="no-line"></td>
                             <td class="no-line"></td>
                             <td class="no-line text-center"><strong>TOTAL</strong></td>
-                            <td class="no-line text-right"><strong><?php echo $venta->getTotal(); ?> €</strong></td>
+                            <td class="no-line text-right"><strong><?php echo round($venta->getTotal(),2); ?> €</strong></td>
                         </tr>
                         </tbody>
                     </table>
@@ -136,11 +135,11 @@ $lineas = $cv->buscarLineasID($idVenta);
 </div>
     </div>
     <div class="row no-print nover">
-        <div class='text-center'>
+        <div class='text-center' id="no_imprimir">
             <a href="javascript:window.print()" class='btn btn-info'><span class='glyphicon glyphicon-print'></span> Imprimir </a>
             <a href="../index.php" class='btn btn-success'><span class='glyphicon glyphicon-ok'></span> Finalizar </a>
             <?php
-            echo "<a href='/tienda/utilidades/descargas2.php?opcion=FAC_PDF&id=".encode($idVenta). " ' target='_blank' class='btn btn-primary'><span class='glyphicon glyphicon-download'></span>  PDF</a>";
+            echo "<a href='/iaw/tienda2020/utilidades/descargas.php?opcion=FAC_PDF&id=".encode($idVenta). " ' target='_blank' class='btn btn-primary'><span class='glyphicon glyphicon-download'></span>  PDF</a>";
             ?>
 
         </div>

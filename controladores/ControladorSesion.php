@@ -67,6 +67,7 @@ class ControladorSesion
         $_SESSION['uds'] = 0;
         $_SESSION['total'] = 0;
         $_SESSION['carrito'] = array();
+        $_SESSION['precio'] = 0;
     }
 
     public function destruirSesion()

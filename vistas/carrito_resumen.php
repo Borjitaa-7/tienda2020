@@ -3,6 +3,9 @@
 // Lo que necesitamos
 require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 require_once VIEW_PATH . "cabecera.php";
+require_once MODEL_PATH . "Venta.php";
+require_once CONTROLLER_PATH . "ControladorVenta.php";
+require_once CONTROLLER_PATH . "ControladorSesion.php";
 
 
 // Solo entramos si somos el usuario y hay items

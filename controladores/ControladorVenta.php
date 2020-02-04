@@ -112,7 +112,7 @@ class ControladorVenta
         // Procesamos cada línea del carrito
         foreach ($_SESSION['carrito'] as $key => $value) {
             if (($value[0] != null)) {
-                $producto = $value[0];
+                $articulo = $value[0];
                 $cantidad = $value[1];
 
                 $conexion->abrirBD();
@@ -120,15 +120,15 @@ class ControladorVenta
                 $consulta = "insert into lineasventas (idVenta, idProducto, nombre, tipo, precio, cantidad) 
                     values (:idVenta, :idProducto, :nombre, :tipo, :precio, :cantidad)";
 
-                $parametros = array(':idVenta' => $venta->getId(), ':idProducto' => $producto->getId(),
-                    ':nombre' => $producto->getnombre(), ':tipo' => $producto->getTipo(), ':precio' => $producto->getPrecio(),
+                $parametros = array(':idVenta' => $venta->getId(), ':idProducto' => $articulo->getid(),
+                    ':nombre' => $articulo->getNombre(), ':tipo' => $articulo->getTipo(), ':precio' => $articulo->getPrecio(),
                     ':cantidad' => $cantidad);
 
                 $estado = $conexion->actualizarBD($consulta, $parametros);
 
                 // Actualizo el stock
-                $cp = ControladorProducto::getControlador();
-                $estado = $cp->actualizarStock($producto->getId(), ($producto->getStock() - $cantidad));
+                $cp = ControladorArticulo::getControlador();
+                $estado = $cp->actualizarStock($articulo->getid(), ($articulo->getUnidades() - $cantidad));
 
                 $conexion->cerrarBD();
             }
