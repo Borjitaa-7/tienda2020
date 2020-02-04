@@ -67,11 +67,13 @@ class ControladorArticulo {
     public function buscarArticuloid($id){ 
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
-        $consulta = "SELECT* FROM articulos WHERE id = :id";
+        $consulta = "SELECT * FROM articulos WHERE id = :id";
         $parametros = array(':id' => $id);
+        
         $filas = $bd->consultarBD($consulta, $parametros);
         $res = $bd->consultarBD($consulta,$parametros);
         $filas=$res->fetchAll(PDO::FETCH_OBJ);
+        
         if (count($filas) > 0) {
             foreach ($filas as $a) {
                 $Articulo = new Articulo($a->id, $a->nombre, $a->tipo, $a->distribuidor, $a->precio, $a->descuento, $a->unidades, $a->imagen);
@@ -125,5 +127,24 @@ class ControladorArticulo {
         $bd->cerrarBD();
         return $estado;
     }
-    
+//-------------------------------------------------------------------------------------------------  
+
+    public function actualizarStock($id, $stock)
+    {
+        $bd = ControladorBD::getControlador();
+        $bd->abrirBD();
+
+        $consulta = "update articulos set unidades=:unidades where id=:id";
+        $parametros = array(':id' => $id, ':unidades' => $stock);
+        $estado = $bd->actualizarBD($consulta, $parametros);
+        $bd->cerrarBD();
+        return $estado;
+
+        $conexion->cerrarBD();
+        return $estado;
+    }
+
+
+
+
 }

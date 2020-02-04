@@ -62,6 +62,14 @@ class ControladorSesion
         exit();
     }
 
+    public function reiniciarCarrito()
+    {
+        $_SESSION['uds'] = 0;
+        $_SESSION['total'] = 0;
+        $_SESSION['carrito'] = array();
+        $_SESSION['precio'] = 0;
+    }
+
     public function destruirSesion()
     {
         session_destroy();
@@ -69,4 +77,6 @@ class ControladorSesion
         alerta("Hasta pronto", "../index.php");
         exit();
     }
+
+
 }

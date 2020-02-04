@@ -136,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
 }
 ?>
 
-<?php require_once VIEW_PATH . "cabecera.php"; ?>
+<?php require_once VIEW_PATH . "cabecera1.php"; ?>
 <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
@@ -180,10 +180,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
                     <!-- descuento -->
                     <div class="form-group <?php echo (!empty($descuentoErr)) ? 'error: ' : ''; ?>">
                         <label>Descuento</label>
-                        <input type="radio" name="descuento"  value="5%" <?php echo (strstr($descuento, '5')) ? 'checked' : ''; ?>>5%</input>
-                        <input type="radio" name="descuento" value="10%" <?php echo (strstr($descuento, '10')) ? 'checked' : ''; ?>>10%</input>
-                        <input type="radio" name="descuento" value="20%" <?php echo (strstr($descuento, '20')) ? 'checked' : ''; ?>>20%</input>
-                        <input type="radio" name="descuento" value="50%" <?php echo (strstr($descuento, '50')) ? 'checked' : ''; ?>>50%</input>
+                        <input type="radio" name="descuento"  value=0 <?php echo (strstr($descuento, '0')) ? 'checked' : ''; ?>>Ninguno</input>
+                        <input type="radio" name="descuento"  value="5" <?php echo (strstr($descuento, '5')) ? 'checked' : ''; ?>>5%</input>
+                        <input type="radio" name="descuento" value="10" <?php echo (strstr($descuento, '10')) ? 'checked' : ''; ?>>10%</input>
+                        <input type="radio" name="descuento" value="20" <?php echo (strstr($descuento, '20')) ? 'checked' : ''; ?>>20%</input>
+                        <input type="radio" name="descuento" value="50" <?php echo (strstr($descuento, '50')) ? 'checked' : ''; ?>>50%</input>
                         <span class="help-block"><?php echo $descuentoErr; ?></span>
                     </div>
                 
@@ -202,9 +203,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
                     </div>
 
                     <!-- Botones -->
-                        <button type="submit" name="aceptar" value="aceptar" class="btn btn-success"><span class="glyphicon glyphicon-floppy-save"></span> > Aceptar</button>
-                        <button type="reset" value="reset" class="btn btn-info"> <span class="glyphicon glyphicon-repeat"></span> > Limpiar</button>
-                        <a onclick="history.back()" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> > Volver</a>
+                        <button type="submit" name="aceptar" value="aceptar" class="btn btn-success"><span class="glyphicon glyphicon-floppy-save"></span> Aceptar</button>
+                        <button type="reset" value="reset" class="btn btn-info"> <span class="glyphicon glyphicon-repeat"></span>  Limpiar</button>
+                        <a onclick="history.back()" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span>  Volver</a>
                     </form>
                 </div>
             </div>        

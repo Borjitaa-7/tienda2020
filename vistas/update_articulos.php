@@ -113,7 +113,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         $controlador = ControladorArticulo::getControlador();
         $estado = $controlador->actualizarArticulo($id, $nombre, $tipo, $distribuidor, $precio, $descuento, $unidades, $imagen);
         if ($estado) {
-            alerta("Usuario/a actualizado/a correctamente . $imageninfo", "catalogo_articulos.php");
+            alerta("Articulo actualizado/a correctamente. $imageninfo", "catalogo_articulos.php");
                 exit();
         } else {
             alerta("Hay algo mal en la linea 124");
@@ -212,10 +212,11 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 <!-- Descuento -->
 <div class="form-group <?php echo (!empty($descuentoErr)) ? 'error: ' : ''; ?>">
         <label>Descuento</label>
-        <input type="radio" name="descuento" value="5%" <?php echo (strstr($descuento, '5%')) ? 'checked' : ''; ?>>5%</input>
-        <input type="radio" name="descuento" value="10%" <?php echo (strstr($descuento, '10%')) ? 'checked' : ''; ?>>10%</input>
-        <input type="radio" name="descuento" value="20%" <?php echo (strstr($descuento, '20%')) ? 'checked' : ''; ?>>20%</input>
-        <input type="radio" name="descuento" value="50%" <?php echo (strstr($descuento, '50%')) ? 'checked' : ''; ?>>50%</input>
+        <input type="radio" name="descuento" value=0 <?php echo (strstr($descuento, '0')) ? 'checked' : ''; ?>>Ninguno</input>
+        <input type="radio" name="descuento" value="5" <?php echo (strstr($descuento, '5')) ? 'checked' : ''; ?>>5%</input>
+        <input type="radio" name="descuento" value="10" <?php echo (strstr($descuento, '10')) ? 'checked' : ''; ?>>10%</input>
+        <input type="radio" name="descuento" value="20" <?php echo (strstr($descuento, '20')) ? 'checked' : ''; ?>>20%</input>
+        <input type="radio" name="descuento" value="50" <?php echo (strstr($descuento, '50')) ? 'checked' : ''; ?>>50%</input>
         <?php echo $descuentoErr; ?>
     </div>
 

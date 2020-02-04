@@ -35,13 +35,9 @@ require_once CONTROLLER_PATH . "controladorCarrito.php";
             echo '<li><a href="/iaw/tienda2020/vistas/login1.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
           }else{ // Si esta logeado
             $correo = $_SESSION['email'];
-              //Unidades del carrito 
-              if(isset( $_SESSION['precio'])|isset( $_SESSION['uds'])){
-                $cc = ControladorCarrito::getControlador();
-              }
-              
+              //Unidades del carrito
+            $cc = ControladorCarrito::getControlador();
                 $_SESSION['uds'] = $cc->unidadesEnCarrito();
-                $_SESSION['precio'] = $cc->precioCarrito();
                 $precio = $_SESSION['precio'];
                 $itemscarrito = $_SESSION['uds'] != 0 ? "<font color='darksalmon'> " . $_SESSION['uds'] . "</font>" : "";
               echo "<li><a href='carrito.php' class='cart-link' title='Ver Carrito'> Carrito  " .$itemscarrito. "   <span class='glyphicon glyphicon-shopping-cart'>  </span></a></b></li>";

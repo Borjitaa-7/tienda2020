@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-01-2020 a las 11:08:37
--- Versión del servidor: 10.4.10-MariaDB
--- Versión de PHP: 7.3.12
+-- Tiempo de generación: 04-02-2020 a las 17:42:46
+-- Versión del servidor: 10.4.8-MariaDB
+-- Versión de PHP: 7.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -57,10 +57,18 @@ INSERT INTO `articulos` (`id`, `nombre`, `tipo`, `distribuidor`, `precio`, `desc
 CREATE TABLE `lineasventas` (
   `idVenta` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `idProducto` int(11) NOT NULL,
-  `articulo` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `nombre` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `tipo` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `precio` float NOT NULL,
   `cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `lineasventas`
+--
+
+INSERT INTO `lineasventas` (`idVenta`, `idProducto`, `nombre`, `tipo`, `precio`, `cantidad`) VALUES
+('200204-052950', 11, 'Carnívoro Especial', 'alucinante, kaotico', 99.98, 2);
 
 -- --------------------------------------------------------
 
@@ -87,7 +95,7 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `dni`, `nombre`, `apellidos`, `email`, `password`, `admin`, `telefono`, `fecha`, `imagen`) VALUES
 (10, '05937585C', 'jose', 'funez', 'prueba@prueba.com', 'c893bad68927b457dbed39460e6afd62', 'si', '626909589', '28/01/2020', '0f0035d49f6a29483d95ed6d9a4e0308.jpeg'),
-(11, '05937585S', 'jose', 'jose', 'prueba@prueba.com', 'c893bad68927b457dbed39460e6afd62', 'no', '626909589', '31/01/2020', '6eea4e453a20145190cb5657a580d538.jpeg');
+(13, '12345679A', 'yoda', 'yoda', 'yoda@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'no', '656322124', '04/02/2020', '8cae442688e9bf3dec63e12bfce861a6.jpeg');
 
 -- --------------------------------------------------------
 
@@ -107,6 +115,13 @@ CREATE TABLE `ventas` (
   `nombreTarjeta` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `numTarjeta` varchar(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `ventas`
+--
+
+INSERT INTO `ventas` (`idVenta`, `fecha`, `total`, `subtotal`, `iva`, `nombre`, `email`, `direccion`, `nombreTarjeta`, `numTarjeta`) VALUES
+('200204-052950', '2020-02-04 17:29:50', 126.571, 104.6, 21.97, 'jose', 'prueba@prueba.com', 'aa', 'yoda', '5555555555555555');
 
 --
 -- Índices para tablas volcadas
@@ -144,7 +159,7 @@ ALTER TABLE `articulos`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -5,7 +5,8 @@ class LineaVenta {
 
     private $idVenta;
     private $idProducto;
-    private $articulo;
+    private $nombre;
+    private $tipo;
     private $precio;
     private $cantidad;
 
@@ -13,15 +14,17 @@ class LineaVenta {
      * LineaVenta constructor.
      * @param $idVenta
      * @param $idProducto
-     * @param $articulo
+     * @param $nombre
+     * @param $tipo
      * @param $precio
      * @param $cantidad
      */
-    public function __construct($idVenta, $idProducto, $articulo, $precio, $cantidad)
+    public function __construct($idVenta, $idProducto, $nombre, $tipo, $precio, $cantidad)
     {
         $this->idVenta = $idVenta;
         $this->idProducto = $idProducto;
-        $this->articulo = $articulo;
+        $this->nombre = $nombre;
+        $this->tipo = $tipo;
         $this->precio = $precio;
         $this->cantidad = $cantidad;
     }
@@ -61,17 +64,33 @@ class LineaVenta {
     /**
      * @return mixed
      */
-    public function getArticulo()
+    public function getNombre()
     {
-        return $this->articulo;
+        return $this->nombre;
     }
 
     /**
-     * @param mixed $articulo
+     * @param mixed $nombre
      */
-    public function setArticulo($articulo): void
+    public function setNombre($nombre): void
     {
-        $this->articulo = $articulo;
+        $this->nombre = $nombre;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * @param mixed $tipo
+     */
+    public function setTipo($tipo): void
+    {
+        $this->tipo = $tipo;
     }
 
 
