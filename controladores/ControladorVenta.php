@@ -3,7 +3,7 @@
 require_once MODEL_PATH . "Venta.php";
 require_once MODEL_PATH . "LineaVenta.php";
 require_once CONTROLLER_PATH . "ControladorBD.php";
-require_once CONTROLLER_PATH . "ControladorProducto.php";
+require_once CONTROLLER_PATH . "ControladorArticulo.php";
 
 class ControladorVenta
 {
@@ -77,8 +77,8 @@ class ControladorVenta
 
         if (count($filas) > 0) {
             foreach ($filas as $venta) {
-                $venta = new LineaVenta($venta->idVenta, $venta->idProducto, $venta->marca,
-                    $venta->modelo, $venta->precio, $venta->cantidad);
+                $venta = new LineaVenta($venta->idVenta, $venta->idProducto, $venta->nombre,
+                    $venta->tipo, $venta->precio, $venta->cantidad);
                 $bd->cerrarBD();
                 $lista[] = $venta;
             }

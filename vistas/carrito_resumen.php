@@ -26,11 +26,11 @@ if (isset($_POST['procesar_compra'])) {
     $email = $_POST['email'];
     $direccion = $_POST['direccion'];
     $nombreTarjeta = $_POST['tTitular'];
-    $numeroTarjeta = $_POST['tNumero'];
+    $numTarjeta = $_POST['tNumero'];
 
     $venta = new Venta($idVenta, "", $total, round(($total / 1.21), 2),
         round(($total - ($total / 1.21)), 2),
-        $nombre, $email, $direccion, $nombreTarjeta, $numeroTarjeta);
+        $nombre, $email, $direccion, $nombreTarjeta, $numTarjeta);
 
     $cv = ControladorVenta::getControlador();
     if ($cv->insertarVenta($venta)) {

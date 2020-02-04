@@ -65,6 +65,9 @@ class Venta {
         return $this->numTarjeta;
     }
 
+
+
+    
     function setId($idventa) {
         $this->idventa = $idventa;
     }
