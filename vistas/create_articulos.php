@@ -136,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
 }
 ?>
 
-<?php require_once VIEW_PATH . "cabecera.php"; ?>
+<?php require_once VIEW_PATH . "cabecera1.php"; ?>
 <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
