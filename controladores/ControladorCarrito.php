@@ -174,6 +174,34 @@ class ControladorCarrito
         }
         return $total;
     }
+    public function precioCarrito()
+    {
+        $conexion = ControladorArticulo::getControlador();
+   
+
+        if (isset($_SESSION['carrito'])) {
+            foreach ($_SESSION['carrito'] as $key => $value) {
+                if ($value[0] != null) {
+                    $articulo =$value[0];
+                    $cantidad = $value[1];
+
+                    if ($articulo->getDescuento() == null){
+                        $preciounidad = $articulo->getPrecio() ;
+                    }else{
+                        $preciounidad = ($articulo->getPrecio()) - (($articulo->getPrecio() * $articulo->getDescuento())/100);
+                        
+                    }
+                    $total+= $preciounidad * $cantidad;
+                
+                }
+            }
+        }
+        if ($total == 0) {
+            unset($_SESSION['carrito']);
+            $_SESSION['uds'] = 0;
+        }
+        return $total;
+    }
 
     /**
      * Vacía el carrito

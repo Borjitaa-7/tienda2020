@@ -8,7 +8,7 @@ error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
  }
 ?>
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php"; ?>
-<?php require_once VIEW_PATH."cabecera.php"; ?>
+<?php require_once VIEW_PATH."cabecera1.php"; ?>
 
 <!DOCTYPE html>
 <html lang="es">
