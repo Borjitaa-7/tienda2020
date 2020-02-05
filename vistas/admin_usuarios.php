@@ -70,7 +70,7 @@ body {
 
 
             $consulta = "SELECT * FROM usuarios WHERE nombre LIKE :nombre OR dni LIKE :dni";
-            $parametros = array(':nombre' => "%".$nombre."%", ':nombre' => "%".$nombre."%", ':dni' => "%".$dni."%");
+            $parametros = array(':nombre' => "%".$nombre."%", ':dni' => "%".$dni."%");
             $limite = 4; // Limite del paginador
             $paginador  = new Paginador($consulta, $parametros, $limite);
             $resultados = $paginador->getDatos($pagina);

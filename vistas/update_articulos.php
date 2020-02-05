@@ -67,11 +67,11 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     if ($_FILES['imagen']['size'] > 0 && count($errores) == 0) {
         $propiedades = explode("/", $_FILES['imagen']['type']);
         $extension = $propiedades[1];
-        $tam_max = 50000; // 50 KBytes
+        $tam_max = 500000; // 500 KBytes
         $tam = $_FILES['imagen']['size'];
         $mod = true;
 
-        if ($extension != "jpg" && $extension != "jpeg") {
+        if ($extension != "jpg" && $extension != "jpeg" && $extension != "png" ) {
             $mod = false;
             $imagenErr = "Formato debe ser jpg/jpeg";
         }
@@ -113,7 +113,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         $controlador = ControladorArticulo::getControlador();
         $estado = $controlador->actualizarArticulo($id, $nombre, $tipo, $distribuidor, $precio, $descuento, $unidades, $imagen);
         if ($estado) {
-            alerta("Articulo actualizado/a correctamente. $imageninfo", "catalogo_articulos.php");
+            alerta("Articulo actualizado correctamente. $imageninfo", "catalogo_articulos.php");
                 exit();
         } else {
             alerta("Hay algo mal en la linea 124");
@@ -139,14 +139,14 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
         $imagen = $Articulo->getimagen();
         $imagenAnterior = $imagen;
     } else {
-        alerta("Hay algo mal en la linea 147");
-    //     header("location: error.php");
-    //     exit();
+        alerta("No se hay ningun articulo con ese ID");
+        header("location: error.php");
+        exit();
     }
 } else {
-    alerta("Hay algo mal en la linea 150");
-   // header("location: error.php"); 
-   // exit();
+    alerta("No has pasado ningun ID");
+   header("location: error.php"); 
+   exit();
 }
 
 ?>
@@ -244,3 +244,4 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 </div>
 </form>
 <br><br><br>
+<?php require_once VIEW_PATH . "pie.php"; ?>

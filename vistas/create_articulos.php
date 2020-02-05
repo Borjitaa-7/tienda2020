@@ -101,17 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
             $imagenErr = "Error al procesar la imagen y subirla al servidor";
         }
     }
-/*
-    //COMPROBAR SOLO ESTOS FILTROS PARA VER SI PASAN LOS DATOS
 
-    echo $nombreVal = filtrado(($_POST["nombre"])).  "<br>";
-    echo $tipo = filtrado(implode(", ", $_POST["tipo"])) .  "<br>";
-    echo $distribuidor = filtrado($_POST["distribuidor"]) .  "<br>";
-    echo $precio = filtrado($_POST["precio"]) .  "<br>";
-    echo $descuento = filtrado($_POST["descuento"]).  "<br>"; 
-    echo $unidades = filtrado($_POST["stock"]) .  "<br>";
-    echo $imagen = filtrado(($_POST["imagen"]));
-*/
 
     if (empty($nombreErr)       && empty($tipoErr)      && empty($distribuidorErr)
      && empty($descuentoErr)    && empty($precioErr)    && empty($unidadesErr) && empty($imagenErr)) {

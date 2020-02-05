@@ -24,7 +24,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"])) && isset($_GET["page"]) && !
         header("location:".$catalogo);
         exit();
     }else{
-         header("location:".$catalogo);
+         alerta("No queda stock de este producto:", "$catalogo");
     }
 
 }

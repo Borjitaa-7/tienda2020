@@ -29,7 +29,7 @@ body {
 </style>
 
 
-    <!-- ---------------------------------------------------------Opciones del navbar -->
+    <!-----------------------------------------------------------Opciones de la cabecera de la tabla -->
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -38,8 +38,8 @@ body {
                 </div>
                 <form class="form-inline" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="no_imprimir">
                     <div class="form-group mx-sm-5 mb-2">
-                        <label for="nombre" class="sr-only">Nombre</label>
-                        <input type="text" class="form-control" id="buscar" name="nombre" placeholder="Nombre">
+                        <label for="nombre" class="sr-only">Nombre o Tipo</label>
+                        <input type="text" class="form-control" id="buscar" name="usuario" placeholder="Nombre">
                     </div>
                     <button type="submit" class="btn btn-primary mb-2"> <span class="glyphicon glyphicon-search"></span>  Buscar</button>
                     <a href="javascript:window.print()" class="btn pull-right"> <span class="glyphicon glyphicon-print"></span> IMPRIMIR</a>
@@ -49,18 +49,20 @@ body {
                     <a href="create_articulos.php" class="btn btn-success pull-right"><span class="glyphicon glyphicon-user"></span>  Añadir articulo</a>
                 </form>
            <hr>
-    <!-- ---------------------------------------------------------Opciones del navbar -->
 
             <?php
             require_once CONTROLLER_PATH."ControladorArticulo.php";
             require_once CONTROLLER_PATH ."Paginador.php";
             require_once UTILITY_PATH."funciones.php";
 
-            if (!isset($_POST["articulo"])) {
+            if (!isset($_POST["usuario"])) {
                 $nombre = "";
+                $tipo = "";
             } else {
-                $nombre = filtrado($_POST["articulo"]);
+                $nombre = filtrado($_POST["usuario"]);
+                $tipo = filtrado($_POST["usuario"]);
             }
+
 
             $controlador = ControladorArticulo::getControlador();
 
@@ -69,12 +71,11 @@ body {
             $enlaces = (isset($_GET['enlaces'])) ? $_GET['enlaces'] : 10;
 
             // Consulta 
-            $consulta = "SELECT * FROM articulos WHERE nombre LIKE :nombre  order by nombre desc";
-            $parametros = array(':nombre' => "%" . $nombre . "%");
+            $consulta = "SELECT * FROM articulos WHERE nombre LIKE :nombre OR tipo LIKE :tipo";
+            $parametros = array(':nombre' => "%" .$nombre. "%", ':tipo' => "%".$tipo."%");
             $limite = 4; // Limite del paginador
             $paginador  = new Paginador($consulta, $parametros, $limite);
             $resultados = $paginador->getDatos($pagina);
-            //-------------------------------------------------------------paginador
 
             //-------------------------------------------------------------TABLA
             if (count($resultados->datos) > 0) {
@@ -106,7 +107,6 @@ body {
                         }else{echo 'Ninguno';} 
                         echo "</td>";
                         echo "<td>" . $Articulo->getUnidades() . "</td>";
-                        //echo "<td>" . str_repeat("*",strlen($Articulo->getpassword())) . "</td>";
                         echo "<td><img src='/iaw/tienda2020/imagenes/" . $Articulo->getimagen() . "' width='48px' height='48px'></td>";
                         echo "<td>";
                             echo "<a href='/iaw/tienda2020/vistas/read_articulos.php?id=" . encode($Articulo->getid()) . "' title='Ver Articulo AQUI' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
@@ -121,7 +121,7 @@ body {
                 echo $paginador->crearLinks($enlaces);
                 echo "</ul>";
             } else {
-                echo "<p><em>No se ha encontrado datos de Articulos/as.</em></p>";
+                echo "<p><em>No se ha encontrado datos de Articulos.</em></p>";
             }
             ?>
             </div>
