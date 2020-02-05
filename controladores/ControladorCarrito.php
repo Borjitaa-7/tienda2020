@@ -46,10 +46,7 @@ class ControladorCarrito
         //uds que tenemos en el carrito
         $carrito = new ControladorCarrito();
         $udsCarrito = $carrito->unidadesArticulo($articulo->getid());
-        //Si las unidades del carrito son igualeso mayores a la del stock pondremos ese articulo temporalmente no disponible
-        if ($udsCarrito >= $udsStock ) {
-            $_SESSION['id_agotado'] = $articulo->getid();
-        }
+       
         // si las unidades que pedimos más las que ya hay en el carrito de ese producto
         // es mayor que lo que hay en Stock no lo añadirmos
         if (($udsStock - ($uds + $udsCarrito)) >= 0) {
@@ -57,30 +54,15 @@ class ControladorCarrito
             //añadimos las nuevas unidades a la sesión para el total uds del carrito
             $_SESSION['uds'] += $uds;
 
-            //Si ademas queremos actualizar sobre la marcha las unidades restantes guardaremos
-            //en un array el id del objeto y la cantidad para restar al stock total
-            if ($udsCarrito <= $udsStock && $articulo->getid()){
-                $_SESSION['stock_restante']=array($udsCarrito,$articulo->getid());
-               
-            }
-            if ($udsCarrito <= $udsStock && $articulo->getid() && $articulo->getid()==$_SESSION['id_agotado'] ){
-                $_SESSION['stock_restante']=array($udsCarrito,$articulo->getid());
-                unset($_SESSION['id_agotado']);
-            }
-            
-            
-            $_SESSION['uds'] += $uds;
-
             // si el artículo existe el total de unidades es lo que había + las nuevas
             // El valor a null es por el problema de borrar en el Array, ver función de eliminar
             if (array_key_exists($articulo->getid(), $_SESSION['carrito']) && ($_SESSION['carrito'][$articulo->getid()][0] != null)) {
                 echo "<br><br><br>Existe";
                 $uds = $_SESSION['carrito'][$articulo->getid()][1] + $uds;
-                
             }
             $_SESSION['carrito'][$articulo->getid()] = [$articulo, $uds];
             return true;
-        } else {
+        }else{
             $id = encode($articulo->getid());
             alerta("No hay en stock suficiente tras añadir este producto a tu carritos. Rogamos nos disculpe", "read_articulos.php?id=$id"); //devolvemos el foco al mismo sitio
             session_start();
