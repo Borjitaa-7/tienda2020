@@ -38,56 +38,67 @@ class ControladorDescargaFactura
         $venta = $cv->buscarVentaID($id);
         $lineas = $cv->buscarLineasID($id);
 
-        $sal = "<h2>Factura</h2>";
-        $sal .= "<h3>Pedido nº:" . $id . "</h3>";
+        $sal = "<h1 align='center'>Factura</h1>";
+        $sal .= "<img src='../imagenes/logo.jpg'> <h5 align='right'>Pedido nº: $id </h5>";
         $date = new DateTime($venta->getFecha());
-        $sal .= "<h4>Fecha de compra:" . $date->format('d/m/Y') . "</h4>";
-        $sal .= "<h4>Datos de pago:</h4>";
+        $sal .= "<h5 align='right'> Fecha de compra : " .$date->format('d/m/Y')."</h5>";
+        $sal .= "<h2>Datos de pago:</h2>";
         $sal .= "<h5>Facturado a: " . $venta->getNombreTarjeta() . "</h5>";
         $sal .= "<h5>Metodo de pago: Tarjeta de crédito/debito: **** " . substr($venta->getNumTarjeta(), -4) . "</h5>";
-        $sal .= "<h4>Datos de Envío:</h4>";
-        $sal .= "<h5>Nombre: " . $venta->getNombre() . "</h5>";
+        $sal .= "<h4> Datos de Envío:</h4>";
+        $sal .= "<h5> Nombre del comprador: " . $venta->getNombre() . "</h5>";
         $sal .= "<h5>Email " . $venta->getEmail() . "</h5>";
         $sal .= "<h5>Dirección " . $venta->getDireccion() . "</h5>";
-        $sal .= "<h4>Productos</h4>";
-        $sal .= "<table>
+        $sal .= "<h2 align='center'>Productos</h2>";
+        $sal .= "<table align='center'>
                 <thead>
-                       <tr><td><b>Item</b></td><td><b>Precio (PVP)</b></td><td><b>Cantidad</b></td><td><b>Total</b></td>
+                       <tr><td><b>Item</b></td><td><b>Precio (PVP)</b></td><td><b>Descuento</b></td><td><b>Cantidad</b></td><td><b>Precio</b></td>
                         </tr>
                         </thead>
                         <tbody>";
 
         foreach ($lineas as $linea) {
             $sal .= "<tr>";
-            $sal .= "<td>" . $linea->getTipo() . " " . $linea->getTipo() . "</td>";
+            $sal .= "<td>" . $linea->getNombre() . "</td>";
             $sal .= "<td>" . $linea->getPrecio() . " €</td>";
+            if($linea->getDescuento()!=0){
+            $sal .= "<td>" . $linea->getDescuento() . " %</td>";
+            }else{
+            $sal .= "<td>Ninguno</td>";
+            }
             $sal .= "<td>" . $linea->getCantidad() . "</td>";
-            $sal .= "<td>" . ($linea->getPrecio() * $linea->getCantidad()) . " €</td>";
+            if ($linea->getDescuento() == null){
+                $preciounidad = $linea>getPrecio() ;
+                }else{
+                $preciounidad = ($linea->getPrecio()) - (($linea->getPrecio() * $linea->getDescuento())/100);  
+                }  
+            $sal .= "<td>" . ($preciounidad * $linea->getCantidad()) . " €</td>";
             $sal .= "</tr>";
         }
 
         $sal .= "<tr>
                             <td></td>
                             <td></td>
-                            <td><strong>Total sin IVA</strong></td>
-                            <td>" . $venta->getSubtotal() . "€</td>
+                            <td><h5><strong>Total sin IVA</strong></h5></td>
+                            <td><h5>" . $venta->getSubtotal() . "€</h5></td>
                         </tr>
                         <tr>
                             <td></td>
                             <td></td>
-                            <td><strong>I.V.A</strong></td>
-                            <td>" . $venta->getIva() . " €</td>
+                            <td><h5><strong>I.V.A</strong></h5></td>
+                            <td><h5>" . $venta->getIva() . " €</h5></td>
                         </tr>
                         <tr>
                             <td></td>
                             <td></td>
-                            <td><strong>TOTAL</strong></td>
-                            <td><strong>" . $venta->getTotal() . " €</strong></td>
+                            <td><h4><strong>TOTAL</strong></h4></td>
+                            <td><h4><strong>" . $venta->getTotal() . " €</strong></h4></td>
                         </tr>";
 
 
         $sal .= " </tbody>
                     </table>";
+        $sal .= "<h6 align='center'>Gracias por su compra, esperemos que tenga un magnifico dia de parte de todo el equipo de Floristeria & Botanica</h6>";
 
 
         $pdf = new HTML2PDF('P', 'A4', 'es', 'true', 'UTF-8');

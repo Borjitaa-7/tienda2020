@@ -4,7 +4,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 require_once CONTROLLER_PATH . "ControladorAcceso.php";
 require_once CONTROLLER_PATH . "ControladorVenta.php";
-require_once VIEW_PATH . "cabecera.php";
+require_once VIEW_PATH . "cabecera1.php";
 
 $cs = ControladorAcceso::getControlador();
 $cs->reiniciarCarrito();
@@ -89,8 +89,9 @@ $lineas = $cv->buscarLineasID($idVenta);
                     <table class="table table-condensed">
                         <thead>
                         <tr>
-                            <td><h4><strong>Item</strong></td>
+                            <td><h4><strong>Item</strong></h4></td>
                             <td class="text-center"><h4><strong>Precio (PVP)</strong></h4></td>
+                            <td class="text-center"><h4><strong>Descuento</strong></h4></td>
                             <td class="text-center"><h4><strong>Cantidad</strong></h4></td>
                             <td class="text-right"><h4><strong>Total</strong></h4></td>
                         </tr>
@@ -100,9 +101,18 @@ $lineas = $cv->buscarLineasID($idVenta);
                         foreach ($lineas as $linea) {
                             echo "<tr>";
                             echo "<td>".$linea->getnombre()." ".$linea->getnombre()."</td>";
-                            echo "<td class='text-center'>".$linea->getPrecio()." €</td>";
+                            echo "<td class='text-center'>".$linea->getPrecio()." €</td>";                          
+                            echo "<td class='text-center'>"; 
+                            if ($linea->getDescuento() !=0 ) 
+                            echo $linea->getDescuento() . "%";
+                            echo " </td>";
                             echo "<td class='text-center'>".$linea->getCantidad()."</td>";
-                            echo "<td class='text-right'>".($linea->getPrecio()*$linea->getCantidad())." €</td>";
+                                if ($linea->getDescuento() == null){
+                                $preciounidad = $linea>getPrecio() ;
+                                }else{
+                                $preciounidad = ($linea->getPrecio()) - (($linea->getPrecio() * $linea->getDescuento())/100);  
+                                }  
+                            echo "<td class='text-right'>".round($preciounidad,2)." €</td>";
                             echo "</tr>";
                         }
                         ?>
@@ -110,20 +120,23 @@ $lineas = $cv->buscarLineasID($idVenta);
                         <tr>
                             <td class="thick-line"></td>
                             <td class="thick-line"></td>
-                            <td class="thick-line text-center"><strong>Total sin IVA</strong></td>
-                            <td class="thick-line text-right"><?php echo $venta->getSubtotal(); ?> €</td>
+                            <td class="thick-line"></td>
+                            <td class="thick-line text-center"><h4><strong>SUBTOTAL</strong></h4></td>
+                            <td class="thick-line text-right"><h4><?php echo $venta->getSubtotal(); ?> €</h4></td>
                         </tr>
                         <tr>
-                            <td class="no-line"></td>
-                            <td class="no-line"></td>
-                            <td class="no-line text-center"><strong>I.V.A</strong></td>
-                            <td class="no-line text-right"><?php echo $venta->getIva(); ?> €</td>
+                            <td class="thick-line"></td>
+                            <td class="thick-line"></td>
+                            <td class="thick-line"></td>
+                            <td class="no-line text-center"><strong><h4>I.V.A</h4></strong></td>
+                            <td class="no-line text-right"><h4><?php echo $venta->getIva(); ?> €</h4></td>
                         </tr>
                         <tr>
-                            <td class="no-line"></td>
-                            <td class="no-line"></td>
-                            <td class="no-line text-center"><strong>TOTAL</strong></td>
-                            <td class="no-line text-right"><strong><?php echo round($venta->getTotal(),2); ?> €</strong></td>
+                            <td class="thick-line"></td>
+                            <td class="thick-line"></td>
+                            <td class="thick-line"></td>
+                            <td class="no-line text-center"><strong><h4>TOTAL</h4></strong></td>
+                            <td class="no-line text-right"><strong><h4><?php echo round($venta->getTotal(),2); ?> €</h4></strong></td>
                         </tr>
                         </tbody>
                     </table>

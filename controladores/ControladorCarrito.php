@@ -64,9 +64,7 @@ class ControladorCarrito
             return true;
         }else{
             $id = encode($articulo->getid());
-            alerta("No hay en stock suficiente tras añadir este producto a tu carritos. Rogamos nos disculpe", "read_articulos.php?id=$id"); //devolvemos el foco al mismo sitio
-            session_start();
-            $_SESSION['id_agotado'] = $articulo->getid();
+            alerta("No hay en stock de este producto. Rogamos nos disculpe", "catalogo_articulos.php"); //devolvemos el foco al mismo sitio
             return false;
         }
     }
@@ -193,8 +191,7 @@ class ControladorCarrito
         //eliminamos esa linea del array completa y restamos las uds al total uds carrito
         unset($_SESSION['carrito']);
         $_SESSION['uds'] = 0;
-        unset($_SESSION['id_agotado']);
-        unset($_SESSION['stock_restante']);
+    
 
     }
 

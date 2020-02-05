@@ -78,7 +78,7 @@ class ControladorVenta
         if (count($filas) > 0) {
             foreach ($filas as $venta) {
                 $venta = new LineaVenta($venta->idVenta, $venta->idProducto, $venta->nombre,
-                    $venta->tipo, $venta->precio, $venta->cantidad);
+                    $venta->tipo, $venta->descuento, $venta->precio, $venta->cantidad);
                 $bd->cerrarBD();
                 $lista[] = $venta;
             }
@@ -117,11 +117,11 @@ class ControladorVenta
 
                 $conexion->abrirBD();
 
-                $consulta = "insert into lineasventas (idVenta, idProducto, nombre, tipo, precio, cantidad) 
-                    values (:idVenta, :idProducto, :nombre, :tipo, :precio, :cantidad)";
+                $consulta = "insert into lineasventas (idVenta, idProducto, nombre, tipo, descuento, precio, cantidad) 
+                    values (:idVenta, :idProducto, :nombre, :tipo, :descuento, :precio, :cantidad)";
 
                 $parametros = array(':idVenta' => $venta->getId(), ':idProducto' => $articulo->getid(),
-                    ':nombre' => $articulo->getNombre(), ':tipo' => $articulo->getTipo(), ':precio' => $articulo->getPrecio(),
+                    ':nombre' => $articulo->getNombre(), ':tipo' => $articulo->getTipo(), ':descuento' => $articulo->getDescuento(), ':precio' => $articulo->getPrecio(),
                     ':cantidad' => $cantidad);
 
                 $estado = $conexion->actualizarBD($consulta, $parametros);

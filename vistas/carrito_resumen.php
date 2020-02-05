@@ -31,6 +31,9 @@ if (isset($_POST['procesar_compra'])) {
     $nombreTarjeta = $_POST['tTitular'];
     $numTarjeta = $_POST['tNumero'];
 
+    $_SESSION['uds']=0;
+    $_SESSION['precio']=0;
+
     $venta = new Venta($idVenta, "", $total, round(($total / 1.21), 2),
         round(($total - ($total / 1.21)), 2),
         $nombre, $email, $direccion, $nombreTarjeta, $numTarjeta);
@@ -57,7 +60,7 @@ if (isset($_POST['procesar_compra'])) {
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-push-6 col-sm-push-6">
                 <!-- Resumen del pedido -->
                 <div class="panel panel-default">
-                    <div class="panel-heading">Pedido
+                    <div class="panel-heading"><span><i class="glyphicon glyphicon-shopping-cart"></i></span> Pedido</h5>
                         <div class="pull-right">
                             <small><a href='carrito.php'>Editar</a></small>
                         </div>
@@ -79,7 +82,7 @@ if (isset($_POST['procesar_compra'])) {
                                         <!-- imagen -->
                                         <img class="img-responsive"
                                              src='../imagenes/<?php echo $producto->getImagen(); ?>'
-                                             alt='imagen' width='70'>
+                                             alt='imagen' width='90'>
                                     </div>
 
                                     <div class="col-sm-6 col-xs-6">
@@ -87,36 +90,55 @@ if (isset($_POST['procesar_compra'])) {
                                         <div class="col-xs-12"><?php echo $producto->getTipo(); ?></div>
                                         <div class="col-xs-12"><small>Precio:
                                                 <span><?php echo $producto->getPrecio(); ?> €</span></small></div>
+                                    <?php
+                                    if ($producto->getDescuento() != 0){
+                                        echo "<div class='col-xs-12'><strong class='text-success'>".'Descuento: ';         
+                                        echo "<span>". $producto->getDescuento().'%'."</span></strong>";
+                                        echo "</div>";
+                                    }
+                                    ?>
                                         <div class="col-xs-12"><small>Cantidad:
-                                                <span><?php echo $cantidad; ?></span></small></div>
+                                                <span><?php echo $cantidad; ?></span></div></small>
                                     </div>
-                                    <div class="col-sm-3 col-xs-3 text-right">
-                                        <h6><?php echo $producto->getPrecio() * $cantidad; ?> €</h6>
+                                    <div class="col-sm-3 col-xs-3 text-right"><strong>Precio
+                                    <?php
+                                        if ($producto->getDescuento() == null){
+                                                $preciounidad = $producto>getPrecio() ;
+                                        }else{
+                                                $preciounidad = ($producto->getPrecio()) - (($producto->getPrecio() * $producto->getDescuento())/100);
+                                                
+                                        }  
+                                        
+                                        echo "<h5>". round($preciounidad * $cantidad,2) . "€</h5>";
+                                    ?>
+                                   
+                                        
                                     </div>
                                 </div>
+                                <hr>
                                 <div class="form-group">
-                                    <hr>
+                                   
                                 </div>
                                 <?php
-                                // lo guardo en un valor de sesión tb
-                            }// if
-                        }// For
+                               
+                            }
+                        }
                         ?>
                         <!-- Subtotales y totales -->
                         <div class="form-group">
-                            <div class="col-xs-12">
+                            <div class="col-xs-12"><h5>
                                 Subtotal:
-                                <div class="pull-right"><span><?php echo round(($total / 1.21), 2); ?> €</span></div>
+                                <div class="pull-right"><span><?php echo round(($total / 1.21), 2); ?> €</span></div><hr></h5>
                             </div>
                             <div class="col-xs-12">
-                                <small>I.V.A.: </small>
+                                <h5><strong>I.V.A.: </stong>
                                 <div class="pull-right">
-                                    <span><?php echo round(($total - ($total / 1.21)), 2); ?> €</span></div>
+                                    <span><?php echo round(($total - ($total / 1.21)), 2); ?> €</span></div><hr></h5>
                             </div>
                             <div class="col-xs-12">
-                                <strong>TOTAL: </strong>
+                                <h3><strong>TOTAL: </strong>
                                 <div class="pull-right">
-                                    <span><strong><?php echo round(($total), 2); ?> €</strong></span></div>
+                                    <span><strong><?php echo round(($total), 2); ?> €</strong></span></div></h3>
                             </div>
                         </div>
                     </div>
@@ -125,7 +147,7 @@ if (isset($_POST['procesar_compra'])) {
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">
                 <!-- Panel de envío -->
                 <div class="panel panel-default">
-                    <div class="panel-heading">Envío</div>
+                    <div class="panel-heading"><h5><span><i class="glyphicon glyphicon-map-marker"></i></span> Envío</h5></div>
                     <div class="panel-body">
                         <!-- Nombre-->
                         <div class="form-group">
@@ -160,22 +182,21 @@ if (isset($_POST['procesar_compra'])) {
                             </div>
                             <div class="col-md-12">
                         <textarea type="text" class="form-control" name="direccion" placeholder="Direccion"
-                                  required><?php echo $direccion; ?></textarea>
+                                  required>C/Falsa nº13</textarea>
                             </div>
                         </div>
 
 
                     </div>
                 </div>
-                <!-- Panel de envio -->
                 <!-- Panel de pago -->
                 <div class="panel panel-info">
-                    <div class="panel-heading"><span><i class="glyphicon glyphicon-lock"></i></span> Pago electrónico
+                    <div class="panel-heading"><h5><span><i class="glyphicon glyphicon-lock"></i></span> Pago electrónico</h5>
                     </div>
                     <div class="panel-body">
                         <div class="form-group">
                             <div class="col-md-12 text-center">
-                                <img src='../imagenes/tarjetas.png'>
+                                <img src='../imagenes/tarjetas.png' width="250">
                             </div>
                         </div>
                         <!-- tipo de tarjeta -->
@@ -202,7 +223,7 @@ if (isset($_POST['procesar_compra'])) {
                                        placeholder="Titular de la tarjeta" required
                                        pattern="([^\s][A-zÀ-ž\s]+)"
                                        title="El nombre no puede contener números"
-                                       minlength="3">
+                                       minlength="3" value="<?php echo $nombre; ?>">
                             </div>
                         </div>
 
@@ -213,9 +234,7 @@ if (isset($_POST['procesar_compra'])) {
                             </div>
                             <div class="col-md-12">
                                 <input type="text" class="form-control" name="tNumero" placeholder="Nº de la tarjeta"
-                                       required
-                                       pattern="[0-9]{13,16}"
-                                >
+                                       required value="12345678901234" pattern="[0-9]{13,16}">
                             </div>
                         </div>
 
@@ -225,7 +244,7 @@ if (isset($_POST['procesar_compra'])) {
                                 <label for="name" class="col-md-3 control-label">CVV:</label>
                             </div>
                             <div class="col-md-12">
-                                <input type="text" class="form-control" name="tCVV" placeholder="CVV" required>
+                                <input type="text" class="form-control" name="tCVV" placeholder="CVV" value="123" required>
                             </div>
                         </div>
 
@@ -238,7 +257,7 @@ if (isset($_POST['procesar_compra'])) {
                                 <select name="tMes" class="form-control" required>
                                     <option value="01">Enero</option>
                                     <option value="02">Febrero</option>
-                                    <option value="03">Marzo</option>
+                                    <option value="03" selected>Marzo</option>
                                     <option value="04">Abril</option>
                                     <option value="05">Mayo</option>
                                     <option value="06">Junio</option>
@@ -253,7 +272,7 @@ if (isset($_POST['procesar_compra'])) {
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <select name="tAño" class="form-control" required>
                                     <option value="2020">2020</option>
-                                    <option value="2021">2021</option>
+                                    <option value="2021" selected>2021</option>
                                     <option value="2022">2022</option>
                                     <option value="2023">2023</option>
                                     <option value="2024">2024</option>

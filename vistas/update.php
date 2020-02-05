@@ -230,8 +230,7 @@ echo "<br>";
                         <!-- Password -->
                         <div class="form-group <?php echo (!empty($passwordErr)) ? 'error: ' : ''; ?>">
                             <label>Password</label>
-                            <input type="password" required name="password" class="form-control" value="<?php echo ($password); ?>"
-                                readonly>
+                            <input type="password" required name="password" class="form-control" value="<?php echo ($password); ?>">
                             <span class="help-block"><?php echo $passwordErr;?></span>
                         </div>
                         <!-- Administrador -->

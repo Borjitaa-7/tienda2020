@@ -36,11 +36,10 @@ require_once CONTROLLER_PATH . "controladorCarrito.php";
           }else{ // Si esta logeado
             $correo = $_SESSION['email'];
               //Unidades del carrito
-            $cc = ControladorCarrito::getControlador();
-                $_SESSION['uds'] = $cc->unidadesEnCarrito();
+                $unidades=$_SESSION['uds'];
                 $precio = $_SESSION['precio'];
-                $itemscarrito = $_SESSION['uds'] != 0 ? "<font color='darksalmon'> " . $_SESSION['uds'] . "</font>" : "";
-              echo "<li><a href='carrito.php' class='cart-link' title='Ver Carrito'> Carrito  " .$itemscarrito. "   <span class='glyphicon glyphicon-shopping-cart'>  </span></a></b></li>";
+                $_SESSION['uds'] != 0 ? "<font color='darksalmon'>" . $_SESSION['uds'] ."</font>" : "";
+              echo "<li><a href='carrito.php' class='cart-link' title='Ver Carrito'> Carrito  " .$unidades. "   <span class='glyphicon glyphicon-shopping-cart'>  </span></a></b></li>";
               echo "<li><a href='carrito.php' class='cart-link' title='Ver Carrito'>  " .round( $precio, 2 ). " €  </a></b></li>";
             echo "<li><a href='update.php?id=".encode($_SESSION['id'])."'><span class='glyphicon glyphicon-user'></span> $correo</a></li>";
             echo '<li><a href="login1.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>';

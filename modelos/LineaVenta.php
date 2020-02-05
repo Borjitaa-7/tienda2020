@@ -7,6 +7,7 @@ class LineaVenta {
     private $idProducto;
     private $nombre;
     private $tipo;
+    private $descuento;
     private $precio;
     private $cantidad;
 
@@ -19,12 +20,13 @@ class LineaVenta {
      * @param $precio
      * @param $cantidad
      */
-    public function __construct($idVenta, $idProducto, $nombre, $tipo, $precio, $cantidad)
+    public function __construct($idVenta, $idProducto, $nombre, $tipo, $descuento, $precio, $cantidad)
     {
         $this->idVenta = $idVenta;
         $this->idProducto = $idProducto;
         $this->nombre = $nombre;
         $this->tipo = $tipo;
+        $this->descuento = $descuento;
         $this->precio = $precio;
         $this->cantidad = $cantidad;
     }
@@ -85,6 +87,7 @@ class LineaVenta {
         return $this->tipo;
     }
 
+
     /**
      * @param mixed $tipo
      */
@@ -93,7 +96,18 @@ class LineaVenta {
         $this->tipo = $tipo;
     }
 
+    public function getDescuento()
+    {
+        return $this->descuento;
+    }
 
+    /**
+     * @param mixed $descuento
+     */
+    public function setDescuento($descuento): void
+    {
+        $this->descuento = $descuento;
+    }
 
     /**
      * @return mixed

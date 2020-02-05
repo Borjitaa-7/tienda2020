@@ -76,6 +76,7 @@ class Venta {
         $this->fecha = $fecha;
     }
 
+
     function setTotal($total) {
         $this->total = $total;
     }

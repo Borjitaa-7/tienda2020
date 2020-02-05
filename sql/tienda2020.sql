@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 04-02-2020 a las 17:42:46
--- Versión del servidor: 10.4.8-MariaDB
--- Versión de PHP: 7.3.11
+-- Servidor: localhost
+-- Tiempo de generación: 05-02-2020 a las 22:01:39
+-- Versión del servidor: 10.4.6-MariaDB
+-- Versión de PHP: 7.1.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -44,9 +44,14 @@ CREATE TABLE `articulos` (
 --
 
 INSERT INTO `articulos` (`id`, `nombre`, `tipo`, `distribuidor`, `precio`, `descuento`, `unidades`, `imagen`) VALUES
-(11, 'Carnívoro Especial', 'alucinante, kaotico', 'Local', '99.98', '50%', '15', 'a55a92491d43a5667fd819123d902cb2.jpeg'),
-(12, 'Jengibre rojo', 'kaotico', 'Local', '27.99', '5%', '19', '0302a8e3fdf7fd6398c0af835d5cb213.jpeg'),
-(15, 'Tibu', 'decoracion', 'Internacional', '1.9', '5%', '12', '4bf38ed990601b6b8dc842b9aebdc9fd.jpeg');
+(11, 'Margarita', 'decoracion', 'Local', '2.99', '50', '82', 'edb553ebb9d106085487e806d5283a63.jpeg'),
+(12, 'Jazmin', 'decoracion', 'Local', '2.5', '10', '79', 'ed9a3962597b0010c9977708e4d28a89.png'),
+(15, 'Rosa', 'formal', 'Local', '1.99', '20', '12', '3983121dfb9104f54a0c68d881cabb7e.jpeg'),
+(16, 'Amapola', 'decoracion', 'Internacional', '9.99', '0', '33', 'bf324c0c9a45074b78a4e33f7acf1128.jpeg'),
+(18, 'Aloe Vera', 'alucinante', 'Internacional', '0.99', '5', '442', 'c311beeacddc5f4278923f5bee8ae89d.jpeg'),
+(19, 'Pitaya', 'alucinante', 'Internacional', '14.99', '0', '75', 'c3a2ced4239da50612f6b1122afe9ad8.jpeg'),
+(20, 'Pasiflora', 'decoracion, alucinante', 'Internacional', '49.99', '50', '100', '8fa40a0613966ffb563813e519c75aca.jpeg'),
+(21, 'Orquidea Azul', 'kaotico', 'Internacional', '99.99', '0', '2', 'ea7c29bd22a41a731f3b119f11b4c02e.jpeg');
 
 -- --------------------------------------------------------
 
@@ -59,16 +64,10 @@ CREATE TABLE `lineasventas` (
   `idProducto` int(11) NOT NULL,
   `nombre` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `tipo` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `descuento` int(11) NOT NULL,
   `precio` float NOT NULL,
   `cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `lineasventas`
---
-
-INSERT INTO `lineasventas` (`idVenta`, `idProducto`, `nombre`, `tipo`, `precio`, `cantidad`) VALUES
-('200204-052950', 11, 'Carnívoro Especial', 'alucinante, kaotico', 99.98, 2);
 
 -- --------------------------------------------------------
 
@@ -94,8 +93,9 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `dni`, `nombre`, `apellidos`, `email`, `password`, `admin`, `telefono`, `fecha`, `imagen`) VALUES
-(10, '05937585C', 'jose', 'funez', 'prueba@prueba.com', 'c893bad68927b457dbed39460e6afd62', 'si', '626909589', '28/01/2020', '0f0035d49f6a29483d95ed6d9a4e0308.jpeg'),
-(13, '12345679A', 'yoda', 'yoda', 'yoda@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'no', '656322124', '04/02/2020', '8cae442688e9bf3dec63e12bfce861a6.jpeg');
+(1, '05937585C', 'Jose', 'Funez', 'prueba@prueba.com', 'c893bad68927b457dbed39460e6afd62', 'si', '626909589', '28/01/2020', '1e132dcb5b051cf06d7846ba146864dd.jpeg'),
+(2, '05923847Y', 'Borja', 'Cebrian', 'prueba@admin.com', 'e10adc3949ba59abbe56e057f20f883e', 'si', '626395860', '05/02/2020', 'fe1704a487b416a1c5c34e6d2a86fc89.jpeg'),
+(3, '05938475C', 'Juan', 'Ortiz', 'juan@juan.com', 'c893bad68927b457dbed39460e6afd62', 'no', '626800495', '05/02/2020', '53d5e02bf7d040ff9f71708ba55c8541.jpeg');
 
 -- --------------------------------------------------------
 
@@ -115,13 +115,6 @@ CREATE TABLE `ventas` (
   `nombreTarjeta` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `numTarjeta` varchar(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `ventas`
---
-
-INSERT INTO `ventas` (`idVenta`, `fecha`, `total`, `subtotal`, `iva`, `nombre`, `email`, `direccion`, `nombreTarjeta`, `numTarjeta`) VALUES
-('200204-052950', '2020-02-04 17:29:50', 126.571, 104.6, 21.97, 'jose', 'prueba@prueba.com', 'aa', 'yoda', '5555555555555555');
 
 --
 -- Índices para tablas volcadas
@@ -153,13 +146,13 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `articulos`
 --
 ALTER TABLE `articulos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
