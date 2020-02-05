@@ -72,3 +72,4 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
         </div>
     </div>
 <br><br><br>
+<?php require_once VIEW_PATH . "pie.php"; ?>

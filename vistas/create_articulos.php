@@ -203,3 +203,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
     </div>
 <!-- ---------------------------------------------------------------FORMULARIO -->
 <br><br><br>
+<?php require_once VIEW_PATH . "pie.php"; ?>
