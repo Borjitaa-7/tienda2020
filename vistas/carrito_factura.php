@@ -61,7 +61,11 @@ $lineas = $cv->buscarLineasID($idVenta);
         <?php
             if ($_SESSION['email'] != $venta->getEmail()) {
                  header("location: error.php");
-                exit(); }
+                exit(); 
+
+                }else{
+                  $email=$venta->getEmail();
+                }
 
         ?>
 <!-- Simple pero efectiva -->
@@ -163,7 +167,7 @@ $lineas = $cv->buscarLineasID($idVenta);
             <a href="javascript:window.print()" class='btn btn-info'><span class='glyphicon glyphicon-print'></span> Imprimir </a>
             <a href="../index.php" class='btn btn-success'><span class='glyphicon glyphicon-ok'></span> Finalizar </a>
             <?php
-            echo "<a href='/iaw/tienda2020/utilidades/descargas.php?opcion=FAC_PDF&id=".encode($idVenta). " ' target='_blank' class='btn btn-primary'><span class='glyphicon glyphicon-download'></span>  PDF</a>";
+            echo "<a href='/iaw/tienda2020/utilidades/descargas.php?opcion=FAC_PDF&id=".encode($idVenta)."&email=".encode($email). " ' target='_blank' class='btn btn-primary'><span class='glyphicon glyphicon-download'></span>  PDF</a>";
             ?>
 
         </div>
