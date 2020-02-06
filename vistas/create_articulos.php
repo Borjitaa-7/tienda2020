@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
     } else {
         $nombre = $nombreVal;
     }
-    // NO SE REPITA el nombre (si se quiere otro campo modificar el ControladorArticulo en la funcion buscarArticulo)
+    // NO SE REPITA el nombre (si se quiere otro campo modificar el ControladorArticulo en la funcion buscar Articulo)
     $controlador = ControladorArticulo::getControlador();
     $articulo = $controlador->buscarArticulo($nombre);
     if (isset($articulo)) {

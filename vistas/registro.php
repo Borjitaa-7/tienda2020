@@ -43,8 +43,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
     $emailVal = filtrado($_POST["email"]);
     if(empty($emailVal)){
         $emailErr = "Por favor introduzca un email válido.";
+        
     } else{
         $email= $emailVal;
+    }
+
+    $controlador = ControladorUsuarios::getControlador();
+    $usuario = $controlador->buscarEmail($email);
+    if (isset($usuario)) {
+        $emailErr = "Ya existe un usuario con este email actualmente, utiliza otro email para el registro";
+    } else {
+        $email = $emailVal;
     }
 
     // Procesamos el password
@@ -164,7 +173,7 @@ body {
                         <div class="form-group <?php echo (!empty($emailErr)) ? 'error: ' : ''; ?>">
                             <label>E-Mail</label>
                             <input type="email" required name="email" class="form-control" value="<?php echo $email; ?>">
-                            <span class="help-block"><?php echo $emailErr;?></span>
+                            <span class="help-block"><p class="text-danger"><?php echo $emailErr;?></p></span>
                         </div>
                     <!-- Password -->
                         <div class="form-group <?php echo (!empty($passwordErr)) ? 'error: ' : ''; ?>">
@@ -181,9 +190,7 @@ body {
                             <span class="help-block"><?php echo $telefonoErr;?></span>
                         </div>
                     <!-- Fecha-->
-                        <div class="form-group <?php echo (!empty($fechaErr)) ? 'error: ' : ''; ?>">
-                        <label>Fecha de alta de usuario</label>
-                            <input type="date" required name="fecha" value="<?php echo date('Y-m-d', strtotime(str_replace('/', '-', $fecha)));?>"></input><div>
+                            <input type="hidden" required name="fecha" value="<?php echo date('Y-m-d', strtotime(str_replace('/', '-', $fecha)));?>" readonly></input><div>
                             <span class="help-block"><?php echo $fechaErr;?></span>
                         </div>
                     <!-- Foto-->

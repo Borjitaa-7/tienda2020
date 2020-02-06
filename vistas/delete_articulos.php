@@ -85,7 +85,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         <input type="hidden" name="id" value="<?php echo trim($id); ?>" />
         <p>¿Está seguro que desea borrar este Articulo?</p><br>
         <p>
-            <button type="submit" class="btn btn-danger"> <span class="glyphicon glyphicon-trash"></span>  Borrar</button>
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea borrar este precioso articulo?')"> <span class="glyphicon glyphicon-trash"></span>  Borrar</button>
             <a onclick="history.back()" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
         </p>
     </div>

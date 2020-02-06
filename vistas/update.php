@@ -91,7 +91,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
        $passwordErr = "Por favor introduzca password válido y que sea mayor que 5 caracteres.";
        $errores[]= $passwordErr;
    } else{
-       $password= $passwordVal;
+    $password= hash('md5',$passwordVal);
    }
    // Procsamos admin
    if (isset($_POST["admin"])) {
