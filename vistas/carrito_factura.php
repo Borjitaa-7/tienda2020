@@ -27,8 +27,8 @@ if ((!isset($_GET['venta']))) {
 
 $idVenta = decode($_GET['venta']);
 $cv = ControladorVenta::getControlador();
-$venta = $cv->buscarVentaID($idVenta);
-$lineas = $cv->buscarLineasID($idVenta);
+$venta = $cv->buscarVentaID($idVenta); //Seleccionamos las campos que nos interese de la tabla venta NºTarjeta , Nombre, Email , Direccion y Fecha
+$lineas = $cv->buscarLineasID($idVenta); // Selecionamos los campos que nos interese de la tabla lineadeventa, el articulo y sus peculiaridades
 
 
 ?>
@@ -115,7 +115,7 @@ $lineas = $cv->buscarLineasID($idVenta);
                         <?php
                         foreach ($lineas as $linea) {
                             echo "<tr>";
-                            echo "<td>".$linea->getnombre()." ".$linea->getnombre()."</td>";
+                            echo "<td>".$linea->getnombre()."</td>";
                             echo "<td class='text-center'>".$linea->getPrecio()." €</td>";                          
                             echo "<td class='text-center'>"; 
                             if ($linea->getDescuento() !=0 ) 
