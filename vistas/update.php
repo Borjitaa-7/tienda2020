@@ -114,9 +114,10 @@ $id = decode($_POST["id"]);
     }
 
    // Procesamos el password
-   $passwordVal = filtrado($_POST["password"]);
+   $passwordAnterior = decode($_POST['passwordAnterior']);
+   $passwordVal = $_POST["password"];
 
-   if($passwordVal != "*****"){
+   if($passwordVal =! "*****"){
                     if(empty($passwordVal) || strlen($passwordVal)<5){
                         $passwordErr = "Por favor introduzca password válido y que sea mayor que 5 caracteres.";
                         $errores[]= $passwordErr;
@@ -124,8 +125,10 @@ $id = decode($_POST["id"]);
                         $password= hash('md5',$passwordVal);
                     }
     }else{
-    $password = decode($passwordAnterior);
+    $password = $passwordAnterior;
    }
+
+
    // Procsamos admin
    if (isset($_POST["admin"])) {
     $admin = filtrado($_POST["admin"]);
