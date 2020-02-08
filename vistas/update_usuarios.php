@@ -23,6 +23,17 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
        $dni= $dniVal;
    }
    
+   $dniAnterior = $_POST['dniAnterior'];
+
+   $controlador = ControladorUsuarios::getControlador();
+   $usuario = $controlador->buscarUsuarioDni($dni);
+
+   if (isset($usuario) && $dniAnterior != $dni) {
+    $dniErr = "Ya existe un DNI igual en la Base de Datos";
+    } else {
+        $dniAnterior = $dniVal;
+    }
+
    // Procesamos el nombre
    $nombreVal = filtrado(($_POST["nombre"]));
    if(empty($nombreVal)){
@@ -50,6 +61,17 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
        $email= $emailVal;
    }
 
+   $emailAnterior = $_POST['emailAnterior'];
+
+   $controlador = ControladorUsuarios::getControlador();
+   $usuario = $controlador->buscarEmail($email);
+
+   if (isset($usuario) && $emailAnterior != $email) {
+    $emailErr = "Ya existe un Email igual en la Base de Datos";
+    } else {
+        $emailAnterior = $emailVal;
+    }
+    
    // Procesamos el password
    $passwordVal = filtrado($_POST["password"]);
    if(empty($passwordVal) || strlen($passwordVal)<5){
@@ -150,9 +172,11 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $usuario = $controlador->buscarUsuario($id);
         if (!is_null($usuario)) {
             $dni = $usuario->getDni();
+            $dniAnterior = $dni;
             $nombre = $usuario->getNombre();
             $apellidos = $usuario->getApellidos();
             $email = $usuario->getEmail();
+            $emailAnterior = $email;
             $password = $usuario->getPassword();
             $admin = $usuario->getAdmin();
             $telefono = $usuario->getTelefono();
@@ -252,6 +276,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         <span class="help-block"><?php echo $imagenErr;?></span>    
                         </div>
                         <input type="hidden" name="id" value="<?php echo $id; ?>"/>
+                        <input type="hidden" name="dniAnterior" value="<?php echo $dniAnterior; ?>"/>
+                        <input type="hidden" name="emailAnterior" value="<?php echo $emailAnterior; ?>" />
                         <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>"/>
                         <!-- Botones --> 
                         <button type="submit" value="aceptar" class="btn btn-warning"> <span class="glyphicon glyphicon-refresh"></span>  Modificar</button>
