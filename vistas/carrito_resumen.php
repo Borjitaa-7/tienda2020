@@ -233,7 +233,7 @@ if (isset($_POST['procesar_compra'])) {
                                 <label for="name" class="col-md-3 control-label">Nº:</label>
                             </div>
                             <div class="col-md-12">
-                                <input type="text" class="form-control" name="tNumero" placeholder="Nº de la tarjeta"
+                                <input type="number" class="form-control" name="tNumero" placeholder="Nº de la tarjeta"
                                        required value="12345678901234" pattern="[0-9]{13,16}">
                             </div>
                         </div>
@@ -244,7 +244,7 @@ if (isset($_POST['procesar_compra'])) {
                                 <label for="name" class="col-md-3 control-label">CVV:</label>
                             </div>
                             <div class="col-md-12">
-                                <input type="text" class="form-control" name="tCVV" placeholder="CVV" value="123" required>
+                                <input type="number" class="form-control" name="tCVV" placeholder="CVV" value="123" required>
                             </div>
                         </div>
 
