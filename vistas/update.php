@@ -23,10 +23,13 @@ if($_SESSION['id'] == decode($_GET["id"])){
         $usuario = $controlador->buscarUsuario($id);
         if (!is_null($usuario)) {
             $dni = $usuario->getDni();
+            $dniAnterior = $dni;
             $nombre = $usuario->getNombre();
             $apellidos = $usuario->getApellidos();
             $email = $usuario->getEmail();
+            $emailAnterior = $email;
             $password = $usuario->getPassword();
+            $passwordAnterior = $password;
             $admin = $usuario->getAdmin();
             $telefono = $usuario->getTelefono();
             $fecha = $usuario->getFecha();
@@ -45,6 +48,8 @@ if($_SESSION['id'] == decode($_GET["id"])){
     header("location: error.php");
             exit();
 }
+
+
 // Procesamos la información obtenida por el get
 if(isset($_POST["id"]) && !empty($_POST["id"])){
     $id = $_POST["id"];
@@ -57,6 +62,17 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
    } else{
        $dni= $dniVal;
    }
+
+   $dniAnterior = $_POST['dniAnterior'];
+
+   $controlador = ControladorUsuarios::getControlador();
+   $usuario = $controlador->buscarUsuarioDni($dni);
+
+   if (isset($usuario) && $dniAnterior != $dni) {
+    $dniErr = "Ya existe un DNI igual en la Base de Datos";
+    } else {
+        $dniAnterior = $dniVal;
+    }
 
    // Procesamos el nombre
    $nombreVal = filtrado(($_POST["nombre"]));
@@ -80,19 +96,36 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
    $emailVal = filtrado($_POST["email"]);
    if(empty($emailVal)){
        $emailErr = "Por favor introduzca email válido.";
-   $errores[]= $emailErr;
+       $errores[]= $emailErr;
    } else{
        $email= $emailVal;
    }
 
+   $emailAnterior = $_POST['emailAnterior'];
+
+   $controlador = ControladorUsuarios::getControlador();
+   $usuario = $controlador->buscarEmail($email);
+
+   if (isset($usuario) && $emailAnterior != $email) {
+    $emailErr = "Ya existe un Email igual en la Base de Datos";
+    } else {
+        $emailAnterior = $emailVal;
+    }
+
    // Procesamos el password
    $passwordVal = filtrado($_POST["password"]);
+
+   if($passwordVal != $passwordAnterior ){
    if(empty($passwordVal) || strlen($passwordVal)<5){
        $passwordErr = "Por favor introduzca password válido y que sea mayor que 5 caracteres.";
        $errores[]= $passwordErr;
    } else{
     $password= hash('md5',$passwordVal);
    }
+   } else {
+    $password = $passwordAnterior;
+   }
+
    // Procsamos admin
    if (isset($_POST["admin"])) {
     $admin = filtrado($_POST["admin"]);
@@ -259,9 +292,12 @@ echo "<br>";
                         <input type="file" name="imagen" class="form-control-file" id="imagen" accept="image/jpeg">
                         <span class="help-block"><?php echo $imagenErr;?></span>
                         </div>
-                        <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-                        <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>"/>
                         <!-- Botones -->
+                        <input type="hidden" name="id" value="<?php echo $id; ?>"/>
+                        <input type="hidden" name="dniAnterior" value="<?php echo $dniAnterior; ?>"/>
+                        <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>"/>
+                        <input type="hidden" name="emailAnterior" value="<?php echo $emailAnterior; ?>" />
+                        <input type="hidden" name="passwordAnterior" value="<?php echo $passwordAnterior; ?>" />
                         <button type="submit" value="aceptar" class="btn btn-warning"> <span class="glyphicon glyphicon-refresh"></span>  Modificar</button>
                         <a onclick="history.back()" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
                     </form>
