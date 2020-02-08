@@ -4,13 +4,14 @@ require_once CONTROLLER_PATH."ControladorUsuarios.php";
 require_once CONTROLLER_PATH."ControladorImagen.php";
 require_once UTILITY_PATH."funciones.php";
 
+$errores=[];
+error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+session_start();
+
 $dni = $nombre = $apellidos = $email = $password = $admin = $telefono = $fecha = $imagen = $imageninfo ="";
 $dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr = $fechaErr = $imagenErr= "";
 $imagenAnterior = "";
 
-$errores=[];
-error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
-session_start();
 
 if($_SESSION['id'] == decode($_GET["id"])){
 
@@ -48,11 +49,11 @@ if($_SESSION['id'] == decode($_GET["id"])){
     header("location: error.php");
             exit();
 }
+// Procesamos la información obtenida por el POST
 
 
-// Procesamos la información obtenida por el get
 if(isset($_POST["id"]) && !empty($_POST["id"])){
-    $id = $_POST["id"];
+$id = decode($_POST["id"]);
 
    // Procesamos el dni
    $dniVal = filtrado($_POST["dni"]);
@@ -115,17 +116,16 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
    // Procesamos el password
    $passwordVal = filtrado($_POST["password"]);
 
-   if($passwordVal != $passwordAnterior ){
-   if(empty($passwordVal) || strlen($passwordVal)<5){
-       $passwordErr = "Por favor introduzca password válido y que sea mayor que 5 caracteres.";
-       $errores[]= $passwordErr;
-   } else{
-    $password= hash('md5',$passwordVal);
+   if($passwordVal != "*****"){
+                    if(empty($passwordVal) || strlen($passwordVal)<5){
+                        $passwordErr = "Por favor introduzca password válido y que sea mayor que 5 caracteres.";
+                        $errores[]= $passwordErr;
+                    } else{
+                        $password= hash('md5',$passwordVal);
+                    }
+    }else{
+    $password = decode($passwordAnterior);
    }
-   } else {
-    $password = $passwordAnterior;
-   }
-
    // Procsamos admin
    if (isset($_POST["admin"])) {
     $admin = filtrado($_POST["admin"]);
@@ -263,7 +263,7 @@ echo "<br>";
                         <!-- Password -->
                         <div class="form-group <?php echo (!empty($passwordErr)) ? 'error: ' : ''; ?>">
                             <label>Password</label>
-                            <input type="password" required name="password" class="form-control" value="<?php echo ($password); ?>">
+                            <input type="password" required name="password" class="form-control" value="*****">
                             <span class="help-block"><?php echo $passwordErr;?></span>
                         </div>
                         <!-- Administrador -->
@@ -293,11 +293,11 @@ echo "<br>";
                         <span class="help-block"><?php echo $imagenErr;?></span>
                         </div>
                         <!-- Botones -->
-                        <input type="hidden" name="id" value="<?php echo $id; ?>"/>
                         <input type="hidden" name="dniAnterior" value="<?php echo $dniAnterior; ?>"/>
                         <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>"/>
                         <input type="hidden" name="emailAnterior" value="<?php echo $emailAnterior; ?>" />
-                        <input type="hidden" name="passwordAnterior" value="<?php echo $passwordAnterior; ?>" />
+                        <input type="hidden" name="passwordAnterior" value="<?php echo encode($passwordAnterior); ?>"/>
+                        <input type="hidden" name="id" value="<?php echo encode($id); ?>"/>
                         <button type="submit" value="aceptar" class="btn btn-warning"> <span class="glyphicon glyphicon-refresh"></span>  Modificar</button>
                         <a onclick="history.back()" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
                     </form>

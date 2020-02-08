@@ -37,7 +37,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     //                      (la BBDD xDD)
 
     //Recuperamos el nombre anterior de la BBDD
-    $nombreAnterior = $_POST['nombreAnterior'];
+    $nombreAnterior = filtrado($_POST['nombreAnterior']);
 
     //Llamos al comandante controlador Articulo que nos traiga del objeto su nombre y que lo traiga antes nuestro
     //supervisor de articulo
