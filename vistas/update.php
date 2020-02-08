@@ -110,14 +110,14 @@ $id = decode($_POST["id"]);
    if (isset($usuario) && $emailAnterior != $email) {
     $emailErr = "Ya existe un Email igual en la Base de Datos";
     } else {
-        $emailAnterior = $emailVal;
+        $email = $emailAnterior ;
     }
 
    // Procesamos el password
    $passwordAnterior = decode($_POST['passwordAnterior']);
    $passwordVal = $_POST["password"];
 
-   if($passwordVal =! "*****"){
+   if($passwordVal != "*****"){
                     if(empty($passwordVal) || strlen($passwordVal)<5){
                         $passwordErr = "Por favor introduzca password válido y que sea mayor que 5 caracteres.";
                         $errores[]= $passwordErr;

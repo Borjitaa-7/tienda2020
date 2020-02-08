@@ -69,17 +69,23 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
    if (isset($usuario) && $emailAnterior != $email) {
     $emailErr = "Ya existe un Email igual en la Base de Datos";
     } else {
-        $emailAnterior = $emailVal;
+        $email = $emailAnterior;
     }
     
-   // Procesamos el password
-   $passwordVal = filtrado($_POST["password"]);
-   if(empty($passwordVal) || strlen($passwordVal)<5){
-       $passwordErr = "Por favor introduzca password válido y que sea mayor que 5 caracteres.";
-       $errores[]= $passwordErr;
-   } else{
-       $password= $passwordVal;
-   }
+//    // Procesamos el password
+   $passwordAnterior = decode($_POST['passwordAnterior']);
+//    $passwordVal = $_POST["password"];
+
+//    if($passwordVal != "*****"){
+//                     if(empty($passwordVal) || strlen($passwordVal)<5){
+//                         $passwordErr = "Por favor introduzca password válido y que sea mayor que 5 caracteres.";
+//                         $errores[]= $passwordErr;
+//                     } else{
+//                         $password= hash('md5',$passwordVal);
+//                     }
+//     }else{
+    $password = $passwordAnterior;
+   // }
 
    // Procsamos admin
    if (isset($_POST["admin"])) {
@@ -147,7 +153,9 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
 
     
     // Chequeamos los errores 
-    if(empty($dniErr) && empty($nombreErr) && empty($apellidosErr) && empty($passwordErr) && empty($emailErr) && 
+    //&& empty($passwordErr)
+
+    if(empty($dniErr) && empty($nombreErr) && empty($apellidosErr)  && empty($emailErr) && 
         empty($adminErr) && empty($telefonoErr) && empty($fechaErr) && empty($imagenErr)){
         $controlador = ControladorUsuarios::getControlador();
         $estado = $controlador->actualizarUsuario($id, $dni, $nombre, $apellidos, $email, $password, $admin, $telefono, $fecha, $imagen);
@@ -178,6 +186,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             $email = $usuario->getEmail();
             $emailAnterior = $email;
             $password = $usuario->getPassword();
+            $passwordAnterior = $password;
             $admin = $usuario->getAdmin();
             $telefono = $usuario->getTelefono();
             $fecha = $usuario->getFecha();
@@ -238,14 +247,13 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         <!-- Email -->
                         <div class="form-group <?php echo (!empty($emailErr)) ? 'error: ' : ''; ?>">
                             <label>E-Mail</label>
-                            <input type="email" required name="email" class="form-control" value="<?php echo $email; ?>">
+                            <input type="email" required name="email" class="form-control" value="<?php echo $emailAnterior; ?>">
                             <span class="help-block"><?php echo $emailErr;?></span>
                         </div>
                         <!-- Password -->
                         <div class="form-group <?php echo (!empty($passwordErr)) ? 'error: ' : ''; ?>">
                             <label>Password</label>
-                            <input type="password" required name="password" class="form-control" value="<?php echo ($password); ?>"
-                                readonly>
+                            <input type="password" required name="password" class="form-control" value="*****" readonly >
                             <span class="help-block"><?php echo $passwordErr;?></span>
                         </div>
                         <!-- Administrador -->
@@ -278,6 +286,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         <input type="hidden" name="id" value="<?php echo $id; ?>"/>
                         <input type="hidden" name="dniAnterior" value="<?php echo $dniAnterior; ?>"/>
                         <input type="hidden" name="emailAnterior" value="<?php echo $emailAnterior; ?>" />
+                        <input type="hidden" name="passwordAnterior" value="<?php echo encode($passwordAnterior); ?>" />
                         <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>"/>
                         <!-- Botones --> 
                         <button type="submit" value="aceptar" class="btn btn-warning"> <span class="glyphicon glyphicon-refresh"></span>  Modificar</button>
