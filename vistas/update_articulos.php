@@ -24,6 +24,15 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         $nombre = $nombreVal;
     }
     
+    $nombreAnterior = $_POST['nombreAnterior'];
+
+    $controlador = ControladorArticulo::getControlador();
+    $articulo = $controlador->buscarArticulo($nombre);
+    if (isset($articulo) && $nombreAnterior != $nombreVal) {
+        $nombreErr = "Ya existe un Articulo con este nombre en la Base de Datos";
+    } else {
+        $nombreAnterior = $nombreVal;
+    }
 
     //Procesamos el tipo
     if (isset($_POST["tipo"])) {
@@ -131,6 +140,8 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     $Articulo = $controlador->buscarArticuloid($id);
     if (!is_null($Articulo)) {
         $nombre = $Articulo->getnombre();
+        //Recojo el nombre anterior aqui.
+        $nombreAnterior = $nombre;
         $tipo = $Articulo->getTipo();
         $distribuidor = $Articulo->getDistribuidor();
         $precio = $Articulo->getPrecio();
@@ -236,6 +247,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 <!-- Botones -->
         <input type="hidden" name="id" value="<?php echo $id; ?>" />
         <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>" />
+        <input type="hidden" name="nombreAnterior" value="<?php echo $nombreAnterior; ?>" />
         <button type="submit" value="aceptar" class="btn btn-warning"> <span class="glyphicon glyphicon-refresh"></span>  Modificar</button>
         <a onclick="history.back()" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
             </div>
