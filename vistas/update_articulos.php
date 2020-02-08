@@ -22,16 +22,40 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         $nombreErr = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
     } else {
         $nombre = $nombreVal;
+        //Nombre recibido de la vista ->UPDATE
     }
     
+
+    //ACTORES IMPLICADOS => 1.COMANDANTE>Controlador    2.SUPERVISOR>Funciona cuando el comandante le retorna ordenes 
+    //                      3.NOMBRE_ANTERIOR>Variable de vista que se recoge con el nombre de la bbdd 
+    //                      4.>NOMBRE >Variable que se le pasa con el POST del campo nombre (Puede ser distinto u no)
+    //TRAMA              => Vamos a comprobar que el comandante y el supervisor esta haciendo bien su trabajo detectando imitadores
+    //                      de nombres de soldados que quieren suplantar sus identidades de manera ilegal para usurpar nuestros biberes
+    //                       (nuestra BBDD).
+    //FINAL              => Mediante el post viene una pista del nombre original de el soldado (nombreAnterior) y se compara con el nuevo
+    //                      Y si el comandante comprueba que existe el supervisor tendra la potestad de denegarle el acesso a nuestro biberes
+    //                      (la BBDD xDD)
+
+    //Recuperamos el nombre anterior de la BBDD
     $nombreAnterior = $_POST['nombreAnterior'];
 
+    //Llamos al comandante controlador Articulo que nos traiga del objeto su nombre y que lo traiga antes nuestro
+    //supervisor de articulo
     $controlador = ControladorArticulo::getControlador();
     $articulo = $controlador->buscarArticulo($nombre);
-    if (isset($articulo) && $nombreAnterior != $nombreVal) {
+    
+    //El supervisor comprueba 2 cosas. 1 Que se le han nombrado a el antes de nada el comandante & tambien que el nombre recibido de comandante
+    //es diferente al nombre anterior que el recogio a traves del update_articulos .
+    if (isset($articulo) && $nombreAnterior != $nombre) {
         $nombreErr = "Ya existe un Articulo con este nombre en la Base de Datos";
+        // que el supervisor estima que lo han llamado retornando la orden true de su comandante controlador
+        // y que ademas el comprueba que nombre anterior no concuerda con el nuevo 
+        // Salta la alarma
     } else {
         $nombreAnterior = $nombreVal;
+        // que el supervisor estima que lo han llamado retornando la orden true de su comandante controlador
+        // y pero comprueba el comprueba que nombre anterior concuerda con el nuevo de la vista->update
+        // No suena la alarma.
     }
 
     //Procesamos el tipo
