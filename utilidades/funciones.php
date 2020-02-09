@@ -1,9 +1,13 @@
 <?php
 
-function alerta($texto) {
-    echo '<script type="text/javascript">alert("' . $texto . '")</script>';
+function alerta($texto, $ruta=null)
+{
+    echo "<script>";
+    echo "alert('" . $texto . "');";
+    if($ruta!=null)
+        echo "window.location= '" . $ruta . "'";
+    echo "</script>";
 }
-
 // filtrado de datos formulario
 function filtrado($datos) {
     $datos = trim($datos); // Elimina espacios antes y después de los datos

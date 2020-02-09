@@ -31,6 +31,23 @@
             table {
                 background-color: rgba(255,255,255,0.5);  
             }
+            table.carrito {
+                background-color: rgba(255,255,255,0.5);  
+                margin-left: 27%;
+                margin-top: 10%;   
+                border : solid 11px
+            }
+
+            th{
+                padding: 20px;
+            }
+           
+            tbody.cesta {
+                background: salmon;
+                text-align: center;
+                border: 20px;
+                
+            }
             .table-bordered {
                 background: white;
             }

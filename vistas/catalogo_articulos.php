@@ -79,7 +79,7 @@ foreach ($resultados->datos as $a){
     echo "</br>";
     echo  "<h5>"."<b>Precio</b>: ". $Articulo->getPrecio() ."€ &nbspx &nbspUnidad</h5>";
 
-    echo "<button type='button' class='btn btn-success'>Agregar ";
+    echo "<a href='/iaw/tienda2020/vistas/carrito_prueba.php?id=" . encode($Articulo->getid()) . "'<button type='button' class='btn btn-success'> Agregar ";
     echo "<span class='glyphicon glyphicon-plus'></span></a>";
     echo "</button>&nbsp ";
 
