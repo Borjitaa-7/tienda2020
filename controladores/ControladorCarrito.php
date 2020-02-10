@@ -24,52 +24,57 @@ class ControladorCarrito{
         }
         return self::$instancia;
     }
+//--------------//--------------//--------------//Quitar Articulo//--------------//--------------//--------------
+/**
+     * Quita un articulo de la cesta de manera definitiva a traves de su INDICE en el ARRAY
+     * @param type $indice
+     * 
+     */
 
-    public function index() {
-       echo "Controlador carrito, accion Index"; 
+    public function quitarArticulo($indice) {       //Recibimos el indice y lo borramos del carrito
+        if(isset($indice) && !empty($_SESSION['cesta']))
+        {
+                   unset($_SESSION['cesta'][$indice]); //Indice que se recibe del boton quitar
+        }
+        
     }
-
-    public function add($id) { //para añadir objetos al carrito
+//--------------//--------------//--------------//Sumar 1 Articulo//--------------//--------------//--------------
+    
+/**
+     * Incrementa en una unidad el articulo en la cesta si el id que le pasamos existe en el carrito
+     * @param type $id
+     * 
+     */
+public function add($id) {                  
      
         if(isset($id)) //debemos pasar un ID de articulo por $_GET
         {
                      $producto_id = $id;
-        }else{
-                    alerta("El ID no existe");
         }
 
-        if(isset($_SESSION['cesta'])) //para comprobar si la sesion de cesta ha sido inicializada
+        if(isset($_SESSION['cesta'])) // si la sesion de cesta ha sido inicializada que empiece
         {   $contador = 0;
             foreach($_SESSION['cesta'] as $indice => $elemento)
             {
-                $articulo = $elemento['articulo'];
+                $articulo = $elemento['articulo']; //Recuperamos el objeto articulo para sacar sus filas
 
-                    if($elemento['id_producto'] == $producto_id ) 
+                    if($elemento['id_producto'] == $producto_id )  //Si el ID que hemos pasado se encuentra en el carrito pasa este IF.
                     {
-                        if($articulo->getUnidades() > 0){
-                                if($_SESSION['cesta'][$indice]['cantidad'] < $articulo->getUnidades() ){
+                        if($articulo->getUnidades() > 0){ // Si ese articulo con ese ID su stock es mayor de 0 que nos añada las unidades. 
+                                if($_SESSION['cesta'][$indice]['cantidad'] < $articulo->getUnidades() ){ //Comprobamos que la cantidad que le sumemos no exceda el stock
                                     $_SESSION['cesta'][$indice]['cantidad']++;
                                     $contador++;
                                 }
-                                if($_SESSION['cesta'][$indice]['cantidad'] <= $articulo->getUnidades() ){
-                                    $contador=99;
-                                }
-
                         }
                       
                     }
             }
-            if($contador==99){
-                alerta("El articulo solicitado esta agotado");
-            }
-
         }
-
-
-        if (empty($contador) || !isset($contador)){
+        //Si no se ha incrementado el controlador de arriba sera porque el producto no se encontraba en la cesta, de esta manera lo inicializamos
+        if (empty($contador) || !isset($contador )){ 
             $id_articulo = $producto_id; //Aqui recogemos el ID del producto para procesar la su busqueda con nuestro controlador
-                $ca = ControladorArticulo::getControlador();
-                $articulo = $ca->buscarArticuloidconStock($id_articulo);
+                $ca = ControladorArticulo::getControlador(); //Abrimos una conexion con el controlado de articulos
+                $articulo = $ca->buscarArticuloidconStock($id_articulo); //y ademas comprobamos si hay stock
                     if($articulo){
                         $_SESSION['cesta'][] = array(
                             "id_producto" => $articulo->getid(),
@@ -77,55 +82,81 @@ class ControladorCarrito{
                             "cantidad" => 1,
                             "descuento" => $articulo->getDescuento(),
                             "articulo" => $articulo);
-                        }elseif($articulo == null){
-                        alerta('Sorry amigo flor medicinal canabica agotada');
                     }
-            }
+            } // si no hay stock no se añade al carrito
         } 
        
-        
-    
-    public function remove($id_eliminar) { //para eliminar objetos del carrito
+//--------------//--------------//--------------//Restar 1 Articulo//--------------//--------------//--------------//--------------//--------------
+   
+/**
+     * Descuenta en una unidad si el id que le pasamos existe en el carrito 
+     * @param type $id_eliminar
+     * EN CONSTRUCCION
+     */
+
+public function remove($id_eliminar) { //para eliminar objetos del carrito
          
-            if(isset($id_eliminar)) //debemos pasar un ID de articulo por $_GET
-            {
-                         $producto_id = $id_eliminar;
-            }
+            
+            $producto_id = $id_eliminar; //cambiamos el ID
+            
             if(isset($_SESSION['cesta'])) //para comprobar si la sesion de cesta ha sido inicializada
             {   $contador = 0;
-                $_SESSION['existe'] = null ;
                 foreach($_SESSION['cesta'] as $indice => $elemento)
                 {  
                     if($elemento['id_producto'] == $producto_id)              
                     {
 
-                        $_SESSION['existe'] = true ;
                         $_SESSION['cesta'][$indice]['cantidad']--; 
                         $contador--;
                     }
                     if($elemento['id_producto'] != $producto_id){
                         $contador++;
                     }
-                }
-               
+                }  
             }
-
-            if($contador >=1)
-            {
-            alerta("Error, ese articulo no se encuentra en la cesta");
-            }
-            
-    
-
     }
-
-    public function delete_all() {
+//--------------//--------------//--------------//Vaciar Carrito//--------------//--------------//--------------//--------------//--------------
+/**
+     * Revienta el carrito
+     * @param type null
+     * 
+     */
+    
+public function delete_all() { // si le llaman acaba con la sesion cesta
          unset($_SESSION['cesta']);
-         alerta("el carrito esta vacio","catalogo_articulos.php");
+         alerta("el carrito esta vacio","catalogo_articulos.php"); // te manda para el catalogo
 
     }
+//--------------//--------------//--------------//Pintar Unidades Y Precio//--------------//--------------//--------------//--------------//--------------
+/**
+     * Nos los elementos del carrito y nos suma el total del indice precio de la cesta.
+     * @param type null
+     * return => array($precioreal)
+     */
+    public function precioreal(){ //Aqui recogemos la cantidad de productos que tenemos en la cesta con la funcion count y 
+                                //ademas calculamos el total
+        $precioreal = array(
+            'contador' => 0,        //Aqui definimos nuestro array precioreal
+            'total'    => 0);
 
-    
+        if(isset($_SESSION['cesta'])){                             // Como requisito  debemos haber inicializado la cesta
+            $precioreal['contador'] = count($_SESSION['cesta']);  // Si todo fluye como la vida misma empezamos contando los productos almacenados
+                                                                 // en la cesta 1 por cada fila
+            foreach($_SESSION['cesta'] as $elemento){           // Ahora recorremos el array y nos fijaremos solos en la cantidad y precio de toda la cesta
+
+                if($elemento['descuento'] == 0){ //Recuperamos si ese articulo tieno o no descuento aplicable
+                   $precioUnitario = $elemento['precio'];
+                }else{ //Si no tiene descuento aplicable
+                    $precioUnitario = ($elemento['precio']) - (($elemento['precio'] * $elemento['descuento']/100));
+                }
+                //Añadimos el precio con o si descuento y lo multiplicamos por la cantidad, y solo sacamos el producto con 2 decimales
+                $precioreal['total'] += round($precioUnitario * $elemento['cantidad'],2);
+            }
+           
+        }
+        return $precioreal; //retornamos el resultado
+    }
+ 
 }
 
 ?>

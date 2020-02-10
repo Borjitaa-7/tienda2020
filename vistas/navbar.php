@@ -1,5 +1,6 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 require_once UTILITY_PATH . "funciones.php";
+require_once CONTROLLER_PATH . "ControladorCarrito.php";
 
 ?>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -30,7 +31,14 @@ require_once UTILITY_PATH . "funciones.php";
             echo '<li><a href="/iaw/tienda2020/vistas/login1.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
           }else{ // Si esta logeado
             $correo = $_SESSION['email'];
-            echo '<li><a href="/iaw/tienda2020/vistas/carrito_prueba.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cesta</a></li>';
+            if (isset($_SESSION['cuenta']) || !empty($_SESSION['cuenta'])){
+            $unidades = $_SESSION['cuenta'];
+            $contador=$unidades['contador'];
+            $total=$unidades['total'];
+              echo '<li><a href="/iaw/tienda2020/vistas/carrito_prueba.php">'.$contador. '<span class="glyphicon glyphicon-shopping-cart"></span> Cesta '.$total. ' €</a> </li>';
+            }else{
+              echo '<li><a href="/iaw/tienda2020/vistas/carrito_prueba.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cesta </a> </li>';
+            }
             echo "<li><a href='update.php?id=".encode($_SESSION['id'])."'><span class='glyphicon glyphicon-user'></span> $correo</a></li>";
             echo '<li><a href="login1.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>';
           }

@@ -34,7 +34,7 @@
             table.carrito {
                 background-color: rgba(255,255,255,0.5);  
                 margin-left: 27%;
-                margin-top: 10%;   
+                margin-top: 5%;   
                 border : solid 11px
             }
 
@@ -43,13 +43,18 @@
             }
            
             tbody.cesta {
-                background: salmon;
+                background: grey;
                 text-align: center;
                 border: 20px;
                 
             }
             .table-bordered {
                 background: white;
+            }
+
+            .mimenu{
+                margin-top: 4%;
+                margin-left: 40%;
             }
     </style>
 

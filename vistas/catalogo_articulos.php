@@ -81,7 +81,7 @@ foreach ($resultados->datos as $a){
     $pagina="catalogo_articulos.php";
 
     if(isset($_SESSION['email'])){
-        echo "<a href='/iaw/tienda2020/vistas/carrito_prueba.php?id=".encode($Articulo->getid())."&pagina=". encode($pagina) ."'<button type='button' class='btn btn-success'> Agregar ";
+        echo "<a href='/iaw/tienda2020/vistas/carrito_prueba.php?id=".encode($Articulo->getid())."'<button type='button' class='btn btn-success'> Agregar ";
         echo "<span class='glyphicon glyphicon-plus'></span></a>";
         echo "</button>&nbsp ";
     }else{
