@@ -78,10 +78,18 @@ foreach ($resultados->datos as $a){
 
     echo "</br>";
     echo  "<h5>"."<b>Precio</b>: ". $Articulo->getPrecio() ."€ &nbspx &nbspUnidad</h5>";
+    $pagina="catalogo_articulos.php";
 
-    echo "<a href='/iaw/tienda2020/vistas/carrito_prueba.php?id=" . encode($Articulo->getid()) . "'<button type='button' class='btn btn-success'> Agregar ";
-    echo "<span class='glyphicon glyphicon-plus'></span></a>";
-    echo "</button>&nbsp ";
+    if(isset($_SESSION['email'])){
+        echo "<a href='/iaw/tienda2020/vistas/carrito_prueba.php?id=".encode($Articulo->getid())."&pagina=". encode($pagina) ."'<button type='button' class='btn btn-success'> Agregar ";
+        echo "<span class='glyphicon glyphicon-plus'></span></a>";
+        echo "</button>&nbsp ";
+    }else{
+        echo "<a href='/iaw/tienda2020/vistas/login1.php'<button type='button' class='btn btn-success'> Agregar ";
+        echo "<span class='glyphicon glyphicon-plus'></span></a>";
+        echo "</button>&nbsp ";
+    }
+ 
 
     echo "<a href='/iaw/tienda2020/vistas/read_articulos.php?id=" . encode($Articulo->getid()) . "'<button type='button' class='btn btn-primary'> Ver </buttom></a>";
 

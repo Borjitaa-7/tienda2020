@@ -68,9 +68,45 @@ class ControladorCarrito{
        
         
     
-    public function remove() {
+    public function remove() { //para eliminar objetos del carrito
+         
+            if(isset($id_eliminar)) //debemos pasar un ID de articulo por $_GET
+            {$id_eliminar ="";
+                         $producto_id = $id_eliminar;
+            }else{
+                        alerta("El ID no existe");
+            }
+    
+            if(isset($_SESSION['cesta'])) //para comprobar si la sesion de cesta ha sido inicializada
+            {   $contador = 0;
+                foreach($_SESSION['cesta'] as $indice => $elemento)
+                {  
+                    if($elemento['id_producto'] == $producto_id) 
+                    {
+                    $_SESSION['cesta'][$indice]['cantidad']++; 
+                        $contador++;
+                    }
+                    else{
+                        alerta('El articulo que intentas borrar no existe');
+                    }
+                }
+            }
+            if (!isset($contador) || $contador == 0){
+                $id_articulo = $producto_id; //Aqui recogemos el ID del producto para procesar la su busqueda con nuestro controlador
+                  
+                    foreach($_SESSION['cesta'] as $indice => $elemento)
+                    {  
+                        if($elemento['id_producto'] == $producto_id) 
+                        {
+                        $_SESSION['cesta'][$indice]['cantidad']++; 
+                        $contador++;
+                        }
+                    }
+            }
+    
 
     }
+
     public function delete_all() {
          unset($_SESSION['cesta']);
          alerta("el carrito esta vacio","catalogo_articulos.php");
