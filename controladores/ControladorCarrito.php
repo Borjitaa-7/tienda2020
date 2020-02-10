@@ -41,68 +41,80 @@ class ControladorCarrito{
         if(isset($_SESSION['cesta'])) //para comprobar si la sesion de cesta ha sido inicializada
         {   $contador = 0;
             foreach($_SESSION['cesta'] as $indice => $elemento)
-            {  
-                if($elemento['id_producto'] == $producto_id) 
-                {
-                $_SESSION['cesta'][$indice]['cantidad']++; 
-                    $contador++;
-                }
+            {
+                $articulo = $elemento['articulo'];
+
+                    if($elemento['id_producto'] == $producto_id ) 
+                    {
+                        if($articulo->getUnidades() > 0){
+                                if($_SESSION['cesta'][$indice]['cantidad'] < $articulo->getUnidades() ){
+                                    $_SESSION['cesta'][$indice]['cantidad']++;
+                                    $contador++;
+                                }
+                                if($_SESSION['cesta'][$indice]['cantidad'] <= $articulo->getUnidades() ){
+                                    $contador=99;
+                                }
+
+                        }
+                      
+                    }
             }
+            if($contador==99){
+                alerta("El articulo solicitado esta agotado");
+            }
+
         }
 
 
-        if (!isset($contador) || $contador == 0){
+        if (empty($contador) || !isset($contador)){
             $id_articulo = $producto_id; //Aqui recogemos el ID del producto para procesar la su busqueda con nuestro controlador
                 $ca = ControladorArticulo::getControlador();
-                $articulo = $ca->buscarArticuloid($id_articulo);
+                $articulo = $ca->buscarArticuloidconStock($id_articulo);
                     if($articulo){
                         $_SESSION['cesta'][] = array(
                             "id_producto" => $articulo->getid(),
                             "precio" => $articulo->getPrecio(),
                             "cantidad" => 1,
                             "descuento" => $articulo->getDescuento(),
-                            "articulo" => $articulo );
+                            "articulo" => $articulo);
+                        }elseif($articulo == null){
+                        alerta('Sorry amigo flor medicinal canabica agotada');
                     }
             }
         } 
        
         
     
-    public function remove() { //para eliminar objetos del carrito
+    public function remove($id_eliminar) { //para eliminar objetos del carrito
          
             if(isset($id_eliminar)) //debemos pasar un ID de articulo por $_GET
-            {$id_eliminar ="";
+            {
                          $producto_id = $id_eliminar;
-            }else{
-                        alerta("El ID no existe");
             }
-    
             if(isset($_SESSION['cesta'])) //para comprobar si la sesion de cesta ha sido inicializada
             {   $contador = 0;
+                $_SESSION['existe'] = null ;
                 foreach($_SESSION['cesta'] as $indice => $elemento)
                 {  
-                    if($elemento['id_producto'] == $producto_id) 
+                    if($elemento['id_producto'] == $producto_id)              
                     {
-                    $_SESSION['cesta'][$indice]['cantidad']++; 
-                        $contador++;
+
+                        $_SESSION['existe'] = true ;
+                        $_SESSION['cesta'][$indice]['cantidad']--; 
+                        $contador--;
                     }
-                    else{
-                        alerta('El articulo que intentas borrar no existe');
+                    if($elemento['id_producto'] != $producto_id){
+                        $contador++;
                     }
                 }
+               
             }
-            if (!isset($contador) || $contador == 0){
-                $id_articulo = $producto_id; //Aqui recogemos el ID del producto para procesar la su busqueda con nuestro controlador
-                  
-                    foreach($_SESSION['cesta'] as $indice => $elemento)
-                    {  
-                        if($elemento['id_producto'] == $producto_id) 
-                        {
-                        $_SESSION['cesta'][$indice]['cantidad']++; 
-                        $contador++;
-                        }
-                    }
+
+            if($contador >=1)
+            {
+            alerta("Error, ese articulo no se encuentra en la cesta");
             }
+            
     
 
     }

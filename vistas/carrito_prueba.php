@@ -12,11 +12,19 @@ session_start();
 
 
 //Para borrar el carrito solo tenemos que pasarle un GET con /localhost/loquesea.php?borrar=loquesea; 
-if(isset($_GET["borrar"])){
-    $borrar = $_GET["borrar"];
+if(isset($_GET["borrar_carrito"])){
+    $borrar = $_GET["borrar_carrito"];
         if($borrar){
             $cc = ControladorCarrito::getControlador();
             $borrar= $cc->delete_all(); 
+        }
+}
+
+if(isset($_GET["quitar_unidad"])){
+    $id_eliminar = $_GET["quitar_unidad"];
+        if($id_eliminar){
+            $cc = ControladorCarrito::getControlador();
+            $borrar= $cc->remove($id_eliminar); 
         }
 }
 
@@ -79,7 +87,7 @@ foreach($_SESSION['cesta'] as $indice => $elemento) {
                     <div>
                         <p>Seguir comprando</p><br>
                         <p>
-                        <a href='/iaw/tienda2020/vistas/carrito_prueba.php?borrar=1' class="btn btn-danger"> <span class="glyphicon glyphicon-trash"></span>  Vaciar carrito</a></button>
+                        <a href='/iaw/tienda2020/vistas/carrito_prueba.php?borrar_carrito=1' class="btn btn-danger"> <span class="glyphicon glyphicon-trash"></span>  Vaciar carrito</a></button>
                             <a href='catalogo_articulos.php' class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span></span> Volver</a></li>
                         </p>
                     </div>

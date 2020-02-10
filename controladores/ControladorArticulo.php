@@ -82,7 +82,27 @@ class ControladorArticulo {
             return null;
         }    
     }
-//--------------------------------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------------------------------
+    public function buscarArticuloidconStock($id){ 
+        $bd = ControladorBD::getControlador();
+        $bd->abrirBD();
+        $consulta = "SELECT* FROM articulos WHERE id = :id AND unidades > 0";
+        $parametros = array(':id' => $id);
+        $filas = $bd->consultarBD($consulta, $parametros);
+        $res = $bd->consultarBD($consulta,$parametros);
+        $filas=$res->fetchAll(PDO::FETCH_OBJ);
+        if (count($filas) > 0) {
+            foreach ($filas as $a) {
+                $Articulo = new Articulo($a->id, $a->nombre, $a->tipo, $a->distribuidor, $a->precio, $a->descuento, $a->unidades, $a->imagen);
+            }
+            $bd->cerrarBD();
+            return $Articulo;
+        }else{
+            return null;
+        }    
+    }
+//------------------------------------------------------------------------------------------------------------
     public function buscarArticulo($nombre){ 
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
