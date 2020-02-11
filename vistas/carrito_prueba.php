@@ -36,15 +36,42 @@ if(isset($_GET["borrar_carrito"])){
         }
 }
 
-// EN CONSTRUCCION// EN CONSTRUCCION// EN CONSTRUCCION// EN CONSTRUCCION// EN CONSTRUCCION
+//Si pulsamos sobre el boton quitar recibira este parametro por get
 if(isset($_GET["quitar_unidad"])){
-    $id_eliminar = $_GET["quitar_unidad"];
-        if($id_eliminar){
+    $id = decode($_GET["quitar_unidad"]); //Restará en una unidad la cantidad de la cesta; siempre y cuando sea mayor a 0
+        
+    $ca = ControladorArticulo::getControlador(); //Abrimos una conexion con el controlado de articulos
+    $articulo = $ca->buscarArticuloidconStock($id);
+
+    if($articulo){
+            $id_eliminar=$id;
             $cc = ControladorCarrito::getControlador();
-            $borrar= $cc->remove($id_eliminar); 
-        } // EN CONSTRUCCION// EN CONSTRUCCION// EN CONSTRUCCION// EN CONSTRUCCION// EN CONSTRUCCION
+            $borrar= $cc->remove($id_eliminar);
+            header("location: carrito_prueba.php");          
+    }else{
+            alerta("Sientiendolo mucho, no tenemos ese producto", "carrito_prueba.php");
+    }
 }
 
+if(isset($_GET["add"])){
+     
+    $id = decode($_GET["add"]); //la id la mandamos codificada
+
+
+    $ca = ControladorArticulo::getControlador(); //Abrimos una conexion con el controlado de articulos
+    $articulo_stock = $ca->buscarArticuloidconStock($id); //Comprobamos si hay stock y si el ID es valido.
+
+    if($articulo_stock){
+            //si todo va bien nos añadirá el producto
+            $cc = ControladorCarrito::getControlador();
+            $estado = $cc->add($id);
+             // si mandamos lo que sea desde el catalogo que nos sume la unidad y lo redirija
+            header("location: carrito_prueba.php");
+    }else{
+        alerta("Sientiendolo mucho, no tenemos stock de ese producto", "catalogo_articulos.php");
+    }
+
+}
 
 
 //Para añadir cosas al carrito solo tenemos que pasarle un GET con /localhost/loquesea.php?id=numero; 
@@ -82,6 +109,8 @@ if (!empty($_SESSION['cesta']) && isset($_SESSION['cesta'])){
     <th>PRECIO</th>
     <th>DESCUENTO</th>
     <th>UNIDADES</th>
+    <th>QUITAR</th>
+    <th>AGREGAR</th>
     <th>BORRAR</th>
 
 </thead>
@@ -93,12 +122,16 @@ foreach($_SESSION['cesta'] as $indice => $elemento) {
     <tr>
     <td> <img src='<?php echo "/iaw/tienda2020/imagenes/" . $articulo->getimagen() ?>' class='rounded' class='img-thumbnail' width='70'></td>  <!-- Imagen -->
     <td> <?php echo $articulo->getnombre(); ?></td> <!-- Nombre del articulo -->
-    <td> <?php echo $elemento['id_producto'] ;?></td>  <!-- ID de articulo quitar pronto -->
+    <td> <?php echo $elemento['id_producto'] ;?></td>  <!-- ID de articulo PROBLEMA DE SEGURIDAD -->
     <td> <?php echo $articulo->getTipo() ;?></td>  <!-- Tipo -->
     <td> <?php echo $elemento['precio'] ;?></td>  <!-- Precio -->
     <td> <?php echo $elemento['descuento'] ;?></td> <!-- descuento -->
     <td> <?php echo $elemento['cantidad'] ;?></td>  <!-- cantidad -->
-    <td>  <a href='/iaw/tienda2020/vistas/carrito_prueba.php?quitar="<?php echo encode($indice); ?>"'><button type="button"  class="btn btn-danger"> Quitar</button></a></td>
+    <td> <a href='/iaw/tienda2020/vistas/carrito_prueba.php?quitar_unidad="<?php echo encode($elemento['id_producto']); ?>"'><button type="button"   class='btn btn-warning'> Quitar</button></a></td>
+    <!-- Lo que estoy pasando por GET es el ID del producto -->
+    <td> <a href='/iaw/tienda2020/vistas/carrito_prueba.php?add="<?php echo encode($elemento['id_producto']); ?>"'><button type="button"   class='btn btn-success'> Añadir</button></a></td>
+    <!-- Lo que estoy pasando por GET es el ID del producto -->
+    <td>  <a href='/iaw/tienda2020/vistas/carrito_prueba.php?quitar="<?php echo encode($indice); ?>"'><button type="button"  class="btn btn-danger"> Borrar</button></a></td>
     </tr><!-- Lo que estoy pasando por GET es el $indice  que contine los elementos del array para unsetearlos -->
 <?php 
     }

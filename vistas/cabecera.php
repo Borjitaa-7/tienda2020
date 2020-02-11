@@ -33,7 +33,7 @@
             }
             table.carrito {
                 background-color: rgba(255,255,255,0.5);  
-                margin-left: 27%;
+                margin-left: 15%;
                 margin-top: 5%;   
                 border : solid 11px
             }
@@ -54,7 +54,7 @@
 
             .mimenu{
                 margin-top: 4%;
-                margin-left: 40%;
+                margin-left: 35%;
             }
     </style>
 

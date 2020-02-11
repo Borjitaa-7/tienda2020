@@ -53,7 +53,8 @@ public function add($id) {
         }
 
         if(isset($_SESSION['cesta'])) // si la sesion de cesta ha sido inicializada que empiece
-        {   $contador = 0;
+        {   $contador = 0 ;
+            $peaje = 0;
             foreach($_SESSION['cesta'] as $indice => $elemento)
             {
                 $articulo = $elemento['articulo']; //Recuperamos el objeto articulo para sacar sus filas
@@ -62,16 +63,23 @@ public function add($id) {
                     {
                         if($articulo->getUnidades() > 0){ // Si ese articulo con ese ID su stock es mayor de 0 que nos añada las unidades. 
                                 if($_SESSION['cesta'][$indice]['cantidad'] < $articulo->getUnidades() ){ //Comprobamos que la cantidad que le sumemos no exceda el stock
-                                    $_SESSION['cesta'][$indice]['cantidad']++;
-                                    $contador++;
-                                }
-                        }
+                                        $_SESSION['cesta'][$indice]['cantidad']++;
+                                        $contador++;
+
+                                }else{
+                                    $peaje++; // Agreamos el peaje para controlar que el articulo a alcanzado el maximo de unidades permitidas en la cesta
+                                }   
+                    
                       
+                        }
                     }
             }
-        }
-        //Si no se ha incrementado el controlador de arriba sera porque el producto no se encontraba en la cesta, de esta manera lo inicializamos
-        if (empty($contador) || !isset($contador )){ 
+        }  
+        //Si no se ha incrementado el controlador de arriba ni tampoco el peaje quiere decir 2 cosas : 1 que ha intentado añadir pero no ha encontrado su ID y si ha encontrado su ID pero no ha superado
+        //el IF de la cantidad maxima.
+        //Si estan a empty significa que el articulo que queremos añadir no se encuentra en el carrito y si se encuentra la variable emty peaje le para los pies.
+
+        if (empty($contador) && empty($peaje)){ 
             $id_articulo = $producto_id; //Aqui recogemos el ID del producto para procesar la su busqueda con nuestro controlador
                 $ca = ControladorArticulo::getControlador(); //Abrimos una conexion con el controlado de articulos
                 $articulo = $ca->buscarArticuloidconStock($id_articulo); //y ademas comprobamos si hay stock
@@ -95,23 +103,24 @@ public function add($id) {
      */
 
 public function remove($id_eliminar) { //para eliminar objetos del carrito
-         
-            
-            $producto_id = $id_eliminar; //cambiamos el ID
+
+        $producto_id = $id_eliminar; // si queremos decodificar (decode( $id_eliminar)) este seria el lugar 
             
             if(isset($_SESSION['cesta'])) //para comprobar si la sesion de cesta ha sido inicializada
-            {   $contador = 0;
+            {   
                 foreach($_SESSION['cesta'] as $indice => $elemento)
                 {  
                     if($elemento['id_producto'] == $producto_id)              
                     {
+                            if( $_SESSION['cesta'][$indice]['cantidad'] > 1){
 
-                        $_SESSION['cesta'][$indice]['cantidad']--; 
-                        $contador--;
-                    }
-                    if($elemento['id_producto'] != $producto_id){
-                        $contador++;
-                    }
+                                    $_SESSION['cesta'][$indice]['cantidad']--; 
+                            
+                            }else{
+                            //Si llega a cero, borra el indice del array donde se almacenan todos los elementos del articulo 
+                                    unset($_SESSION['cesta'][$indice]);
+                            }
+                    }  
                 }  
             }
     }
