@@ -52,6 +52,7 @@ class ControladorAcceso
                     $_SESSION['id'] = $usuario->getId();
                     $_SESSION['nombre'] = $usuario->getNombre();
                     $_SESSION['apellido'] = $usuario->getApellidos();
+                    $_SESSION['telefono'] = $usuario->getTelefono();
                     $_SESSION['administrador'] = $usuario->getAdmin();
                     $_SESSION['email'] = $usuario->getEmail();
                     $_SESSION['USUARIO']['email'] = $email;

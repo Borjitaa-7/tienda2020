@@ -31,6 +31,7 @@ class ControladorSesion
         $_SESSION['apellidos'] = $usuario->getApellidos();
         $_SESSION['admin'] = $usuario->getAdmin();
         $_SESSION['email'] = $usuario->getEmail();
+        $_SESSION['telefono'] = $usuario->getTelefono();
         $_SESSION['id_usuario'] = $usuario->getId();
         $_SESSION['uds'] = 0;
 
