@@ -69,7 +69,7 @@ if(isset($_GET["id"])){
 }
 
 
-if (!empty($_SESSION['cesta']) && count($_SESSION['cesta']>=0)){
+if (!empty($_SESSION['cesta']) && isset($_SESSION['cesta'])){
 ?>
  <!-- TABLA DE CARRITO -->
 <table class='carrito'>
@@ -100,7 +100,7 @@ foreach($_SESSION['cesta'] as $indice => $elemento) {
     <td> <?php echo $elemento['cantidad'] ;?></td>  <!-- cantidad -->
     <td>  <a href='/iaw/tienda2020/vistas/carrito_prueba.php?quitar="<?php echo encode($indice); ?>"'><button type="button"  class="btn btn-danger"> Quitar</button></a></td>
     </tr><!-- Lo que estoy pasando por GET es el $indice  que contine los elementos del array para unsetearlos -->
-<? 
+<?php 
     }
 ?>
 </tbody>
@@ -114,9 +114,9 @@ $subtotal=$unidades['total']; //saco del array el indice 'total' y lo meto en la
 ?>
                     <div class='mimenu'>
                     <!-- MENU  DE TOTALES -->
-                        <p><? echo "<h3>El importe total de tu compra es : </h3><ul><h4> Subtotal: " .round ($subtotal / 1.21,2)  ?>€</p> 
+                        <p><?php echo "<h3>El importe total de tu compra es : </h3><ul><h4> Subtotal: " .round ($subtotal / 1.21,2)  ?>€</p> 
                         <p>IVA: 21%</p>
-                        <p>TOTAL: <? echo round ($subtotal,2)  ?>€</p></h4></p>
+                        <p>TOTAL: <?php echo round ($subtotal,2)  ?>€</p></h4></p>
                         </ul>
                        <!-- MENU  DE BOTONES -->
                         <br>
