@@ -102,8 +102,6 @@ if(){
 ?>
 
 
-
-<!------ Include the above in your HEAD tag ---------->
 <br>
 
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
