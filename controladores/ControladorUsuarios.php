@@ -144,31 +144,23 @@ class ControladorUsuarios {
      
     //---------------------------------------------------------------ACTUALIZAR
 
-      /**
-     * Realiza el login buscando un usuario en una base de datos
-     * @param $email email de usuario
-     * @param $pass password
-     * @return Usuario|null
-     */
-  
-    // public function login($email, $pass)
-    // {
-    //     $bd = ControladorBD::getControlador();
-    //     $bd->abrirBD();
-
-    //     $consulta = "select * from usuarios where email = :email and password = :password";
-    //     $parametros = array(':email' => $email, ':password' => $pass);
-
-    //     $res = $bd->consultarBD($consulta, $parametros);
-    //     $filas = $res->fetchAll(PDO::FETCH_OBJ);
-
-    //     if (count($filas) > 0) {
-    //         $usuario = new Usuario($filas[0]->id, $filas[0]->dni, $filas[0]->nombre, $filas[0]->apellidos, $filas[0]->email, $filas[0]->password, $filas[0]->admin, $filas[0]->telefono,$filas[0]->fecha,$filas[0]->imagen);
-    //         $bd->cerrarBD();
-    //         return $usuario;
-    //     } else {
-    //         return null;
-    //     }
-    // }
+    public function buscarEmail($email){ 
+        $bd = ControladorBD::getControlador();
+        $bd->abrirBD();
+        $consulta = "SELECT * FROM usuarios WHERE email = :email";
+        $parametros = array(':email' => $email);
+        $filas = $bd->consultarBD($consulta, $parametros);
+        $res = $bd->consultarBD($consulta,$parametros);
+        $filas=$res->fetchAll(PDO::FETCH_OBJ);
+        if (count($filas) > 0) {
+            foreach ($filas as $a) {
+                $usuario = new Usuario($a->id, $a->dni, $a->nombre, $a->apellidos, $a->email, $a->password, $a->admin, $a->telefono, $a->fecha, $a->imagen);
+            }
+            $bd->cerrarBD();
+            return $usuario;
+        }else{
+            return null;
+        }    
+    }
       //---------------------------------------------------------------LOGIN
 }
