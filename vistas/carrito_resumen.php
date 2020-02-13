@@ -37,9 +37,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
 //Validamos el nombre
 $Valnombre = filtrado($_POST['nombre']);
 if(empty($Valnombre)){
-  $Errnombre = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
+  $Errnombre = "Por favor introduzca un nombre.";
   $errores[]= $Errnombre;
-}elseif(!preg_match("/([^\s][A-zÀ-ž\s]+$)/", $Valnombre)){
+}elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s+([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,36}$/iu", $Valnombre)){
   $Errnombre = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
   $errores[]= $Errnombre;
 
@@ -52,8 +52,8 @@ $Valemail = filtrado($_POST["email"]);
 if(empty($Valemail)){
     $Erremail = "Por favor introduzca email válido.";
     $errores[]= $Erremail;
-}elseif(!filter_var($Valemail, FILTER_VALIDATE_EMAIL)){
-    $Erremail = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
+}elseif(!preg_match("/^[a-zA-Z0-9-_.]+[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/", $Valemail)){
+    $Erremail = "Por favor introduzca un email válido con solo carácteres alfabéticos.";
     $errores[]= $Erremail;
 }else{
     $email= $Valemail;
@@ -88,7 +88,7 @@ $Valdireccion = filtrado($_POST['direccion']);
 if(empty($Valdireccion)){
   $Errdireccion = "Tienes que escribir una direccion de teléfono";
   $errores[]= $Errdireccion;
-}elseif(!preg_match("/([^\s][A-zÀ-ž\s]+\s\d?\d?\d+$)/", $Valdireccion)){
+}elseif(!preg_match("/[^\s][A-zÀ-ž\s]+[A-zÀ-ž\s]\s\d?\d?\d+$/", $Valdireccion)){
   $Errdireccion= "Introduce una direccion valida , valores validos : Falsa 4 , Principe pio 9 , Teresa de calcula 192 ";
   $errores[]= $Errdireccion;
 }else{
@@ -100,7 +100,7 @@ $Valtitular = filtrado($_POST['titular']);
 if(empty($Valtitular)){
 $Errtitular = "Por favor introduzca un nombre de titular válido con solo carácteres alfabéticos.";
 $errores[]= $Errtitular;
-}elseif(!preg_match("/([^\s][A-zÀ-ž\s]+$)/", $Valtitular)){
+}elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s+([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,36}$/iu", $Valtitular)){
 $Errtitular = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
 $errores[]= $Errtitular;
 }else{
@@ -157,7 +157,9 @@ if (empty($errores)){
   //WORK IN PROGRESS////WORK IN PROGRESS////WORK IN PROGRESS////WORK IN PROGRESS////WORK IN PROGRESS//
 }
 }
-var_dump($errores)
+var_dump($errores);
+echo "<br>";
+var_dump($Valdireccion);
 ?>
 
 
@@ -173,13 +175,14 @@ var_dump($errores)
             <div class='form-row'>
               <div class='col-xs-12 form-group required'>
                 <label class='control-label'>Nombre</label>
-                <input type="text" required name="nombre"  class="form-control" maxlength='30' value='<?php echo $nombreC ?>' pattern="([^\s][A-zÀ-ž\s]+$)">
+                <input type="text" required name="nombre"  class="form-control" maxlength='30' value='<?php echo $nombreC ?>' pattern="^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s+([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,36}$">
               </div>
             </div>
             <div class='form-row'>
               <div class='col-xs-12 form-group required'>
                 <label class='control-label'>Email</label>
-                <input type="email" required name="email" class="form-control" maxlength='30'  value='<?php echo $email?>' pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$">
+                <input type="email" required name="email" class="form-control" maxlength='30'  value='<?php echo $email?>' >
+                <!-- pattern="^[a-zA-Z0-9-_.]+[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"  title="Introduce una email valido , ejemplo jo-_-se_Lu_algo1@fm-ail.com "> -->
               </div>
             </div>
             <div class='form-row'>
@@ -267,7 +270,7 @@ foreach($_SESSION['cesta'] as $indice => $elemento) {
             <div class='form-row'>
               <div class='col-xs-12 form-group required'>
                 <label class='control-label'>Titular</label>
-                <input class='form-control' required size='4' type='text' name='titular' value='<?php echo $nombreC?>' pattern="([^\s][A-zÀ-ž\s]+$)">
+                <input class='form-control' required size='4' type='text' name='titular' value='<?php echo $nombreC?>' pattern="^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s+([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,36}$">
               </div>
             </div>
             <div class='form-row'>
