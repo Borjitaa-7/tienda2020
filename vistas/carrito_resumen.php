@@ -76,7 +76,7 @@ if (isset($usuario) && $emailAnterior != $email) {
 if(empty($Valtelefono)){
   $Errtelefono = "Tienes que escribir tu número de teléfono";
   $errores[]= $Errtelefono;
-}elseif(!(preg_match('/^[0-9]{9}+$/', $Valtelefono))){
+}elseif(!(preg_match('/^(\+34|0034|34)?[\s|\-|\.]?[6|7|8|9][\s|\-|\.]?([0-9][\s|\-|\.]?){8}$/', $Valtelefono))){
   $Errtelefono = "Por favor introduzca 9 numeros válidos";
   $errores[]= $Errtelefono;
 }else{
@@ -86,10 +86,10 @@ if(empty($Valtelefono)){
 //Validamos direccion
 $Valdireccion = filtrado($_POST['direccion']);
 if(empty($Valdireccion)){
-  $Errdireccion = "Tienes que escribir una direccion de teléfono";
+  $Errdireccion = "Tienes que escribir una direccion de casa";
   $errores[]= $Errdireccion;
-}elseif(!preg_match("/[^\s][A-zÀ-ž\s]+[A-zÀ-ž\s]\s\d?\d?\d+$/", $Valdireccion)){
-  $Errdireccion= "Introduce una direccion valida , valores validos : Falsa 4 , Principe pio 9 , Teresa de calcula 192 ";
+}elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){1,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,10}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){2,10}\s+[1-9]{0,3}$/iu", $Valdireccion)){
+  $Errdireccion= "Introduce una direccion valida , valores validos : Pio 3 , Falsa 4 , Principe pio 9 , Téresa De Calcula 192 ";
   $errores[]= $Errdireccion;
 }else{
   $direccion = $Valdireccion;
@@ -100,7 +100,7 @@ $Valtitular = filtrado($_POST['titular']);
 if(empty($Valtitular)){
 $Errtitular = "Por favor introduzca un nombre de titular válido con solo carácteres alfabéticos.";
 $errores[]= $Errtitular;
-}elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s+([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,36}$/iu", $Valtitular)){
+}elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){2,18}\s+([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,36}$/iu", $Valtitular)){
 $Errtitular = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
 $errores[]= $Errtitular;
 }else{
@@ -112,8 +112,8 @@ $Valtarjeta = filtrado($_POST['tarjeta']);
 if(empty($Valtarjeta)){
   $Errtarjeta = "Por introduzca un numero de tarjeta.";
   $errores[]= $Errtarjeta;
-}elseif(!(preg_match('/^[0-9]{13}+$/', $Valtarjeta))){
-  $Errtarjeta = "Por introduzca un numero de tarjeta con 13 caracteres.";
+}elseif(!(preg_match('/^[1-9]{1}[0-9]{12}+$/', $Valtarjeta))){
+  $Errtarjeta = "Por introduzca un numero de tarjeta con 13 caracteres validos.";
   $errores[]= $Errtarjeta;
 }else{
   $tarjeta = $Valtarjeta ;
@@ -123,7 +123,7 @@ $Valcvc = filtrado($_POST['cvc']);
 if(empty($Valcvc)){
   $Errcvc = "Por introduzca un cvc valido.";
   $errores[]= $Errcvc;
-}elseif(!(preg_match('/^[0-9]{3}+$/', $Valcvc))){
+}elseif(!(preg_match('/^[1-9]+[0-9]{2}+$/', $Valcvc))){
   $Errcvc = "Por introduzca un cvc valido con 3 caracteres.";
   $errores[]= $Errcvc;
 }else{
@@ -133,15 +133,15 @@ if(empty($Valcvc)){
 //Validamos caducidad_mes
 $Valcaducidad_mes = filtrado($_POST['caducidad_mes']);
 if(empty($Valcaducidad_mes)){
-  $Errcaducidad_mes = "Por introduzca algun valido.";
+  $Errcaducidad_mes = "Por favor introduzca un mes.";
   $errores[]= $Errcaducidad_mes;
-}elseif(!(preg_match('/^(1[0-2]|0[1-9]){1}+$/', $Valcaducidad_mes))){
-  $Errcaducidad_mes = "Por introduzca un mes valido del 1 al 12.";
+}elseif(!(preg_match('/^(0[1-9]|1[012])+$/', $Valcaducidad_mes))){
+  $Errcaducidad_mes = "Por introduzca un mes valido del 01 al 12.";
   $errores[]= $Errcaducidad_mes;
 }else{
   $caducidad_mes = $Valcaducidad_mes ;
 }
-
+//Validamos caducidad_mes
 $Valcaducidad_year = filtrado($_POST['caducidad_year']);
 if(empty($Valcaducidad_year)){
   $Errcaducidad_year = "Por introduzca algun cvc";
@@ -159,7 +159,7 @@ if (empty($errores)){
 }
 var_dump($errores);
 echo "<br>";
-var_dump($Valdireccion);
+var_dump($Valcaducidad_mes);
 ?>
 
 
@@ -188,18 +188,19 @@ var_dump($Valdireccion);
             <div class='form-row'>
               <div class='col-xs-12 form-group required'>
                 <label class='control-label'>Telefono</label>
-                <input type="text" required  name="telefono"  class="form-control" placeholder= "626 90 95 88" maxlength="9" minlength="9" value='<?php echo $telefono?>' pattern="[0-9]{9}"
-                title="Introduce una numero valido , ejemplo 626 90 12 12 ">
+                <input type="text" required  name="telefono"  class="form-control" placeholder= "626 90 95 88" maxlength="14" minlength="9" value='<?php echo $telefono?>' pattern="(^(\+34|0034|34)?[\s|\-|\.]?[6|7|8|9][\s|\-|\.]?([0-9][\s|\-|\.]?){8}$"
+                title="Introduce una numero valido , 0034 626901212  | 626903231 | +34 781121123">
               </div>
             </div>
             <div class='form-row'>
               <div class='col-xs-12 form-group required'>
                 <label class='control-label'>Direccion</label>
-                <input type="text" required name="direccion" class="form-control" placeholder='C/ Benefica 4' maxlength='23' minlength='6' value="" pattern="([^\s][A-zÀ-ž\s]+\s\d?\d?\d$)"
-                            title="Introduce una direccion valida , valores validos : Falsa 4 , Principe pio 9 , Teresa de calcula 192 ">
+                <input type="text" required name="direccion" class="form-control" placeholder='C/ Benefica 4' maxlength='30' pattern='^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){1,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,10}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){2,10}\s+[1-9]{0,3}$'
+                value='Pio 1'title="Introduce una direccion valida , valores validos : Pio 1, Falsa 4 , Principe pio 9 , Teresa de calcula 192 ">
               </div>
             </div>
             </fieldset>
+           <!-- minlength='5' value= pattern="([^\s][A-zÀ-ž\s]+\s\d?\d?\d$)"  -->
 
 <br>
 <!-- Resumen -->
@@ -276,24 +277,27 @@ foreach($_SESSION['cesta'] as $indice => $elemento) {
             <div class='form-row'>
               <div class='col-xs-12 form-group card required'>
                 <label class='control-label'>Numero de tarjeta</label>
-                <input type="text" required name="tarjeta" class="form-control" placeholder='123456789012' value=""  maxlength='13' minlength='13' pattern="[0-9]{13}" 
+                <input type="text" required name="tarjeta" class="form-control" placeholder='123456789012' value="1212121212121"  maxlength='13' minlength='13' pattern="[1-9]{1}[0-9]{12}" 
                             title="Introduce los 13 numeros de tu tarjeta, por ejemplo: 1234567889023">
               </div>
             </div>
             <div class='form-row'>
               <div class='col-xs-4 form-group cvc required'>
                 <label class='control-label'>CVC</label>
-                <input required class='form-control card-cvc'  required name="cvc" placeholder='ex. 311' size='3' maxlength='3' minlength='3'  pattern="[0-9]{3}" type='text'>
+                <input required class='form-control card-cvc'  required name="cvc" placeholder='ex. 311' size='3' maxlength='3' minlength='3'  pattern="[1-9][0-9]{2}" type='text'
+                title="Introduce un cvc valido del 100 al 999">
               </div>
               <div class='col-xs-4 form-group expiration required'>
-                <label class='control-label'>Caducidad</label>
-                <input type="text" required name="caducidad_mes" class="form-control" placeholder='MM' maxlength='2' minlength='1' value="" pattern="(1[0-2]|0[1-9]{2})" 
-                            title="Introduce el mes de caducidad de tu tarjeta, numeros validos del 1 al 12">
+                <label class='control-label'>Caducidad Mes</label>
+                <input type="text" required name="caducidad_mes" class="form-control" placeholder='MM' maxlength='2' minlength='1' value="06" pattern="0[1-9]|1[012]" 
+                            title="Introduce el mes de caducidad de tu tarjeta, numeros validos del 01 al 12">
               </div>
               <div class='col-xs-4 form-group expiration required'>
-                <label class='control-label'> Año</label>
-                <input type="text" required name="caducidad_year" class="form-control" placeholder='AA' maxlength='2' minlength='2' value="" pattern="(2[1-9]){1}"
+                <label class='control-label'>Caducidad Año</label>
+                <input type="text" required name="caducidad_year" class="form-control" placeholder='AA' maxlength='222' minlength='1' value="" pattern="2[1-9]"
                             title="Introduce el mes de caducidad de tu tarjeta, numeros validos del 21 al 29">
+
+                            <!-- pattern="(2[1-9]){1}" -->
               </div>
             </div>
             <!-- Para verificar el email -->
