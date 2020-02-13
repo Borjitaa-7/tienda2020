@@ -30,10 +30,13 @@ if (isset($_SESSION["cesta"]) && !empty($_SESSION["cesta"])) {
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
 
+
   $Errnombre=$Erremail=$Errtelefono=$Errdireccion=$Errtitular=$Errtarjeta=$Errcvc=$Errcaducidad_mes=$Errcaducidad_year="";
   $Valnombre=$Valemail=$Valtelefono=$Valdireccion=$Valtitular=$Valtarjeta=$Valcvc=$Valcaducidad_mes=$Valcaducidad_year="";
   $nombre=$email=$telefono=$direccion=$titular=$tarjeta=$cvc=$caducidad_mes=$caducidad_year="";
   $errores = [];
+
+
 //Validamos el nombre
 $Valnombre = filtrado($_POST['nombre']);
 if(empty($Valnombre)){
@@ -181,8 +184,8 @@ var_dump($Valcaducidad_mes);
             <div class='form-row'>
               <div class='col-xs-12 form-group required'>
                 <label class='control-label'>Email</label>
-                <input type="email" required name="email" class="form-control" maxlength='30'  value='<?php echo $email?>' >
-                <!-- pattern="^[a-zA-Z0-9-_.]+[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"  title="Introduce una email valido , ejemplo jo-_-se_Lu_algo1@fm-ail.com "> -->
+                <input type="email" required name="email" class="form-control" maxlength='30'  value='<?php echo $email?>' 
+                pattern="^[a-zA-Z0-9-_.]+[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"  title="Introduce una email valido , ejemplo jo-_-se_Lu_algo1@fm-ail.com "> 
               </div>
             </div>
             <div class='form-row'>
@@ -214,7 +217,7 @@ var_dump($Valcaducidad_mes);
   <th scope="col">Articulo</th>
   <th scope="col" width="120">Cantidad</th>
   <th scope="col" width="120">Precio</th>
-  <th scope="col" width="200" class="text-right">Quitar</th>
+  <th scope="col" width="200" class="text-right">Accion</th>
 </tr>
 </thead>
 <tbody>
@@ -251,8 +254,8 @@ foreach($_SESSION['cesta'] as $indice => $elemento) {
 		</div> <!-- price-wrap .// -->
 	</td>
 	<td class="text-right"> 
-	<a title="" href="" class="btn btn-outline-success" data-toggle="tooltip" data-original-title="Save to Wishlist"> <i class="fa fa-heart"></i></a> 
-  <a href='/iaw/tienda2020/vistas/carrito_prueba.php?quitar="<?php echo encode($indice); ?>"'><button class="btn btn-outline-danger"> × Quitar</a>
+	
+  <a href='/iaw/tienda2020/vistas/carrito_prueba.php?quitar="<?php echo encode($indice); ?>"&ui="<?php echo encode('carrito_resumen.php'); ?>"'><button class="btn btn-outline-danger"> × Quitar</a>
 	</td>
 </tr>
     <?php }?>
@@ -297,19 +300,34 @@ foreach($_SESSION['cesta'] as $indice => $elemento) {
                 <input type="text" required name="caducidad_year" class="form-control" placeholder='AA' maxlength='222' minlength='1' value="" pattern="2[1-9]"
                             title="Introduce el mes de caducidad de tu tarjeta, numeros validos del 21 al 29">
 
-                            <!-- pattern="(2[1-9]){1}" -->
+                        
               </div>
             </div>
             <!-- Para verificar el email -->
             <input type="hidden" name="emailAnterior" value="<?php echo $emailAnterior; ?>" />
             <div class='form-row'>
               <div class='col-md-12'>
-              <br>
-                <div class='form-control total btn btn-info'>
-                  Total:
-                  <span class='amount'><?php echo $total ?>€</span>
-                </div>
-              </div>
+
+                <div class='form-control total btn list-group-item-info'>
+                <div class="dropup">
+               
+                <div class="row">
+               <div class="col-md-12 school-options-dropdown text-center">
+                <div class="dropdown btn-group">
+
+                  
+                  <span class='amount' type="button" data-toggle="dropdown">Total: <?php echo $total ?>€</span>
+                  <span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    <li><p align="center">Subtotal  <?php echo round($total / 1.21,2)?>€ </p></li>
+                    <li class="divider"></li>
+                    <li><p align="center">IVA  <?php echo "21%" ?></p></li>
+                  </ul>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
             </div>
             <div class='form-row'>
               <div class='col-md-12 form-group'>

@@ -7,19 +7,21 @@ require_once VIEW_PATH . "cabecera.php";
 error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
 session_start();
 
-if ($_GET["quitar"])
+if ($_GET["quitar"] && $_GET["ui"]) //Comprobamos de que pagina se recibe la peticion para redireccionarlo o bien 
+// a carrito prueba o bien a carrito resumen
 {
     $indice_val=decode($_GET["quitar"]); //Si le llega el quitar que descodifique antes de nada
+                $pagina=decode($_GET["ui"]);
     
     if(!empty($_SESSION['cesta']) && $_SESSION['cesta'][$indice_val] !=null)
     { //si la cesta existe y es diferente de nulo el indice que le pasemos no hay problema
         $indice=$indice_val;
             $cc = ControladorCarrito::getControlador();
             $quitar = $cc->quitarArticulo($indice);
-            alerta("Articulo borrado con exito","carrito_prueba.php");
+            alerta("Articulo borrado con exito",$pagina);
     }
     else
-    { //Si el indice se esta pasando de manera manual o haciendo fraude saldra esto.
+    { //Si el indice no se esta pasando de manera manual o haciendo fraude saldra esto.
         alerta("Lo siento amigo ese indice no es valido");
     }
     
@@ -131,7 +133,7 @@ foreach($_SESSION['cesta'] as $indice => $elemento) {
     <!-- Lo que estoy pasando por GET es el ID del producto -->
     <td> <a href='/iaw/tienda2020/vistas/carrito_prueba.php?add="<?php echo encode($elemento['id_producto']); ?>"'><button type="button"   class='btn btn-success'> Añadir</button></a></td>
     <!-- Lo que estoy pasando por GET es el ID del producto -->
-    <td>  <a href='/iaw/tienda2020/vistas/carrito_prueba.php?quitar="<?php echo encode($indice); ?>"'><button type="button"  class="btn btn-danger"> Borrar</button></a></td>
+    <td>  <a href='/iaw/tienda2020/vistas/carrito_prueba.php?quitar="<?php echo encode($indice); ?>" &ui="<?php echo encode('carrito_prueba.php'); ?>"'><button type="button"  class="btn btn-danger"> Borrar</button></a></td>
     </tr><!-- Lo que estoy pasando por GET es el $indice  que contine los elementos del array para unsetearlos -->
 <?php 
     }
