@@ -160,9 +160,10 @@ if (empty($errores)){
   //WORK IN PROGRESS////WORK IN PROGRESS////WORK IN PROGRESS////WORK IN PROGRESS////WORK IN PROGRESS//
 }
 }
-var_dump($errores);
-echo "<br>";
-var_dump($Valcaducidad_mes);
+// var_dump($errores);
+// echo "<br>";
+// var_dump($Valcaducidad_mes);
+
 ?>
 
 
@@ -203,8 +204,6 @@ var_dump($Valcaducidad_mes);
               </div>
             </div>
             </fieldset>
-           <!-- minlength='5' value= pattern="([^\s][A-zÀ-ž\s]+\s\d?\d?\d$)"  -->
-
 <br>
 <!-- Resumen -->
 <fieldset>
@@ -222,9 +221,13 @@ var_dump($Valcaducidad_mes);
 </thead>
 <tbody>
 <?php
+//RESUMEN DEL CARRO
+
+  $precio_descuento = 0;
 foreach($_SESSION['cesta'] as $indice => $elemento) {
     $articulo = $elemento['articulo'];
-?>
+   
+    ?>
 <tr>
 	<td>
 <figure class="media">
@@ -239,6 +242,15 @@ foreach($_SESSION['cesta'] as $indice => $elemento) {
 		  <dt>Comerciante: </dt>
 		  <dd><?php echo $articulo->getDistribuidor();?></dd>
 		</dl>
+		<dl class="param param-inline small" >
+    
+    <?php if($articulo->getDescuento() != 0) { ?>
+
+      <dt> <p class="text-success">Descuento:</p></dt>
+		  <dd><p class="text-success"><?php echo $articulo->getDescuento();?>%</p></dd>
+    <?php } ?>
+    
+		</dl>
 	</figcaption>
 </figure> 
 	</td>
@@ -247,26 +259,48 @@ foreach($_SESSION['cesta'] as $indice => $elemento) {
 	<var class="price"><?php echo $elemento['cantidad'];?></var> 
   </div> 
 	</td>
+  <!-- Descuento total -->
 	<td> 
 		<div class="price-wrap"> 
-			<var class="price"><?php echo $elemento['precio']*$elemento['cantidad'];?>€</var> 
-			<small class="text-muted">(<?php echo $elemento['precio'] ;?>€ cada una)</small> 
+     <?php $precio_total = ($elemento['precio'] * $elemento['cantidad'])?> 
+    <?php if($articulo->getDescuento() == 0){  //precio con cantidad ?> 
+      <var class="price"><?php echo $precio_total;?>€</var> 
+      <?php } if($articulo->getDescuento() >0 ){ ?>
+        <var class="price"><?php 
+        $precio_total_descontado=$precio_total-(($precio_total*$articulo->getDescuento()) / 100 );
+        if($elemento['cantidad'] > 1){echo "<span class='text-danger'><del><i>". round($precio_total,2) ."€</i></del></span>";}
+        echo "      ". round($precio_total_descontado,2) ;?>€</var>
+        
+      <?php } ?> 
+	<!-- Descuento unitario -->
+      <small class="text-muted"><br><?php
+      if($articulo->getDescuento() > 0.0){
+        $precio_unitario = ($articulo->getPrecio()); //precio sin cantidad
+        $precio_descuento += (($precio_unitario * $articulo->getDescuento())/100)*$elemento['cantidad']  ;
+        $precio_unitario_descontado = $precio_unitario-(($precio_unitario * $articulo->getDescuento()) / 100);
+        echo "<del><i><strong class='text-danger'>".round($precio_unitario,2)."€</strong></i></del>    ".round($precio_unitario_descontado,2); }else{ 
+        echo $elemento['precio'];} ;?>€ cada una)
+        </small> 
 		</div> <!-- price-wrap .// -->
 	</td>
+
+ <?php var_dump($precio_descuento);?>
 	<td class="text-right"> 
-	
   <a href='/iaw/tienda2020/vistas/carrito_prueba.php?quitar="<?php echo encode($indice); ?>"&ui="<?php echo encode('carrito_resumen.php'); ?>"'><button class="btn btn-outline-danger"> × Quitar</a>
 	</td>
 </tr>
-    <?php }?>
+     <?php  }?> 
 </tbody>
 </table>
 </div>
+<h2 class="bg-success text-white text-center"> <p class="text-success">Con esta compra estas ahorrando <strong><?php echo round($precio_descuento,2);?> €</strong></p></h2>
+<?php echo $precio_descuento;?>
 <hr>
 </fielsheet>
 <br>
 <br>
 <br>
+
 <!-- Resumen -->
 
             <fieldset>
