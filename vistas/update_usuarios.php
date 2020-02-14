@@ -87,6 +87,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     $password = $passwordAnterior;
    // }
 
+
    // Procsamos admin
    if (isset($_POST["admin"])) {
     $admin = filtrado($_POST["admin"]);
@@ -266,7 +267,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         <!-- Telefono-->
                         <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
                             <label>Telefono de Contacto</label>
-                            <input type="text" required name="telefono" class="form-control" value="<?php echo $telefono;?>" pattern="[0-9]{9}" 
+                            <input type="number" required name="telefono" class="form-control" value="<?php echo $telefono;?>" pattern="[0-9]{9}" 
                             title="En este campo solo puedes escribir números, por ejemplo: 689 00 00 00">
                             <span class="help-block"><?php echo $telefonoErr;?></span>
                         </div>

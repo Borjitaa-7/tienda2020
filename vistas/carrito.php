@@ -42,37 +42,39 @@ if (isset($_POST['id']) && isset($_POST['uds'])) {
         header("location: carrito.php");
     }
 }
-
-
 ?>
+
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Tienda</title>
+    </head>
+    <style type="text/css">
+        body {
+        background: url(/iaw/tienda2020/imagenes/fondocompra.jpg) no-repeat center center fixed;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+        }
+    </style>
+<body>
 
 <main role="main">
     <section class="page-header clearfix text-center">
-        <h2>Carrito de compra</h2>
+        <h2>UNIDADES SELECCIONADAS</h2>
     </section>
     <?php
     if ($_SESSION['uds'] > 0) {
-        ?>
+    ?>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12 col-md-10 col-md-offset-1">
 
                     <table class="table table-hover">
-
-                        <thead>
-                        <tr>
-                            <th class="table-image">Imagen</th>
-                            <th class="text-left">Producto</th>
-                            <th class="text-right">Precio</th>
-                            <th class="text-right">Descuento</th>
-                            <th>Cantidad</th>
-                            <th class="text-right">Total</th>
-                            <th class="text-center"></th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-
                         <?php
                         $total = 0;
                         foreach ($_SESSION['carrito'] as $key => $value) {
@@ -91,25 +93,44 @@ if (isset($_POST['id']) && isset($_POST['uds'])) {
                                 $total+= $preciounidad * $cantidad
                                 ?>
                                 <!-- Inicio de fila -->
+                                <table border="1">
                                 <tr>
                                     <!-- Imagen -->
                                     <td class='col-sm-1 col-md-1'><img
                                                 src='../imagenes/<?php echo $articulo->getImagen(); ?>'
                                                 class='avatar img-thumbnail' alt='imagen' width='60px'>
-                                        <!-- Nombre -->
+
+                                    <!-- Nombre -->
                                     <td class='col-sm-8 col-md-6 text-left'>
                                         <h4><?php echo $articulo->getnombre(); ?></h4>
                                     </td>
+
                                     <!-- precio -->
                                     <td class="col-sm-1 col-md-1 text-right">
-                                        <h5><?php echo $articulo->getPrecio(); ?>
-                                            €</h5></td>
+                                        <h5><s><?php echo $articulo->getPrecio(); ?> €</h5></s></td>
+
                                     <!-- Descuento -->
                                     <td class="col-sm-1 col-md-1 text-right">
                                         <h5>
                                            <?php if($articulo->getDescuento()!=0)echo $articulo->getDescuento()."%"; ?></h5></td>
+
+                                    <!-- Total -->
+                                    <td class="col-sm-1 col-md-1 text-right"><h5>
+                                    <?php if ($articulo->getDescuento() == null){
+                                        $preciounidad = $articulo->getPrecio() ;
+                                    }else{
+                                        $preciounidad = ($articulo->getPrecio()) - (($articulo->getPrecio() * $articulo->getDescuento())/100);
+                                        
+                                    }
+                                        $totalP= $preciounidad * $cantidad
+                                    ?>
+            
+                                            <strong><?php echo round($totalP,2) ?> €</strong>
+                                        </h5>
+                                    </td>
+
                                     <!-- Cantidad -->
-                                    <td class="col-sm-1 col-md-1 text-center">
+                                    <td class="col-sm-1 col-md-1 text-left">
                                         <!-- Para actualizar -->
                                         <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>"
                                               method="post">
@@ -120,22 +141,9 @@ if (isset($_POST['id']) && isset($_POST['uds'])) {
                                                    onchange="submit()">
                                         </form>
                                     </td>
-                                    <!-- Total -->
-                                    <td class="col-sm-1 col-md-1 text-right"><h5>
-                                    <?php if ($articulo->getDescuento() == null){
-                                        $preciounidad = $articulo->getPrecio() ;
-                                    }else{
-                                        $preciounidad = ($articulo->getPrecio()) - (($articulo->getPrecio() * $articulo->getDescuento())/100);
-                                        
-                                    }
-                                    $totalP= $preciounidad * $cantidad
-                                    ?>
-            
-                                            <strong><?php echo round($totalP,2) ?> €</strong>
-                                        </h5>
-                                    </td>
+                                    
                                     <!-- Eliminar -->
-                                    <td class="col-sm-1 col-md-1 text-right">
+                                    <td class="col-sm-1 col-md-1 text-center">
                                         <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>"
                                               method="post">
                                             <input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
@@ -149,6 +157,7 @@ if (isset($_POST['id']) && isset($_POST['uds'])) {
                                         </form>
                                     </td>
                                 </tr>
+
                                 <!-- Fin de fila de fila -->
                                 <?php
                                 // lo guardo en un valor de sesión tb
@@ -156,71 +165,71 @@ if (isset($_POST['id']) && isset($_POST['uds'])) {
                             }
                         }
                         ?>
+                        </table>
 
-                        </tbody>
-                        <!-- Pie de Tabla -->
-                        <tfoot>
-                        <tr>
-                            <td>  </td>
-                            <td>  </td>
-                            <td>  </td>
-                            <td class="col-sm-1 col-md-1 text-right">
-                                <h5><strong><span id='subTotal'>SubTotal: </span></strong></h5>
-                                <h5><strong><span id='iva'>I.V.A.: </span></strong></h5>
-                                <h4><strong><span id='iva'>TOTAL: </span></strong></h4>
-                            <td class="col-sm-8 col-md-6 text-right">
-                                <h5><strong><span
-                                                id='subTotal'><?php echo round(($total / 1.21), 2); ?> €</span></strong>
-                                </h5>
-                                <h5><strong><span id='iva'><?php echo round(($total - ($total / 1.21)), 2); ?> €</span></strong>
-                                </h5>
-                                <h4><strong><span id='precioTotal'><?php echo round(($total), 2); ?> €</span></strong>
-                                </h4>
-                            </td>
-                            <td>  </td>
-                        </tr>
+                        <br>
+                        <br>
+                        <br>
+                        
+                        <table border="1">
+                            <tr>
+                                <td class="col-sm-2 text-right">
+                                    <h5><strong><span id='subTotal'>SubTotal: </span></strong></h5>
+                                    <h5><strong><span id='iva'>I.V.A.: </span></strong></h5>
+                                    <br>
+                                    <h4><strong><span id='iva'>TOTAL: </span></strong></h4>
 
-                        <tr>
-                            <td>
-                                <!-- Seguir comprando -->
-                                <a href='catalogo_articulos.php' class='btn btn-default'><span
-                                            class='glyphicon glyphicon-plus'></span> Seguir comprando </a>
-                            </td>
-                            <td>  </td>
+                                <td class="col-sm-9 text-center">
+                                    <h5><strong><span id='subTotal'><?php echo round(($total / 1.21), 2); ?> €</span></strong></h5>
+                                    <h5><strong><span id='iva'><?php echo round(($total - ($total / 1.21)), 2); ?> €</span></strong></h5>
+                                    <br>
+                                    <h4><strong><span id='precioTotal'><?php echo round(($total), 2); ?> €</span></strong></h4>
+                                </td>
+                            </tr>
+                        </table>
+ 
+                        <br>
 
-                            <td>
-                                <!-- Vaciar Carrito -->
-                                <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>"
-                                      method="post">
-                                    <button class="btn btn-danger" type="submit" name="vaciar_carrito"
-                                            title='Vaciar Carrito'
-                                            onclick="return confirm('¿Seguro que desea vaciar el carrito?')">
-                                        <span class='glyphicon glyphicon-trash'></span> Vaciar carrito</span>
-                                    </button>
-                                </form>
-                            </td>
-                            </td>
-                            <td>  </td>
-                            <td>  </td>
-                            <td>
-                                <!-- Pagar Carrito -->
-                                <a href='carrito_resumen.php' class='btn btn-success'><span
+                        <table>
+                            <tr>
+                                <td>
+                                    <!-- Seguir comprando -->
+                                    <a href='catalogo_articulos.php' class='btn btn-default'><span
+                                    class='glyphicon glyphicon-plus'></span> Seguir comprando </a>
+                                </td>
+                                <td>
+                                    <div style="text-align: right;width:213px">
+                                        <!-- Vaciar Carrito -->
+                                            <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>"
+                                                method="post">
+                                                <button class="btn btn-warning" type="submit" name="vaciar_carrito"
+                                                        title='Vaciar Carrito'
+                                                        onclick="return confirm('¿Seguro que desea vaciar el carrito?')">
+                                                    <span class='glyphicon glyphicon-trash'></span> Vaciar carrito</span>
+                                                </button>
+                                            </form>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="text-align: right;width:222px">
+                                            <!-- Pagar Carrito -->
+                                            <a href='carrito_resumen.php' class='btn btn-success'><span
                                             class='glyphicon glyphicon-credit-card'></span> Pagar compra </a>
-                            </td>
-                        </tr>
-                        </tfoot>
-                    </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                 </div>
             </div>
         </div>
-        <?php
+    <?php
     } else {
         echo "<p class='lead'><em>El carrito está vacio.</em></p>";
     }
     ?>
 </main>
 
-
 <br>
+
 <!-- Pie de la página web -->
 <?php require_once VIEW_PATH . "pie.php"; ?>
