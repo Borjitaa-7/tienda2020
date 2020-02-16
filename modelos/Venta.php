@@ -8,14 +8,15 @@ class Venta {
     private $subtotal;
     private $iva;
     private $nombre;
-    private $email; 
+    private $email;
     private $direccion;
+    private $telefono;
     private $nombreTarjeta;
     private $numTarjeta;
 
 
     //CONSTRUCTOR para poner las variables en un estado inicial
-    function __construct($idventa, $fecha, $total, $subtotal, $iva, $nombre, $email, $direccion, $nombreTarjeta, $numTarjeta) {
+    function __construct($idventa, $fecha, $total, $subtotal, $iva, $nombre, $email, $telefono, $direccion, $nombreTarjeta, $numTarjeta) {
         $this->idventa = $idventa;
         $this->fecha = $fecha;
         $this->total = $total;
@@ -23,6 +24,7 @@ class Venta {
         $this->iva = $iva;
         $this->nombre = $nombre;
         $this->email = $email;
+        $this->telefono = $telefono;
         $this->direccion = $direccion;
         $this->nombreTarjeta = $nombreTarjeta;
         $this->numTarjeta = $numTarjeta;
@@ -57,6 +59,10 @@ class Venta {
 
     function getEmail() {
         return $this->email;
+    }
+
+    function getTelefono() {
+        return $this->telefono;
     }
 
     function getDireccion() {
@@ -102,6 +108,10 @@ class Venta {
 
     function setEmail($email) {
         $this->email = $email;
+    }
+
+    function setTelefono($telefono) {
+        $this->telefono = $telefono;
     }
 
     function setDireccion($direccion) {
