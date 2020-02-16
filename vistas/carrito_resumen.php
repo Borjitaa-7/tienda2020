@@ -155,6 +155,8 @@ if(empty($Valcaducidad_year)){
 }else{
   $caducidad_year = $Valcaducidad_year ;
 }
+
+
 if (empty($errores)){
   //Aqui viene el controlador de venta
   //WORK IN PROGRESS////WORK IN PROGRESS////WORK IN PROGRESS////WORK IN PROGRESS////WORK IN PROGRESS//
@@ -294,7 +296,7 @@ foreach($_SESSION['cesta'] as $indice => $elemento) {
 </table>
 </div>
 <h2 class="bg-success text-white text-center"> <p class="text-success">Con esta compra estas ahorrando <strong><?php echo round($precio_descuento,2);?> €</strong></p></h2>
-<?php echo $precio_descuento;?>
+<?php //echo $precio_descuento;?>
 <hr>
 </fielsheet>
 <br>
