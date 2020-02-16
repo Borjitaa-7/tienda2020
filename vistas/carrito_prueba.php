@@ -28,7 +28,6 @@ if ($_GET["quitar"] && $_GET["ui"]) //Comprobamos de que pagina se recibe la pet
 }
 
 
-
 //Para borrar el carrito solo tenemos que pasarle un GET con /localhost/loquesea.php?borrar=loquesea; 
 if(isset($_GET["borrar_carrito"])){
     $borrar = $_GET["borrar_carrito"];
@@ -100,40 +99,60 @@ if(isset($_GET["id"])){
 
 if (!empty($_SESSION['cesta']) && isset($_SESSION['cesta'])){
 ?>
- <!-- TABLA DE CARRITO -->
-<table class='carrito'>
-<h1 align="center">Cesta de nuestra tienda</h1>
-<thead class='cestilla'>
-    <th>IMAGEN</th>
-    <th>Nombre</th>
-    <th>ID</th>
-    <th>TIPO</th>
-    <th>PRECIO</th>
-    <th>DESCUENTO</th>
-    <th>UNIDADES</th>
-    <th>QUITAR</th>
-    <th>AGREGAR</th>
-    <th>BORRAR</th>
 
-</thead>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sesión</title>
+</head>
+    <style type="text/css">
+    body {
+            background: url(/iaw/tienda2020/imagenes/fondocarrito.jpg) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+    }
+    </style>
+
+ <!-- TABLA DE CARRITO -->
+<table class='carrito' style="margin: 0 auto;">
+    <h1 align="center">Cesta de tus productos</h1>
+    <br>
+    <br>
+    <br>
+    <thead class='cestilla'>
+        <th>IMAGEN</th>
+        <th>Nombre</th>
+        <th>TIPO</th>
+        <th>PRECIO</th>
+        <th>DESCUENTO</th>
+        <th>UNIDADES</th>
+        <th>QUITAR</th>
+        <th>AGREGAR</th>
+        <th>BORRAR</th> 
+    </thead>
+
 <tbody class='cesta'>
 <?php
 foreach($_SESSION['cesta'] as $indice => $elemento) {
     $articulo = $elemento['articulo'];
     ?> 
     <tr>
-    <td> <img src='<?php echo "/iaw/tienda2020/imagenes/" . $articulo->getimagen() ?>' class='rounded' class='img-thumbnail' width='70'></td>  <!-- Imagen -->
-    <td> <?php echo $articulo->getnombre(); ?></td> <!-- Nombre del articulo -->
-    <td> <?php echo $elemento['id_producto'] ;?></td>  <!-- ID de articulo PROBLEMA DE SEGURIDAD -->
-    <td> <?php echo $articulo->getTipo() ;?></td>  <!-- Tipo -->
-    <td> <?php echo $elemento['precio'] ;?></td>  <!-- Precio -->
-    <td> <?php echo $elemento['descuento'] ;?></td> <!-- descuento -->
-    <td> <?php echo $elemento['cantidad'] ;?></td>  <!-- cantidad -->
-    <td> <a href='/iaw/tienda2020/vistas/carrito_prueba.php?quitar_unidad="<?php echo encode($elemento['id_producto']); ?>"'><button type="button"   class='btn btn-warning'> Quitar</button></a></td>
-    <!-- Lo que estoy pasando por GET es el ID del producto -->
-    <td> <a href='/iaw/tienda2020/vistas/carrito_prueba.php?add="<?php echo encode($elemento['id_producto']); ?>"'><button type="button"   class='btn btn-success'> Añadir</button></a></td>
-    <!-- Lo que estoy pasando por GET es el ID del producto -->
-    <td>  <a href='/iaw/tienda2020/vistas/carrito_prueba.php?quitar="<?php echo encode($indice); ?>" &ui="<?php echo encode('carrito_prueba.php'); ?>"'><button type="button"  class="btn btn-danger"> Borrar</button></a></td>
+        <td> <img src='<?php echo "/iaw/tienda2020/imagenes/" . $articulo->getimagen() ?>' class='rounded' class='img-thumbnail' width='70'></td>  <!-- Imagen -->
+        <td> <?php echo $articulo->getnombre(); ?></td> <!-- Nombre del articulo -->
+        <td> <?php echo $articulo->getTipo() ;?></td>  <!-- Tipo -->
+        <td> <?php echo $elemento['precio'] ;?>€</td>  <!-- Precio -->
+        <td> <?php echo $elemento['descuento'] ;?>%</td> <!-- descuento -->
+        <td> <?php echo $elemento['cantidad'] ;?></td>  <!-- cantidad -->
+        <td> <a href='/iaw/tienda2020/vistas/carrito_prueba.php?quitar_unidad="<?php echo encode($elemento['id_producto']); ?>"'><button type="button"   class='btn btn-warning'> Quitar</button></a></td>
+        <!-- Lo que estoy pasando por GET es el ID del producto -->
+        <td> <a href='/iaw/tienda2020/vistas/carrito_prueba.php?add="<?php echo encode($elemento['id_producto']); ?>"'><button type="button"   class='btn btn-success'> Añadir</button></a></td>
+        <!-- Lo que estoy pasando por GET es el ID del producto -->
+        <td>  <a href='/iaw/tienda2020/vistas/carrito_prueba.php?quitar="<?php echo encode($indice); ?>" &ui="<?php echo encode('carrito_prueba.php'); ?>"'><button type="button"  class="btn btn-danger"> Borrar</button></a></td>
     </tr><!-- Lo que estoy pasando por GET es el $indice  que contine los elementos del array para unsetearlos -->
 <?php 
     }
@@ -151,7 +170,8 @@ $subtotal=$unidades['total']; //saco del array el indice 'total' y lo meto en la
                     <!-- MENU  DE TOTALES -->
                         <p><?php echo "<h3>El importe total de tu compra es : </h3><ul><h4> Subtotal: " .round ($subtotal / 1.21,2)  ?>€</p> 
                         <p>IVA: 21%</p>
-                        <p>TOTAL: <?php echo round ($subtotal,2)  ?>€</p></h4></p>
+                        <br>
+                        <b><p>TOTAL: <?php echo round ($subtotal,2)  ?>€</p></h4></p></b>
                         </ul>
                        <!-- MENU  DE BOTONES -->
                         <br>
@@ -161,10 +181,10 @@ $subtotal=$unidades['total']; //saco del array el indice 'total' y lo meto en la
                             <a href='carrito_resumen.php' class='btn btn-success'><span class='glyphicon glyphicon-credit-card'></span> Pagar compra </a>
                         </p>
                     </div>
-
-
+                    
 <?php
-   } else {
+
+} else {
     // <!-- Si el carrito no existe tenemos que unsetear la sesiones de carrito y cuenta -->
     unset($_SESSION['cuenta']);
     unset($_SESSION['carrito']);

@@ -231,7 +231,7 @@ foreach($_SESSION['cesta'] as $indice => $elemento) {
 <tr>
 	<td>
 <figure class="media">
-	<div class="img-wrap"><img src='<?php echo "/iaw/tienda2020/imagenes/" . $articulo->getimagen() ?>' class="img-thumbnail img-sm"></div>
+	<div class="img-wrap"><img src='<?php echo "/iaw/tienda2020/imagenes/" . $articulo->getimagen() ?>' class="img-thumbnail img-sm" width=150px></div>
 	<figcaption class="media-body">
 		<h6 class="title text-truncate"><?php echo $articulo->getnombre();?> </h6>
 		<dl class="param param-inline small">
