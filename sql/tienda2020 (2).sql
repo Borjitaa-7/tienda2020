@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-02-2020 a las 14:23:08
+-- Tiempo de generación: 16-02-2020 a las 14:42:25
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.3.11
 
@@ -112,8 +112,8 @@ CREATE TABLE `ventas` (
   `email` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `telefono` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `direccion` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `nombreTarjeta` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `numTarjeta` varchar(100) COLLATE utf8_spanish_ci NOT NULL
+  `titular` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `tarjeta` varchar(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --

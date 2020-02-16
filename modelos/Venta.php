@@ -11,12 +11,12 @@ class Venta {
     private $email;
     private $direccion;
     private $telefono;
-    private $nombreTarjeta;
-    private $numTarjeta;
+    private $titular;
+    private $tarjeta;
 
 
     //CONSTRUCTOR para poner las variables en un estado inicial
-    function __construct($idventa, $fecha, $total, $subtotal, $iva, $nombre, $email, $telefono, $direccion, $nombreTarjeta, $numTarjeta) {
+    function __construct($idventa, $fecha, $total, $subtotal, $iva, $nombre, $email, $telefono, $direccion, $titular, $tarjeta) {
         $this->idventa = $idventa;
         $this->fecha = $fecha;
         $this->total = $total;
@@ -26,8 +26,8 @@ class Venta {
         $this->email = $email;
         $this->telefono = $telefono;
         $this->direccion = $direccion;
-        $this->nombreTarjeta = $nombreTarjeta;
-        $this->numTarjeta = $numTarjeta;
+        $this->titular = $titular;
+        $this->tarjeta = $tarjeta;
 
 
 
@@ -69,12 +69,12 @@ class Venta {
         return $this->direccion;
     }
 
-    function getNombreTarjeta() {
-        return $this->nombreTarjeta;
+    function getTitular() {
+        return $this->titular;
     }
 
-    function getNumTarjeta() {
-        return $this->numTarjeta;
+    function getTarjeta() {
+        return $this->tarjeta;
     }
 
 
@@ -118,12 +118,12 @@ class Venta {
         $this->direccion = $direccion;
     }
 
-    function setNombreTarjeta($nombreTarjeta) {
-        $this->nombreTarjeta = $nombreTarjeta;
+    function setTitular($titular) {
+        $this->titular = $titular;
     }
 
-    function setNumTarjeta($numTarjeta) {
-        $this->numTarjeta = $numTarjeta;
+    function setTarjeta($tarjeta) {
+        $this->tarjeta = $tarjeta;
     }
 
 
