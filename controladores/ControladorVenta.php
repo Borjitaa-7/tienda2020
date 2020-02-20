@@ -49,10 +49,10 @@ class ControladorVenta
         'tarjeta' => $venta->getTarjeta()
         );
 
+        // y Utilizamos dichos campos para actualizar la BBDD. Después cerramos conexión.
         $estado = $conexion->actualizarBD($consulta, $campos);
         $conexion->cerrarBD();
     }
-
 
 }
     

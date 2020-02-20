@@ -3,6 +3,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 require_once CONTROLLER_PATH . "ControladorCarrito.php";
 require_once CONTROLLER_PATH . "ControladorUsuarios.php";
 require_once CONTROLLER_PATH . "ControladorImagen.php";
+require_once CONTROLLER_PATH . "ControladorVenta.php";
+require_once CONTROLLER_PATH . "ControladorSesion.php";
+require_once MODEL_PATH . "Venta.php";
 require_once VIEW_PATH . "cabecera.php"; 
 require_once UTILITY_PATH . "funciones.php"; 
 
@@ -178,7 +181,12 @@ if ((isset($_POST['aceptar'])) ){
   } else {
       alerta("Hay un error patxi");
   }
+
 }
+
+var_dump($insertar);
+echo "<br>";
+var_dump($venta);
 
 
 
@@ -194,6 +202,24 @@ if ((isset($_POST['aceptar'])) ){
 ?>
 
 <br>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sesión</title>
+</head>
+    <style type="text/css">
+    body {
+            background: url(/iaw/tienda2020/imagenes/fondocarrito.jpg) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+    }
+    </style>
 
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
 <div class="container">
