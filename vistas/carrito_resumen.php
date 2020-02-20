@@ -158,30 +158,30 @@ if(empty($Valcaducidad_year)){
 
 
 //INTENTO DE PROCESAR LOS DATOS PARA ENVIARLO A LA BBDD CON SU RESPECTIVO CONTROLADOR con los datos del usuario (hay que hacerlo)
-if ((isset($_POST['aceptar'])) && (empty($errores))) {
+if ((isset($_POST['aceptar'])) ){
   
   $idVenta = date('ymd-his');
   $nombre = $_POST['nombre'];
   $email = $_POST['email'];
-  $telefono = $_POST['telefono'];
   $direccion = $_POST['direccion'];
+  $telefono = $_POST['telefono'];
   $titular = $_POST['titular'];
   $tarjeta = $_POST['tarjeta'];
 
-  //$_SESSION['uds']=0;
-  //$_SESSION['precio']=0;
-
   $venta = new Venta($idVenta, "", $total, round(($total / 1.21), 2), round(($total - ($total / 1.21)), 2), $nombre, $email, $direccion, $telefono, $titular, $tarjeta);
 
-  $cv = ControladorVenta::getControlador(); //HAY QUE AÑADIR AUN EL CONTROLADOR DE VENTA
-  if ($cv->insertarVenta($venta)) {
+  $insertar = ControladorVenta::getControlador(); 
+  if ($insertar->addVenta($venta)) {
       $cs = ControladorSesion::getControlador();
-      alerta("Venta procesada", "../vistas/carrito_factura.php?venta=" . encode($idVenta));
+      alerta("Venta procesada. Se te redirige al final de tu compra", "../vistas/carrito_factura.php?venta=" . encode($idVenta));
       exit();
   } else {
-      alerta("Existe un error al procesar la venta");
+      alerta("Hay un error patxi");
   }
 }
+
+
+
 
 //if (empty($errores)){
   //Aqui viene el controlador de venta
