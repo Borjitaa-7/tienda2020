@@ -26,7 +26,7 @@ class ControladorVenta
 
 
     //---------------------------------------------------------INTRODUCIR VENTA EN LA BBDD--------------------------------------
-    public function addVenta(){
+    public function addVenta($venta){
 
         $bd = ControladorBD::getControlador(); //abrimos la conexion a la BBDD
         $bd->abrirBD();
@@ -50,8 +50,37 @@ class ControladorVenta
         );
 
         // y Utilizamos dichos campos para actualizar la BBDD. Después cerramos conexión.
-        $estado = $conexion->actualizarBD($consulta, $campos);
-        $conexion->cerrarBD();
+        $estado = $bd->actualizarBD($consulta, $campos);
+        $bd->cerrarBD();
+
+
+    // Procesamos cada línea del carrito
+    foreach ($_SESSION['carrito'] as $key => $value) {
+        if (($value[0] != null)) {
+            $articulo = $value[0];
+            $cantidad = $value[1];
+
+            $conexion->abrirBD();
+
+            $consulta = "insert into lineasventas (idVenta, idProducto, nombre, tipo, descuento, precio, cantidad) 
+                values (:idVenta, :idProducto, :nombre, :tipo, :descuento, :precio, :cantidad)";
+
+            $parametros = array(':idVenta' => $venta->getId(), ':idProducto' => $articulo->getid(),
+                ':nombre' => $articulo->getNombre(), ':tipo' => $articulo->getTipo(), ':descuento' => $articulo->getDescuento(), ':precio' => $articulo->getPrecio(),
+                ':cantidad' => $cantidad);
+
+            $estado = $conexion->actualizarBD($consulta, $parametros);
+
+            // Actualizo el stock
+            $cp = ControladorArticulo::getControlador();
+            $estado = $cp->actualizarStock($articulo->getid(), ($articulo->getUnidades() - $cantidad));
+
+            $conexion->cerrarBD();
+        }
+    }
+    return $estado;
+
+    
     }
 
 }

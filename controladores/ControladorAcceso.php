@@ -29,6 +29,13 @@ class ControladorAcceso
         session_unset();
         session_destroy();
     }
+    public function reiniciarCarrito()
+    {
+        $_SESSION['uds'] = 0;
+        $_SESSION['total'] = 0;
+        $_SESSION['carrito'] = array();
+        $_SESSION['precio'] = 0;
+    }
 
     public function procesarIdentificacion($email, $password)
     {

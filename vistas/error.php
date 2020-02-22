@@ -9,11 +9,11 @@
 <br>
 <?php
 
-var_dump($_SESSION['id']);
-var_dump($_SESSION['email']);
-var_dump($_SESSION['nombre']);
-var_dump($_SESSION['apellido']);
-var_dump($_SESSION['administrador']);
+//var_dump($_SESSION['id']);
+//var_dump($_SESSION['email']);
+//var_dump($_SESSION['nombre']);
+//var_dump($_SESSION['apellido']);
+//var_dump($_SESSION['administrador']);
 ?>
     <div class="wrapper">
         <div class="container-fluid">

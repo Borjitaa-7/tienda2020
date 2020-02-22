@@ -176,18 +176,13 @@ if ((isset($_POST['aceptar'])) ){
   $insertar = ControladorVenta::getControlador(); 
   if ($insertar->addVenta($venta)) {
       $cs = ControladorSesion::getControlador();
-      alerta("Venta procesada. Se te redirige al final de tu compra", "../vistas/carrito_factura.php?venta=" . encode($idVenta));
+      alerta("Venta procesada. Se te redirige al final de tu compra", "carrito_factura.php");
       exit();
   } else {
       alerta("Hay un error patxi");
   }
 
 }
-
-var_dump($insertar);
-echo "<br>";
-var_dump($venta);
-
 
 
 
@@ -336,7 +331,7 @@ foreach($_SESSION['cesta'] as $indice => $elemento) {
 		</div> <!-- price-wrap .// -->
 	</td>
 
- <?php var_dump($precio_descuento);?>
+ <?php //var_dump($precio_descuento);?>
 	<td class="text-right"> 
   <a href='/iaw/tienda2020/vistas/carrito_prueba.php?quitar="<?php echo encode($indice); ?>"&ui="<?php echo encode('carrito_resumen.php'); ?>"'><button class="btn btn-outline-danger"> × Quitar</a>
 	</td>
