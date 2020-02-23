@@ -16,6 +16,7 @@ session_start();
 ?>
 
 <?php 
+
 //Declaramos en variables las sesiones si existe el carrito;
 
 if (isset($_SESSION["cesta"]) && !empty($_SESSION["cesta"])) {
@@ -161,39 +162,28 @@ if(empty($Valcaducidad_year)){
 
 
 //INTENTO DE PROCESAR LOS DATOS PARA ENVIARLO A LA BBDD CON SU RESPECTIVO CONTROLADOR con los datos del usuario (hay que hacerlo)
-if ((isset($_POST['aceptar'])) ){
-  
-  $idVenta = date('ymd-his');
-  $nombre = $_POST['nombre'];
-  $email = $_POST['email'];
-  $direccion = $_POST['direccion'];
-  $telefono = $_POST['telefono'];
-  $titular = $_POST['titular'];
-  $tarjeta = $_POST['tarjeta'];
+  if ((isset($_POST['aceptar'])) ){
+    
+    $idVenta = date('ymd-his');
+    $nombre = $_POST['nombre'];
+    $email = $_POST['email'];
+    $direccion = $_POST['direccion'];
+    $telefono = $_POST['telefono'];
+    $titular = $_POST['titular'];
+    $tarjeta = $_POST['tarjeta'];
 
-  $venta = new Venta($idVenta, "", $total, round(($total / 1.21), 2), round(($total - ($total / 1.21)), 2), $nombre, $email, $direccion, $telefono, $titular, $tarjeta);
+    $venta = new Venta($idVenta, "", $total, round(($total / 1.21), 2), round(($total - ($total / 1.21)), 2), $nombre, $email, $direccion, $telefono, $titular, $tarjeta);
 
-  $insertar = ControladorVenta::getControlador(); 
-  if ($insertar->addVenta($venta)) {
-      $cs = ControladorSesion::getControlador();
-      alerta("Venta procesada. Se te redirige al final de tu compra", "carrito_factura.php");
-      exit();
-  } else {
-      alerta("Hay un error patxi");
+      $insertar = ControladorVenta::getControlador(); 
+      if ($insertar->addVenta($venta)) {
+          $cs = ControladorSesion::getControlador();
+          alerta("Venta procesada. Se te redirige al final de tu compra", "carrito_factura.php?venta=" . encode($idVenta));
+          exit();
+      } 
   }
 
 }
 
-
-
-//if (empty($errores)){
-  //Aqui viene el controlador de venta
-  //WORK IN PROGRESS////WORK IN PROGRESS////WORK IN PROGRESS////WORK IN PROGRESS////WORK IN PROGRESS//
-//}
-// var_dump($errores);
-// echo "<br>";
-// var_dump($Valcaducidad_mes);
-}
 ?>
 
 <br>
@@ -252,60 +242,64 @@ if ((isset($_POST['aceptar'])) ){
             </div>
             </fieldset>
 <br>
-<!-- Resumen -->
-<fieldset>
-          <legend>Resumen</legend>
-<div class="container">
-<div class="card">
-<table class="table table-hover shopping-cart-wrap">
-<thead class="text-muted">
-<tr>
-  <th scope="col">Articulo</th>
-  <th scope="col" width="120">Cantidad</th>
-  <th scope="col" width="120">Precio</th>
-  <th scope="col" width="200" class="text-right">Accion</th>
-</tr>
-</thead>
-<tbody>
-<?php
-//RESUMEN DEL CARRO
+    <!-- Resumen -->
+    <fieldset>
+              <legend>Resumen</legend>
+    <div class="container">
+    <div class="card">
+    <table class="table table-hover shopping-cart-wrap">
+    <thead class="text-muted">
+    <tr>
+      <th scope="col">Articulo</th>
+      <th scope="col" width="120">Cantidad</th>
+      <th scope="col" width="120">Precio</th>
+      <th scope="col" width="200" class="text-right">Accion</th>
+    </tr>
+    </thead>
 
-  $precio_descuento = 0;
-foreach($_SESSION['cesta'] as $indice => $elemento) {
-    $articulo = $elemento['articulo'];
-   
-    ?>
+<tbody>
+
+  <?php
+    //RESUMEN DEL CARRO
+      $precio_descuento = 0;
+      foreach($_SESSION['cesta'] as $indice => $elemento) {
+        $articulo = $elemento['articulo'];
+  ?>
+
 <tr>
+
 	<td>
 <figure class="media">
 	<div class="img-wrap"><img src='<?php echo "/iaw/tienda2020/imagenes/" . $articulo->getimagen() ?>' class="img-thumbnail img-sm" width=150px></div>
-	<figcaption class="media-body">
-		<h6 class="title text-truncate"><?php echo $articulo->getnombre();?> </h6>
-		<dl class="param param-inline small">
-		  <dt>Tipo: </dt>
-		  <dd><?php echo $articulo->getTipo();?></dd>
-		</dl>
-		<dl class="param param-inline small">
-		  <dt>Comerciante: </dt>
-		  <dd><?php echo $articulo->getDistribuidor();?></dd>
-		</dl>
-		<dl class="param param-inline small" >
-    
-    <?php if($articulo->getDescuento() != 0) { ?>
+      <figcaption class="media-body">
+        <h6 class="title text-truncate"><?php echo $articulo->getnombre();?> </h6>
+        <dl class="param param-inline small">
+          <dt>Tipo: </dt>
+          <dd><?php echo $articulo->getTipo();?></dd>
+        </dl>
+        <dl class="param param-inline small">
+          <dt>Comerciante: </dt>
+          <dd><?php echo $articulo->getDistribuidor();?></dd>
+        </dl>
+        <dl class="param param-inline small" >
+        
+        <?php if($articulo->getDescuento() != 0) { ?>
 
-      <dt> <p class="text-success">Descuento:</p></dt>
-		  <dd><p class="text-success"><?php echo $articulo->getDescuento();?>%</p></dd>
-    <?php } ?>
-    
-		</dl>
-	</figcaption>
+          <dt> <p class="text-success">Descuento:</p></dt>
+          <dd><p class="text-success"><?php echo $articulo->getDescuento();?>%</p></dd>
+        <?php } ?>
+        
+        </dl>
+      </figcaption>
 </figure> 
 	</td>
+
 	<td>
-  <div class="price-wrap"> 
-	<var class="price"><?php echo $elemento['cantidad'];?></var> 
-  </div> 
+    <div class="price-wrap"> 
+    <var class="price"><?php echo $elemento['cantidad'];?></var> 
+    </div> 
 	</td>
+
   <!-- Descuento total -->
 	<td> 
 		<div class="price-wrap"> 
@@ -319,6 +313,7 @@ foreach($_SESSION['cesta'] as $indice => $elemento) {
         echo "      ". round($precio_total_descontado,2) ;?>€</var>
         
       <?php } ?> 
+
 	<!-- Descuento unitario -->
       <small class="text-muted"><br><?php
       if($articulo->getDescuento() > 0.0){
@@ -338,18 +333,20 @@ foreach($_SESSION['cesta'] as $indice => $elemento) {
 </tr>
      <?php  }?> 
 </tbody>
+
 </table>
 </div>
+
 <h2 class="bg-success text-white text-center"> <p class="text-success">Con esta compra estas ahorrando <strong><?php echo round($precio_descuento,2);?> €</strong></p></h2>
 <?php //echo $precio_descuento;?>
 <hr>
 </fielsheet>
+
 <br>
 <br>
 <br>
 
 <!-- Resumen -->
-
             <fieldset>
             <legend>Pago</legend>
             <div class='form-row'>

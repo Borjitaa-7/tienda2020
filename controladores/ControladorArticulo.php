@@ -146,4 +146,20 @@ class ControladorArticulo {
         return $estado;
     }
     
+//------------------------------------------------------------------------------------------------- 
+    public function actualizarStock($id, $stock)
+    {
+        $bd = ControladorBD::getControlador();
+        $bd->abrirBD();
+
+        $consulta = "update articulos set unidades=:unidades where id=:id";
+        $parametros = array(':id' => $id, ':unidades' => $stock);
+        $estado = $bd->actualizarBD($consulta, $parametros);
+        $bd->cerrarBD();
+        return $estado;
+
+        $conexion->cerrarBD();
+        return $estado;
+    }
+
 }

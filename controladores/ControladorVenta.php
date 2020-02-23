@@ -1,7 +1,6 @@
 <?php
 
 require_once MODEL_PATH . "Venta.php";
-require_once MODEL_PATH . "LineaVenta.php";
 require_once CONTROLLER_PATH . "ControladorBD.php";
 require_once CONTROLLER_PATH . "ControladorArticulo.php";
 
@@ -54,33 +53,53 @@ class ControladorVenta
         $bd->cerrarBD();
 
 
-    // Procesamos cada línea del carrito
-    foreach ($_SESSION['carrito'] as $key => $value) {
-        if (($value[0] != null)) {
-            $articulo = $value[0];
-            $cantidad = $value[1];
+        // Procesamos cada línea del carrito
+        foreach ($_SESSION['carrito'] as $key => $value) {
+            if (($value[0] != null)) {
+                $articulo = $value[0];
+                $cantidad = $value[1];
 
-            $conexion->abrirBD();
+                // Actualizo el stock para que SE RESTE EL ARTICULO. HAY QUE TOCARLO!
+                $cp = ControladorArticulo::getControlador();
+                $estado = $cp->actualizarStock($articulo->getid(), ($articulo->getUnidades() - $cantidad));
 
-            $consulta = "insert into lineasventas (idVenta, idProducto, nombre, tipo, descuento, precio, cantidad) 
-                values (:idVenta, :idProducto, :nombre, :tipo, :descuento, :precio, :cantidad)";
-
-            $parametros = array(':idVenta' => $venta->getId(), ':idProducto' => $articulo->getid(),
-                ':nombre' => $articulo->getNombre(), ':tipo' => $articulo->getTipo(), ':descuento' => $articulo->getDescuento(), ':precio' => $articulo->getPrecio(),
-                ':cantidad' => $cantidad);
-
-            $estado = $conexion->actualizarBD($consulta, $parametros);
-
-            // Actualizo el stock
-            $cp = ControladorArticulo::getControlador();
-            $estado = $cp->actualizarStock($articulo->getid(), ($articulo->getUnidades() - $cantidad));
-
-            $conexion->cerrarBD();
+                $conexion->cerrarBD();
+            }
         }
-    }
-    return $estado;
-
+        return $estado;
     
+    }
+
+    public function buscarVentaID($id)
+    {
+        $bd = ControladorBD::getControlador();
+        $bd->abrirBD();
+
+        $consulta = "select * from ventas where idVenta = :idVenta";
+        $parametros = array(':idVenta' => $id);
+
+        $res = $bd->consultarBD($consulta, $parametros);
+        $filas = $res->fetchAll(PDO::FETCH_OBJ);
+
+        if (count($filas) > 0) {
+            $venta = new Venta($filas[0]->idVenta, 
+                $filas[0]->fecha, 
+                $filas[0]->total,
+                $filas[0]->subtotal, 
+                $filas[0]->iva, 
+                $filas[0]->nombre, 
+                $filas[0]->email, 
+                $filas[0]->telefono, 
+                $filas[0]->direccion,
+                $filas[0]->titular, 
+                $filas[0]->tarjeta);
+
+            $bd->cerrarBD();
+            return $venta;
+        } else {
+            return null;
+        }
+
     }
 
 }
