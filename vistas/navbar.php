@@ -33,9 +33,14 @@ require_once CONTROLLER_PATH . "ControladorCarrito.php";
             $correo = $_SESSION['email'];
             if (isset($_SESSION['cuenta']) || !empty($_SESSION['cuenta'])){
             $unidades = $_SESSION['cuenta'];
-            $contador=$unidades['contador'];
-            $total=$unidades['total'];
+            if ((!empty($unidades))) {
+              $contador=$unidades['contador'];
+              $total=$unidades['total'];
               echo '<li><a href="/iaw/tienda2020/vistas/carrito_prueba.php">'.$contador. '<span class="glyphicon glyphicon-shopping-cart"></span> Cesta '.$total. ' €</a> </li>';
+            } else {
+              echo '<li><a href="/iaw/tienda2020/vistas/carrito_prueba.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cesta </a> </li>';
+            }
+    
             }else{
               echo '<li><a href="/iaw/tienda2020/vistas/carrito_prueba.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cesta </a> </li>';
             }

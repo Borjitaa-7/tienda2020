@@ -162,6 +162,7 @@ if(empty($Valcaducidad_year)){
 
 
 //INTENTO DE PROCESAR LOS DATOS PARA ENVIARLO A LA BBDD CON SU RESPECTIVO CONTROLADOR con los datos del usuario (hay que hacerlo)
+//Cuando se pulse el boton de aceptar, se recogen estos datos para aañdirlos a la BBDD de ventas
   if ((isset($_POST['aceptar'])) ){
     
     $idVenta = date('ymd-his');
@@ -174,12 +175,18 @@ if(empty($Valcaducidad_year)){
 
     $venta = new Venta($idVenta, "", $total, round(($total / 1.21), 2), round(($total - ($total / 1.21)), 2), $nombre, $email, $direccion, $telefono, $titular, $tarjeta);
 
+      //Después de recoger los datos, se llama al controlador de venta para que meta dichos datos en la BBDD
+      //Se añaden, se actualiza y se cierra la conexion (todo esto desde la funcion de AddVenta)
       $insertar = ControladorVenta::getControlador(); 
       if ($insertar->addVenta($venta)) {
           $cs = ControladorSesion::getControlador();
           alerta("Venta procesada. Se te redirige al final de tu compra", "carrito_factura.php?venta=" . encode($idVenta));
           exit();
       } 
+      //Posteriormente, en el AddVenta, tambien se aplicará que se reste lo que haya en la session de cesta, y se restará cuando se pulse el boton aceptar
+      //Resumiendo;
+      //    Cuando se pulse el boton de aceptar(comprar) se añadira a la BBDD de ventas la comra realizada con los datos del usuario
+      //    y se restará del stock las cantidades del producto comprado
   }
 
 }

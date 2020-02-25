@@ -3,7 +3,7 @@
 // Lo que necesitamos
 require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 require_once CONTROLLER_PATH . "ControladorAcceso.php";
-require_once CONTROLLER_PATH . "ControladorSesion.php";
+//require_once CONTROLLER_PATH . "ControladorSesion.php";
 require_once CONTROLLER_PATH . "ControladorVenta.php";
 require_once VIEW_PATH . "cabecera.php";
 
@@ -13,7 +13,7 @@ $cs->reiniciarCarrito();
 //$cs->destruirCookie();
 
 
-//decodificamos la venta que pasamos desde el carrito_resumen
+//decodificamos la venta que pasamos desde el carrito_resumen y llamamos al controlador venta para llamar a la función
 $idVenta = decode($_GET['venta']);
 $cv = ControladorVenta::getControlador();
 $venta = $cv->buscarVentaID($idVenta); //Seleccionamos la venta por ID para recuperar los campos de abajo

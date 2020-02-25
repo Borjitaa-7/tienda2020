@@ -48,41 +48,42 @@ class ControladorVenta
         'tarjeta' => $venta->getTarjeta()
         );
 
-        // y Utilizamos dichos campos para actualizar la BBDD. Después cerramos conexión.
+        // y utilizamos dichos campos para actualizar la BBDD. Después cerramos conexión.
         $estado = $bd->actualizarBD($consulta, $campos);
         $bd->cerrarBD();
 
 
-        // Procesamos cada línea del carrito
-        foreach ($_SESSION['carrito'] as $key => $value) {
-            if (($value[0] != null)) {
-                $articulo = $value[0];
-                $cantidad = $value[1];
+        // Recorremos los campos del array de la sesion de la cesta . Nos interesan articulo y cantidad para la resta
+        foreach ($_SESSION['cesta'] as $key => $value) {
+            
+                $articulo = $value['articulo']; // Recoge el articulo que contiene el id y la cantidad del array de la cesta
+                $cantidad = $value['cantidad'];
 
-                // Actualizo el stock para que SE RESTE EL ARTICULO. HAY QUE TOCARLO!
+                // Actualizo el stock mediante el id del articulo y la cantidad que se le va a restar
                 $cp = ControladorArticulo::getControlador();
                 $estado = $cp->actualizarStock($articulo->getid(), ($articulo->getUnidades() - $cantidad));
-
-                $conexion->cerrarBD();
-            }
         }
         return $estado;
     
     }
 
+
+    //Para buscar las ventas por id en el carrito_factura y sacar los datos para mostrarlos
     public function buscarVentaID($id)
     {
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
 
-        $consulta = "select * from ventas where idVenta = :idVenta";
+        $consulta = "select * from ventas where idVenta = :idVenta"; //Solo EL ID
         $parametros = array(':idVenta' => $id);
 
         $res = $bd->consultarBD($consulta, $parametros);
         $filas = $res->fetchAll(PDO::FETCH_OBJ);
 
+        //Recogemos el id solamente y se pone 0 porque lo unico que queremos recoger es el ID
         if (count($filas) > 0) {
-            $venta = new Venta($filas[0]->idVenta, 
+            $venta = new Venta(
+                $filas[0]->idVenta, 
                 $filas[0]->fecha, 
                 $filas[0]->total,
                 $filas[0]->subtotal, 
