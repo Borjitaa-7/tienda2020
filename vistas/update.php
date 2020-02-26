@@ -31,6 +31,7 @@ if($_SESSION['id'] == decode($_GET["id"])){
             $passwordAnterior = $password;
             $admin = $usuario->getAdmin();
             $telefono = $usuario->getTelefono();
+            $telefonoAnterior = $telefono;
             $fecha = $usuario->getFecha();
             $imagen = $usuario->getImagen();
             $imagenAnterior = $imagen;
@@ -151,18 +152,35 @@ $id = decode($_POST["id"]);
     $password = $passwordAnterior;
    }
 
+    // Procesamos telefono
+    $telefonoVal = filtrado($_POST["telefono"]);
 
-   // Procsamos admin
+    if(empty($telefonoVal)){
+        $telefonoErr = "Tienes que escribir tu número de teléfono";
+        $errores[]= $telefonoErr;
+    }elseif(!preg_match("/^[0-9]{9}$/", $telefonoVal)){ //filtro para que no pueda colarnos nada
+        $telefonoErr = "Por favor introduzca un telefono válido con 9 dígitos";
+        $errores[]= $telefonoErr;
+    }else{
+        $telefono = $telefonoVal;
+    }
+
+    $telefonoAnterior = $_POST['telefonoAnterior']; //ahora recuperamos el telefono anterior para asegurar que no nos cuela una mism direccion
+
+    $controlador = ControladorUsuarios::getControlador(); //abrimos conexion con el controlador de Usuarios
+    $usuario = $controlador->buscarTelefono($telefono); //Buscamos la funcion del telefono para buscarlo
+ 
+    if (isset($usuario) && $telefonoAnterior != $telefono) { //si el usuario es veradero y el telefono anterir es distinto de telefono
+         $telefonoErr = "Ya existe un telefono igual en la Base de Datos"; //dara error si es el mismo
+     } else {
+         $telefono = $telefonoAnterior ; //se actualizará ya que no es el mismo
+     }
+
+
+   // Procesamos admin
    if (isset($_POST["admin"])) {
     $admin = filtrado($_POST["admin"]);
 } else
-    // Procesamos telefono
-    if(isset($_POST["telefono"])){
-        $telefono = filtrado($_POST["telefono"]);
-    }else{
-        $telefonoErr = "Tienes que escribir tu número de teléfono";
-        $errores[]= $telefonoErr;
-    }
 
     // Procesamos fecha
     $fecha = date("d-m-Y", strtotime(filtrado($_POST["fecha"])));
@@ -301,8 +319,8 @@ echo "<br>";
                         <!-- Telefono-->
                         <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
                             <label>Telefono de Contacto</label>
-                            <input type="text" required name="telefono" class="form-control" value="<?php echo $telefono;?>" pattern="[0-9]{9}"
-                            title="En este campo solo puedes escribir números, por ejemplo: 689 00 00 00">
+                            <input type="number" required name="telefono" class="form-control" value="<?php echo $telefono;?>" pattern="[0-9]{9}"
+                            title="Por favor introduzca un telefono válido con 9 dígitos";>
                             <span class="help-block"><?php echo $telefonoErr;?></span>
                         </div>
                         <!-- Fecha-->
@@ -322,6 +340,7 @@ echo "<br>";
                         <input type="hidden" name="dniAnterior" value="<?php echo $dniAnterior; ?>"/>
                         <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>"/>
                         <input type="hidden" name="emailAnterior" value="<?php echo $emailAnterior; ?>" />
+                        <input type="hidden" name="telefonoAnterior" value="<?php echo $telefonoAnterior; ?>" />
                         <input type="hidden" name="passwordAnterior" value="<?php echo encode($passwordAnterior); ?>"/>
                         <input type="hidden" name="id" value="<?php echo encode($id); ?>"/>
                         <button type="submit" value="aceptar" class="btn btn-warning"> <span class="glyphicon glyphicon-refresh"></span>  Modificar</button>
