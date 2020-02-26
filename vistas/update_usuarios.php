@@ -60,7 +60,11 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     if(empty($apellidosVal)){
         $apellidosErr = "Por favor introduzca un apellido válido con solo carácteres alfabéticos.";
     $errores[]= $apellidosErr;
-    } else{
+   //Entonces, ahora llega aqui y comprobamos que no nos pase nada raro
+    }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $apellidosVal)){ //filtro para que no pueda colarnos nada
+        $apellidosErr = "Por favor introduzca el apellido con formato valido, ejemplos Garcia Vaquero o Garcia .";
+        $errores[]= $apellidosErr;
+    } else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
         $apellidos= $apellidosVal;
     }
    
@@ -68,10 +72,14 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
    $emailVal = filtrado($_POST["email"]);
    if(empty($emailVal)){
        $emailErr = "Por favor introduzca email válido.";
-   $errores[]= $emailErr;
-   } else{
-       $email= $emailVal;
-   }
+       $errores[]= $emailErr;
+    //Entonces, ahora llega aqui y comprobamos que no nos pase nada raro    
+    }elseif(!preg_match("/^[a-zA-Z0-9-_.]+[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/", $emailVal)){ //filtro para que no pueda colarnos nada
+        $emailErr = "Por favor introduzca un email válido con solo carácteres alfabéticos.";
+        $errores[]= $emailErr;
+    } else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
+        $email= $emailVal;
+    }
 
    $emailAnterior = $_POST['emailAnterior'];
 
@@ -84,20 +92,21 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $email = $emailAnterior;
     }
     
-//    // Procesamos el password
-   $passwordAnterior = decode($_POST['passwordAnterior']);
-//    $passwordVal = $_POST["password"];
+   // Procesamos el password
+   $passwordAnterior = decode($_POST['passwordAnterior']); //recuperamos la password anterior
+   $passwordVal = $_POST["password"]; //recogemos por post la passwor de formulario
 
-//    if($passwordVal != "*****"){
-//                     if(empty($passwordVal) || strlen($passwordVal)<5){
-//                         $passwordErr = "Por favor introduzca password válido y que sea mayor que 5 caracteres.";
-//                         $errores[]= $passwordErr;
-//                     } else{
-//                         $password= hash('md5',$passwordVal);
-//                     }
-//     }else{
+   if($passwordVal != "*****") //SI la contraseña se modifica
+   {
+                    if(empty($passwordVal) || strlen($passwordVal)<5){ //comprueba que la pass pasada es diferente de null o tiene mas de 5 caracteres 
+                        $passwordErr = "Por favor introduzca password válido y que sea mayor que 5 caracteres.";
+                        $errores[]= $passwordErr;
+                    } else{ //Si todo lo anterior fue falso se actualiza la pass en md5 y se guarda en la bd
+                        $password= hash('md5',$passwordVal);
+                    }
+    }else{              //Si no se ha cambiado se mantiene la anterior
     $password = $passwordAnterior;
-   // }
+   }
 
    // Procsamos admin
    if (isset($_POST["admin"])) {

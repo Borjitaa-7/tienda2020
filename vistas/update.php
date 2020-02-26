@@ -15,8 +15,6 @@ $imagenAnterior = "";
 
 if($_SESSION['id'] == decode($_GET["id"])){
 
-
-
 // Comprobamos que existe el id antes de ir más lejos
     if(isset($_GET["id"]) && !empty(trim($_GET["id"] ))){
         $id =  decode($_GET["id"]);
@@ -58,12 +56,12 @@ $id = decode($_POST["id"]);
    // Procesamos el dni
    $dniVal = filtrado($_POST["dni"]);
    if(empty($dniVal)){
-       $dniErr = "Por favor introduzca un DNI válido.";
-   $errores[]= $dniErr;
+        $dniErr = "Por favor introduzca un DNI válido.";
+        $errores[]= $dniErr;
   }
    elseif(!preg_match("/^([0-9]){8}+([A-Za-z]){1}$/", $dniVal)){
-    $dniErr = "Por favor introduzca un DNI con un formato valido =>Formato admitido 123456789A.";
-    $errores[]= $dniErr;
+        $dniErr = "Por favor introduzca un DNI con un formato valido =>Formato admitido 123456789A.";
+        $errores[]= $dniErr;
    } else{
        $dni= $dniVal;
    }
@@ -87,48 +85,54 @@ $id = decode($_POST["id"]);
     
 
    // Procesamos el nombre
-      $nombreVal = filtrado(($_POST["nombre"]));
+      $nombreVal = filtrado(($_POST["nombre"])); //recuperamos el nombre valido
       if(empty($nombreVal)){
-          $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos.";
-      $errores[]= $nombreErr;
-      }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $nombreVal)){
+          $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos."; //dará error si no se cumple
+          $errores[]= $nombreErr;
+      //Entonces, ahora llega aqui y comprobamos que no nos pase nada raro
+      }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $nombreVal)){ //filtro para que no pueda colarnos nada
             $nombreErr = "Por favor introduzca un nombre con formato valido, ejemplos Juan Pedro o Juan .";
             $errores[]= $nombreErr;
-      }else{
+      }else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
           $nombre= $nombreVal;
       }
 
 
     // Procesamos los apellidos
-    $apellidosVal = filtrado(($_POST["apellidos"]));
+    $apellidosVal = filtrado(($_POST["apellidos"])); //recuperamos los apellidos validos
     if(empty($apellidosVal)){
-        $apellidosErr = "Por favor introduzca un apellido válido con solo carácteres alfabéticos.";
-    $errores[]= $apellidosErr;
-    }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $apellidosVal)){
+        $apellidosErr = "Por favor introduzca un apellido válido con solo carácteres alfabéticos."; //dará error si no se cumple
+        $errores[]= $apellidosErr;
+    //Entonces, ahora llega aqui y comprobamos que no nos pase nada raro
+    }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $apellidosVal)){ //filtro para que no pueda colarnos nada
         $apellidosErr = "Por favor introduzca el apellido con formato valido, ejemplos Garcia Vaquero o Garcia .";
         $errores[]= $apellidosErr;
-    } else{
+    } else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
         $apellidos= $apellidosVal;
     }
 
    // Procesamos el email
-   $emailVal = filtrado($_POST["email"]);
+   $emailVal = filtrado($_POST["email"]); //recuperamos el email valido
    if(empty($emailVal)){
-       $emailErr = "Por favor introduzca email válido.";
+       $emailErr = "Por favor introduzca email válido."; //dará error si no se cumple
        $errores[]= $emailErr;
-   } else{
+    //Entonces, ahora llega aqui y comprobamos que no nos pase nada raro
+    }elseif(!preg_match("/^[a-zA-Z0-9-_.]+[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/", $emailVal)){ //filtro para que no pueda colarnos nada
+        $emailErr = "Por favor introduzca un email válido con solo carácteres alfabéticos.";
+        $errores[]= $emailErr;
+   } else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
        $email= $emailVal;
    }
 
-   $emailAnterior = $_POST['emailAnterior'];
+   $emailAnterior = $_POST['emailAnterior']; //ahora recuperamos el email anterior para asegurar que no nos cuela una mism direccion
 
-   $controlador = ControladorUsuarios::getControlador();
-   $usuario = $controlador->buscarEmail($email);
+   $controlador = ControladorUsuarios::getControlador(); //abrimos conexion con el controlador de Usuarios
+   $usuario = $controlador->buscarEmail($email); //Buscamos la funcion del email para buscarlo
 
-   if (isset($usuario) && $emailAnterior != $email) {
-    $emailErr = "Ya existe un Email igual en la Base de Datos";
+   if (isset($usuario) && $emailAnterior != $email) { //si el usuario es veradero y el email anterir es distinto de email
+        $emailErr = "Ya existe un Email igual en la Base de Datos"; //dara error si es el mismo
     } else {
-        $email = $emailAnterior ;
+        $email = $emailAnterior ; //se actualizará ya que no es el mismo
     }
 
    // Procesamos el password
