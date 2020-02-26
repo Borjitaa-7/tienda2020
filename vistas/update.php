@@ -60,6 +60,10 @@ $id = decode($_POST["id"]);
    if(empty($dniVal)){
        $dniErr = "Por favor introduzca un DNI válido.";
    $errores[]= $dniErr;
+  }
+   elseif(!preg_match("/^([0-9]){8}+([A-Za-z]){1}$/", $dniVal)){
+    $dniErr = "Por favor introduzca un DNI con un formato valido =>Formato admitido 123456789A.";
+    $errores[]= $dniErr;
    } else{
        $dni= $dniVal;
    }
@@ -68,27 +72,41 @@ $id = decode($_POST["id"]);
 
    $controlador = ControladorUsuarios::getControlador();
    $usuario = $controlador->buscarUsuarioDni($dni);
+ 
+    if (isset($usuario) && $dniAnterior != $dni) {
 
-   if (isset($usuario) && $dniAnterior != $dni) {
-    $dniErr = "Ya existe un DNI igual en la Base de Datos";
-    } else {
-        $dniAnterior = $dniVal;
+        $dniErr = "Ya existe un DNI igual en la Base de Datos";
+        $errores[] = $dniErr;
+    
+    } elseif($dniAnterior == $dni){
+            $dni = $dniAnterior;
+
+    }elseif(empty($usuario) && $dniAnterior != $dni){
+            $dni;
     }
+    
 
    // Procesamos el nombre
-   $nombreVal = filtrado(($_POST["nombre"]));
-   if(empty($nombreVal)){
-       $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos.";
-   $errores[]= $nombreErr;
-   } else{
-       $nombre= $nombreVal;
-   }
+      $nombreVal = filtrado(($_POST["nombre"]));
+      if(empty($nombreVal)){
+          $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos.";
+      $errores[]= $nombreErr;
+      }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $nombreVal)){
+            $nombreErr = "Por favor introduzca un nombre con formato valido, ejemplos Juan Pedro o Juan .";
+            $errores[]= $nombreErr;
+      }else{
+          $nombre= $nombreVal;
+      }
+
 
     // Procesamos los apellidos
     $apellidosVal = filtrado(($_POST["apellidos"]));
     if(empty($apellidosVal)){
         $apellidosErr = "Por favor introduzca un apellido válido con solo carácteres alfabéticos.";
     $errores[]= $apellidosErr;
+    }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $apellidosVal)){
+        $apellidosErr = "Por favor introduzca el apellido con formato valido, ejemplos Garcia Vaquero o Garcia .";
+        $errores[]= $apellidosErr;
     } else{
         $apellidos= $apellidosVal;
     }
@@ -114,17 +132,18 @@ $id = decode($_POST["id"]);
     }
 
    // Procesamos el password
-   $passwordAnterior = decode($_POST['passwordAnterior']);
-   $passwordVal = $_POST["password"];
+   $passwordAnterior = decode($_POST['passwordAnterior']); //recuperamos la password anterior
+   $passwordVal = $_POST["password"]; //recogemos por post la passwor de formulario
 
-   if($passwordVal != "*****"){
-                    if(empty($passwordVal) || strlen($passwordVal)<5){
+   if($passwordVal != "*****") //SI la contraseña se modifica
+   {
+                    if(empty($passwordVal) || strlen($passwordVal)<5){ //comprueba que la pass pasada es diferente de null o tiene mas de 5 caracteres 
                         $passwordErr = "Por favor introduzca password válido y que sea mayor que 5 caracteres.";
                         $errores[]= $passwordErr;
-                    } else{
+                    } else{ //Si todo lo anterior fue falso se actualiza la pass en md5 y se guarda en la bd
                         $password= hash('md5',$passwordVal);
                     }
-    }else{
+    }else{              //Si no se ha cambiado se mantiene la anterior
     $password = $passwordAnterior;
    }
 

@@ -43,7 +43,7 @@ class ControladorSesion
         $_SESSION['uds'] = 0;
         $_SESSION['total'] = 0;
         $_SESSION['carrito'] = array();
-        crearCookie();  // crea o modifica
+        ///crearCookie();  // crea o modifica
     }
 
     // la cookie tendrá el siguiente formato
@@ -61,14 +61,6 @@ class ControladorSesion
     {
         setcookie($_SESSION['email'], '', time() - 100);
         exit();
-    }
-
-    public function reiniciarCarrito()
-    {
-        $_SESSION['uds'] = 0;
-        $_SESSION['total'] = 0;
-        $_SESSION['carrito'] = array();
-        $_SESSION['precio'] = 0;
     }
 
     public function destruirSesion()

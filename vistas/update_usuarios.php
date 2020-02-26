@@ -28,18 +28,30 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
    $controlador = ControladorUsuarios::getControlador();
    $usuario = $controlador->buscarUsuarioDni($dni);
 
-   if (isset($usuario) && $dniAnterior != $dni) {
-    $dniErr = "Ya existe un DNI igual en la Base de Datos";
-    } else {
-        $dniAnterior = $dniVal;
+
+    if (isset($usuario) && $dniAnterior != $dni) {
+
+        $dniErr = "Ya existe un DNI igual en la Base de Datos";
+        $errores[] = $dniErr;
+    
+    } elseif($dniAnterior == $dni){
+            $dni = $dniAnterior;
+
+    }elseif(empty($usuario) && $dniAnterior != $dni){
+            $dni;
     }
+    
+
 
    // Procesamos el nombre
    $nombreVal = filtrado(($_POST["nombre"]));
    if(empty($nombreVal)){
        $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos.";
    $errores[]= $nombreErr;
-   } else{
+   }elseif(preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,36}$/iu", $nombreVal)){
+    $nombreErr = "Por favor introduzca un nombre con formato valido, ejemplos Juan Pedro o Juan .";
+    $errores[]= $nombreErr;
+   }else{
        $nombre= $nombreVal;
    }
 
