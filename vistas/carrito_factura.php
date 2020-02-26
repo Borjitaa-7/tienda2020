@@ -72,20 +72,7 @@ if (isset($_GET['venta']) || !empty($_SESSION["venta"] )) {
         <div class="col-xs-6 text-right">
             <address>
                 <h4><strong>Enviado a:</strong></h4><br>
-                <?php echo $venta->getNombre(); ?><br>
-
-    <!-- Vamos a protoger a la mecaguendiez la pagina -->
-            <?php
-                if ($_SESSION['email'] != $venta->getEmail()) {
-                    header("location: error.php");
-                    exit(); 
-
-                    }else{
-                    $email=$venta->getEmail();
-                    }
-            ?>
-
-    <!-- Simple pero efectiva -->
+                <?php echo "Calle ". $venta->getDireccion(); ?><br>
                 <?php echo $venta->getEmail(); ?><br>
                 <?php echo $venta->getTelefono(); // minierror, en verdad coge la direccion. Mirar por qué pasa eso?><br> 
             </address>

@@ -60,7 +60,7 @@ if(empty($Valemail)){
     $Erremail = "Por favor introduzca email válido.";
     $errores[]= $Erremail;
 }elseif(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/", $Valemail)){
-    $Erremail = "Por favor introduzca un email válido con solo carácteres alfabéticos.";
+    $Erremail = "Por favor introduzca un email válido, formato valido: joseborja@gmcil.com ";
     $errores[]= $Erremail;
 }else{
     $email= $Valemail;
@@ -83,7 +83,7 @@ if (isset($usuario) && $emailAnterior != $email) {
 if(empty($Valtelefono)){
   $Errtelefono = "Tienes que escribir tu número de teléfono";
   $errores[]= $Errtelefono;
-}elseif(!(preg_match('/^(\+34|0034|34)?[\s|\-|\.]?[6|7|8|9][\s|\-|\.]?([0-9][\s|\-|\.]?){8}$/', $Valtelefono))){
+}elseif(!(preg_match('/^[6|7|8|9][0-9]{8}$/', $Valtelefono))){
   $Errtelefono = "Por favor introduzca 9 numeros válidos";
   $errores[]= $Errtelefono;
 }else{
@@ -119,8 +119,8 @@ $Valtarjeta = filtrado($_POST['tarjeta']);
 if(empty($Valtarjeta)){
   $Errtarjeta = "Por introduzca un numero de tarjeta.";
   $errores[]= $Errtarjeta;
-}elseif(!(preg_match('/^[1-9]{1}[0-9]{12}+$/', $Valtarjeta))){
-  $Errtarjeta = "Por introduzca un numero de tarjeta con 13 caracteres validos.";
+}elseif(!(preg_match('/^[1-9]{1}[0-9]{12}$/', $Valtarjeta))){
+  $Errtarjeta = "Por favor introduzca una tarjeta con 13 numeros validos.";
   $errores[]= $Errtarjeta;
 }else{
   $tarjeta = $Valtarjeta ;
@@ -128,10 +128,10 @@ if(empty($Valtarjeta)){
  //Validamos cvc
 $Valcvc = filtrado($_POST['cvc']);
 if(empty($Valcvc)){
-  $Errcvc = "Por introduzca un cvc valido.";
+  $Errcvc = "Por favor introduzca un cvc valido.";
   $errores[]= $Errcvc;
-}elseif(!(preg_match('/^[1-9]+[0-9]{2}+$/', $Valcvc))){
-  $Errcvc = "Por introduzca un cvc valido con 3 caracteres.";
+}elseif(!(preg_match('/^[1-9]+[0-9]{2}$/', $Valcvc))){
+  $Errcvc = "Por favor introduzca un cvc valido del 100 al 999.";
   $errores[]= $Errcvc;
 }else{
   $cvc = $Valcvc ;
@@ -142,8 +142,8 @@ $Valcaducidad_mes = filtrado($_POST['caducidad_mes']);
 if(empty($Valcaducidad_mes)){
   $Errcaducidad_mes = "Por favor introduzca un mes.";
   $errores[]= $Errcaducidad_mes;
-}elseif(!(preg_match('/^(0[1-9]|1[012])+$/', $Valcaducidad_mes))){
-  $Errcaducidad_mes = "Por introduzca un mes valido del 01 al 12.";
+}elseif(!(preg_match('/^(0[1-9]|1[012])$/', $Valcaducidad_mes))){
+  $Errcaducidad_mes = "Por favor introduzca un mes valido del 01 al 12.";
   $errores[]= $Errcaducidad_mes;
 }else{
   $caducidad_mes = $Valcaducidad_mes ;
@@ -151,45 +151,44 @@ if(empty($Valcaducidad_mes)){
 //Validamos caducidad_mes
 $Valcaducidad_year = filtrado($_POST['caducidad_year']);
 if(empty($Valcaducidad_year)){
-  $Errcaducidad_year = "Por introduzca algun cvc";
+  $Errcaducidad_year = "Por favor introduzca algun cvc";
   $errores[]= $Errcaducidad_year;
-}elseif(!(preg_match('/^(2[1-9]){1}+$/', $Valcaducidad_year))){ 
-  $Errcaducidad_year = "Por introduzca un año valido del 21 al 29.";
+}elseif(!(preg_match('/^(2[1-9]){1}$/', $Valcaducidad_year))){ 
+  $Errcaducidad_year = "Por favor introduzca un año valido del 21 al 29.";
   $errores[]= $Errcaducidad_year;
 }else{
   $caducidad_year = $Valcaducidad_year ;
 }
-
-
+ if(!empty($errores)){
+   alerta("se han encontrado errores");
+ }else{
 //INTENTO DE PROCESAR LOS DATOS PARA ENVIARLO A LA BBDD CON SU RESPECTIVO CONTROLADOR con los datos del usuario (hay que hacerlo)
-//Cuando se pulse el boton de aceptar, se recogen estos datos para aañdirlos a la BBDD de ventas
-  if ((isset($_POST['aceptar'])) ){
-    
-    $idVenta = date('ymd-his');
-    $nombre = $_POST['nombre'];
-    $email = $_POST['email'];
-    $direccion = $_POST['direccion'];
-    $telefono = $_POST['telefono'];
-    $titular = $_POST['titular'];
-    $tarjeta = $_POST['tarjeta'];
+//Cuando se pulse el boton de aceptar, se recogen estos datos para aañdirlos a la BBDD de venta
+$idVenta = date('ymd-his');
 
-    $venta = new Venta($idVenta, "", $total, round(($total / 1.21), 2), round(($total - ($total / 1.21)), 2), $nombre, $email, $direccion, $telefono, $titular, $tarjeta);
+$venta = new Venta($idVenta, "", $total, round(($total / 1.21), 2), round(($total - ($total / 1.21)), 2), $nombre, $email, $telefono, $direccion,  $titular, $tarjeta);
 
-      //Después de recoger los datos, se llama al controlador de venta para que meta dichos datos en la BBDD
-      //Se añaden, se actualiza y se cierra la conexion (todo esto desde la funcion de AddVenta)
-      $insertar = ControladorVenta::getControlador(); 
-      if ($insertar->addVenta($venta)) {
-          $cs = ControladorSesion::getControlador();
-          alerta("Venta procesada. Se te redirige al final de tu compra", "carrito_factura.php?venta=" . encode($idVenta));
-          exit();
-      } 
-      //Posteriormente, en el AddVenta, tambien se aplicará que se reste lo que haya en la session de cesta, y se restará cuando se pulse el boton aceptar
-      //Resumiendo;
-      //    Cuando se pulse el boton de aceptar(comprar) se añadira a la BBDD de ventas la comra realizada con los datos del usuario
-      //    y se restará del stock las cantidades del producto comprado
-  }
+  //Después de recoger los datos, se llama al controlador de venta para que meta dichos datos en la BBDD
+  //Se añaden, se actualiza y se cierra la conexion (todo esto desde la funcion de AddVenta)
+  $insertar = ControladorVenta::getControlador(); 
+    if($insertar){
+        $insertar->addVenta($venta);
+        $cs = ControladorSesion::getControlador();
+        alerta("Venta procesada. Se te redirige al final de tu compra", "carrito_factura.php?venta=" . encode($idVenta));
+        exit();
+    }else{
+      alerta("Ha habido un problema con el controlador venta", "error.php");
+    }
+    //Posteriormente, en el AddVenta, tambien se aplicará que se reste lo que haya en la session de cesta, y se restará cuando se pulse el boton aceptar
+    //Resumiendo;
+    //    Cuando se pulse el boton de aceptar(comprar) se añadira a la BBDD de ventas la comra realizada con los datos del usuario
+    //    y se restará del stock las cantidades del producto comprado
+
 
 }
+ }
+
+
 
 ?>
 
@@ -224,6 +223,8 @@ if(empty($Valcaducidad_year)){
               <div class='col-xs-12 form-group required'>
                 <label class='control-label'>Nombre</label>
                 <input type="text" required name="nombre"  class="form-control" maxlength='30' value='<?php echo $nombreC ?>' pattern="^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s+([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,36}$">
+                <span class="help-block"><?php echo $Errnombre;?></span>
+
               </div>
             </div>
             <div class='form-row'>
@@ -231,20 +232,23 @@ if(empty($Valcaducidad_year)){
                 <label class='control-label'>Email</label>
                 <input type="email" required name="email" class="form-control" maxlength='30'  value='<?php echo $email?>' 
                 pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})"  title="Introduce una email valido , ejemplo jo-_-se_Lu_algo1@fm-ail.com "> 
+                <span class="help-block"><?php echo $Erremail;?></span>
               </div>
             </div>
             <div class='form-row'>
               <div class='col-xs-12 form-group required'>
                 <label class='control-label'>Telefono</label>
-                <input type="text" required  name="telefono"  class="form-control" placeholder= "626 90 95 88" maxlength="14" minlength="9" value='<?php echo $telefono?>' pattern="(^(\+34|0034|34)?[\s|\-|\.]?[6|7|8|9][\s|\-|\.]?([0-9][\s|\-|\.]?){8}$"
-                title="Introduce una numero valido , 0034 626901212  | 626903231 | +34 781121123">
-              </div>
+                <input type="text" required  name="telefono"  class="form-control" placeholder= "626 90 95 88" maxlength="14" minlength="9" value='<?php echo $telefono?>' pattern="^[6|7|8|9][0-9]{8}$"
+                title="Introduce una numero valido de españa">
+                <span class="help-block"><?php echo $Errtelefono;?></span>
+             </div>
             </div>
             <div class='form-row'>
               <div class='col-xs-12 form-group required'>
                 <label class='control-label'>Direccion</label>
                 <input type="text" required name="direccion" class="form-control" placeholder='C/ Benefica 4' maxlength='30' pattern='^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){1,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,10}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){2,10}\s+[1-9]{0,3}$'
                 value='Pio 1'title="Introduce una direccion valida , valores validos : Pio 1, Falsa 4 , Principe pio 9 , Teresa de calcula 192 ">
+                <span class="help-block"><?php echo $Errdireccion;?></span>
               </div>
             </div>
             </fieldset>
@@ -281,6 +285,7 @@ if(empty($Valcaducidad_year)){
       <figcaption class="media-body">
         <h6 class="title text-truncate"><?php echo $articulo->getnombre();?> </h6>
         <dl class="param param-inline small">
+
           <dt>Tipo: </dt>
           <dd><?php echo $articulo->getTipo();?></dd>
         </dl>
@@ -333,7 +338,6 @@ if(empty($Valcaducidad_year)){
 		</div> <!-- price-wrap .// -->
 	</td>
 
- <?php //var_dump($precio_descuento);?>
 	<td class="text-right"> 
   <a href='/iaw/tienda2020/vistas/carrito_prueba.php?quitar="<?php echo encode($indice); ?>"&ui="<?php echo encode('carrito_resumen.php'); ?>"'><button class="btn btn-outline-danger"> × Quitar</a>
 	</td>
@@ -343,9 +347,9 @@ if(empty($Valcaducidad_year)){
 
 </table>
 </div>
-
-<h2 class="bg-success text-white text-center"> <p class="text-success">Con esta compra estas ahorrando <strong><?php echo round($precio_descuento,2);?> €</strong></p></h2>
-<?php //echo $precio_descuento;?>
+<?php if (!empty($precio_descuento)){ ?>
+<h2 class="bg-success text-white text-center"> <p class="text-success">¡Enhorabuena! Con esta compra estas ahorrando <strong><?php echo round($precio_descuento,2);?> €</strong></p></h2>
+<?php }?>
 <hr>
 </fielsheet>
 
@@ -360,6 +364,8 @@ if(empty($Valcaducidad_year)){
               <div class='col-xs-12 form-group required'>
                 <label class='control-label'>Titular</label>
                 <input class='form-control' required size='4' type='text' name='titular' value='<?php echo $nombreC?>' pattern="^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s+([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,36}$">
+                <span class="help-block"><?php echo $Errtitular;?></span>
+
               </div>
             </div>
             <div class='form-row'>
@@ -367,6 +373,7 @@ if(empty($Valcaducidad_year)){
                 <label class='control-label'>Numero de tarjeta</label>
                 <input type="text" required name="tarjeta" class="form-control" placeholder='123456789012' value="1212121212121"  maxlength='13' minlength='13' pattern="[1-9]{1}[0-9]{12}" 
                             title="Introduce los 13 numeros de tu tarjeta, por ejemplo: 1234567889023">
+                            <span class="help-block"><?php echo $Errtarjeta;?></span>
               </div>
             </div>
             <div class='form-row'>
@@ -374,18 +381,19 @@ if(empty($Valcaducidad_year)){
                 <label class='control-label'>CVC</label>
                 <input required class='form-control card-cvc'  required name="cvc" placeholder='ex. 311' size='3' maxlength='3' minlength='3'  pattern="[1-9][0-9]{2}" type='text'
                 title="Introduce un cvc valido del 100 al 999">
+                <span class="help-block"><?php echo $Errcvc;?></span>
               </div>
               <div class='col-xs-4 form-group expiration required'>
                 <label class='control-label'>Caducidad Mes</label>
                 <input type="text" required name="caducidad_mes" class="form-control" placeholder='MM' maxlength='2' minlength='1' value="06" pattern="0[1-9]|1[012]" 
                             title="Introduce el mes de caducidad de tu tarjeta, numeros validos del 01 al 12">
+                            <span class="help-block"><?php echo $Errcaducidad_mes;?></span>
               </div>
               <div class='col-xs-4 form-group expiration required'>
                 <label class='control-label'>Caducidad Año</label>
                 <input type="text" required name="caducidad_year" class="form-control" placeholder='AA' maxlength='222' minlength='1' value="" pattern="2[1-9]"
                             title="Introduce el mes de caducidad de tu tarjeta, numeros validos del 21 al 29">
-
-                        
+                            <span class="help-block"><?php echo $Errcaducidad_year;?></span>                        
               </div>
             </div>
             <!-- Para verificar el email -->
