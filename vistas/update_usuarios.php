@@ -4,12 +4,51 @@ require_once CONTROLLER_PATH."ControladorUsuarios.php";
 require_once CONTROLLER_PATH."ControladorImagen.php";
 require_once UTILITY_PATH."funciones.php";
  
+error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+session_start();
+
 $dni = $nombre = $apellidos = $email = $password = $admin = $telefono = $fecha = $imagen = $imageninfo ="";
 $dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr = $fechaErr = $imagenErr= "";
 $imagenAnterior = "";
 
 $errores=[];
  
+if($_SESSION['id'] == decode($_GET["id"])){
+
+    // Comprobamos que existe el id antes de ir más lejos
+        if(isset($_GET["id"]) && !empty(trim($_GET["id"] ))){
+            $id =  decode($_GET["id"]);
+            $controlador = ControladorUsuarios::getControlador();
+            $usuario = $controlador->buscarUsuario($id);
+            if (!is_null($usuario)) {
+                $dni = $usuario->getDni();
+                $dniAnterior = $dni;
+                $nombre = $usuario->getNombre();
+                $apellidos = $usuario->getApellidos();
+                $email = $usuario->getEmail();
+                $emailAnterior = $email;
+                $password = $usuario->getPassword();
+                $passwordAnterior = $password;
+                $admin = $usuario->getAdmin();
+                $telefono = $usuario->getTelefono();
+                $telefonoAnterior = $telefono;
+                $fecha = $usuario->getFecha();
+                $imagen = $usuario->getImagen();
+                $imagenAnterior = $imagen;
+            }else{
+                header("location: error.php");
+                exit();
+            }
+        }else{
+                header("location: error.php");
+                exit();
+        }
+    
+    }else{
+        header("location: error.php");
+                exit();
+    }
+
 // Procesamos la información obtenida por el get
 if(isset($_POST["id"]) && !empty($_POST["id"])){
     $id = $_POST["id"];
@@ -122,17 +161,6 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $telefono = $telefonoVal;
     }
 
-    $telefonoAnterior = $_POST['telefonoAnterior']; //ahora recuperamos el telefono anterior para asegurar que no nos cuela una mism direccion
-
-    $controlador = ControladorUsuarios::getControlador(); //abrimos conexion con el controlador de Usuarios
-    $usuario = $controlador->buscarTelefono($telefono); //Buscamos la funcion del telefono para buscarlo
- 
-    if (isset($usuario) && $telefonoAnterior != $telefono) { //si el usuario es veradero y el telefono anterir es distinto de telefono
-         $telefonoErr = "Ya existe un telefono igual en la Base de Datos"; //dara error si es el mismo
-     } else {
-         $telefono = $telefonoAnterior ; //se actualizará ya que no es el mismo
-     }
-
    // Procsamos admin
    if (isset($_POST["admin"])) {
     $admin = filtrado($_POST["admin"]);
@@ -211,35 +239,6 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
 
 }
     
-    // Comprobamos que existe el id antes de ir más lejos
-    if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
-        $id =  decode($_GET["id"]);
-        $controlador = ControladorUsuarios::getControlador();
-        $usuario = $controlador->buscarUsuario($id);
-        if (!is_null($usuario)) {
-            $dni = $usuario->getDni();
-            $dniAnterior = $dni;
-            $nombre = $usuario->getNombre();
-            $apellidos = $usuario->getApellidos();
-            $email = $usuario->getEmail();
-            $emailAnterior = $email;
-            $password = $usuario->getPassword();
-            $passwordAnterior = $password;
-            $admin = $usuario->getAdmin();
-            $telefono = $usuario->getTelefono();
-            $telefonoAnterior = $telefono;
-            $fecha = $usuario->getFecha();
-            $imagen = $usuario->getImagen();
-            $imagenAnterior = $imagen;
-        }else{
-            header("location: error.php");
-            exit();
-        }
-    }else{
-            header("location: error.php");
-            exit();
-    }
-
 ?>
  
 <?php require_once VIEW_PATH."cabecera.php"; ?>
@@ -308,7 +307,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
                             <label>Telefono de Contacto</label>
                             <input type="number" required name="telefono" class="form-control" value="<?php echo $telefono;?>" pattern="[0-9]{9}"
-                            title="Por favor introduzca un telefono válido con 9 dígitos";>
+                            title="Por favor introduzca un telefono válido con 9 dígitos" readonly>
                             <span class="help-block"><?php echo $telefonoErr;?></span>
                         </div>
                         <!-- Fecha-->
