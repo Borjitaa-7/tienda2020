@@ -125,9 +125,9 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
             // Borrar
             $imagenAnterior = trim($_POST["imagenAnterior"]);
             if ($imagenAnterior != $imagen) {
-                if(!$controlador->eliminarImagen($imagenAnterior)){
-                    
-                    $imageninfo= "No se encontró la imagen anterior en el servidor";
+                if (!$controlador->eliminarImagen($imagenAnterior)) {
+                    $e='';
+                    $e = "Error al borrar la antigua imagen en el servidor";
                 }
             }
         } else {

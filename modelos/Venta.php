@@ -1,6 +1,6 @@
 <?php
 
-
+//Creamos la clase Venta que contendrá la compra realizada por el usuario
 class Venta {
     private $idventa;
     private $fecha;
@@ -8,12 +8,15 @@ class Venta {
     private $subtotal;
     private $iva;
     private $nombre;
-    private $email; //identificador que he usado para el usuario
+    private $email;
     private $direccion;
-    private $nombreTarjeta;
-    private $numTarjeta;
+    private $telefono;
+    private $titular;
+    private $tarjeta;
 
-    function __construct($idventa, $fecha, $total, $subtotal, $iva, $nombre, $email, $direccion, $nombreTarjeta, $numTarjeta) {
+
+    //CONSTRUCTOR para poner las variables en un estado inicial
+    function __construct($idventa, $fecha, $total, $subtotal, $iva, $nombre, $email, $telefono, $direccion, $titular, $tarjeta) {
         $this->idventa = $idventa;
         $this->fecha = $fecha;
         $this->total = $total;
@@ -21,9 +24,14 @@ class Venta {
         $this->iva = $iva;
         $this->nombre = $nombre;
         $this->email = $email;
+        $this->telefono = $telefono;
         $this->direccion = $direccion;
-        $this->nombreTarjeta = $nombreTarjeta;
-        $this->numTarjeta = $numTarjeta;
+        $this->titular = $titular;
+        $this->tarjeta = $tarjeta;
+
+
+
+    //SET & GET para acceder a los atributos privados (las variables que hemos declarado arriba)
     }
     function getId() {
         return $this->idventa;
@@ -53,20 +61,25 @@ class Venta {
         return $this->email;
     }
 
+    function getTelefono() {
+        return $this->telefono;
+    }
+
     function getDireccion() {
         return $this->direccion;
     }
 
-    function getNombreTarjeta() {
-        return $this->nombreTarjeta;
+    function getTitular() {
+        return $this->titular;
     }
 
-    function getNumTarjeta() {
-        return $this->numTarjeta;
+    function getTarjeta() {
+        return $this->tarjeta;
     }
 
 
-
+  //------------------------------------------------------------------------------------------------------------------
+  
     
     function setId($idventa) {
         $this->idventa = $idventa;
@@ -97,16 +110,20 @@ class Venta {
         $this->email = $email;
     }
 
+    function setTelefono($telefono) {
+        $this->telefono = $telefono;
+    }
+
     function setDireccion($direccion) {
         $this->direccion = $direccion;
     }
 
-    function setNombreTarjeta($nombreTarjeta) {
-        $this->nombreTarjeta = $nombreTarjeta;
+    function setTitular($titular) {
+        $this->titular = $titular;
     }
 
-    function setNumTarjeta($numTarjeta) {
-        $this->numTarjeta = $numTarjeta;
+    function setTarjeta($tarjeta) {
+        $this->tarjeta = $tarjeta;
     }
 
 

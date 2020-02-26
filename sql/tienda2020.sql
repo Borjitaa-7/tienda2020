@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 05-02-2020 a las 22:01:39
--- Versión del servidor: 10.4.6-MariaDB
--- Versión de PHP: 7.1.32
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 24-02-2020 a las 00:09:43
+-- Versión del servidor: 10.4.8-MariaDB
+-- Versión de PHP: 7.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -111,10 +111,24 @@ CREATE TABLE `ventas` (
   `iva` float NOT NULL,
   `nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `email` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `telefono` text COLLATE utf8_spanish_ci NOT NULL,
   `direccion` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `nombreTarjeta` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `numTarjeta` varchar(100) COLLATE utf8_spanish_ci NOT NULL
+  `tarjeta` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `titular` varchar(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `ventas`
+--
+
+INSERT INTO `ventas` (`idVenta`, `fecha`, `total`, `subtotal`, `iva`, `nombre`, `email`, `telefono`, `direccion`, `tarjeta`, `titular`) VALUES
+('200223-110218', '2020-02-23 23:02:18', 3.09, 2.55, 0.54, 'Jose Funez', 'prueba@prueba.com', 'Pio 1', '626909589', '1212121212121', 'Jose Funez'),
+('200223-110540', '2020-02-23 23:05:40', 3.09, 2.55, 0.54, 'Jose Funez', 'prueba@prueba.com', 'Pio 1', '626909589', '1212121212121', 'Jose Funez'),
+('200223-110601', '2020-02-23 23:06:01', 3.09, 2.55, 0.54, 'Jose Funez', 'prueba@prueba.com', 'Pio 1', '626909589', '1212121212121', 'Jose Funez'),
+('200223-111923', '2020-02-23 23:19:23', 3.09, 2.55, 0.54, 'Jose Funez', 'prueba@prueba.com', 'Pio 1', '626909589', '1212121212121', 'Jose Funez'),
+('200223-113402', '2020-02-23 23:34:02', 3.09, 2.55, 0.54, 'Jose Funez', 'prueba@prueba.com', 'Falsa 4', '626909589', '1212121212121', 'Jose Funez'),
+('200223-115812', '2020-02-23 23:58:12', 3.09, 2.55, 0.54, 'Jose Funez', 'prueba@prueba.com', 'Pio 1', '626909589', '1212121212121', 'Jose Funez'),
+('200224-120709', '2020-02-24 00:07:09', 3.09, 2.55, 0.54, 'Jose Funez', 'prueba@prueba.com', 'Pio 1', '626909589', '1212121212121', 'Jose Funez');
 
 --
 -- Índices para tablas volcadas

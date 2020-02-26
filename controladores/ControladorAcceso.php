@@ -35,6 +35,8 @@ class ControladorAcceso
         $_SESSION['total'] = 0;
         $_SESSION['carrito'] = array();
         $_SESSION['precio'] = 0;
+        $_SESSION['cuenta'] = array(); //necesario para borrar los datos de la cuenta
+        $_SESSION['cesta'] = array(); //este contiene los contenidos de cesta. Habra que borrarlos despues de la compra
     }
 
     public function procesarIdentificacion($email, $password)
@@ -54,11 +56,11 @@ class ControladorAcceso
 
               session_start();
                 //recorro las filas y las asocio al objeto Usuario
-
                     $usuario = new Usuario( $filas[0]->id, $filas[0]->dni, $filas[0]->nombre, $filas[0]->apellidos, $filas[0]->email, $filas[0]->password, $filas[0]->admin, $filas[0]->telefono, $filas[0]->fecha, $filas[0]->imagen);
                     $_SESSION['id'] = $usuario->getId();
                     $_SESSION['nombre'] = $usuario->getNombre();
-                    $_SESSION['apellidos'] = $usuario->getApellidos();
+                    $_SESSION['apellido'] = $usuario->getApellidos();
+                    $_SESSION['telefono'] = $usuario->getTelefono();
                     $_SESSION['administrador'] = $usuario->getAdmin();
                     $_SESSION['email'] = $usuario->getEmail();
                     $_SESSION['USUARIO']['email'] = $email;

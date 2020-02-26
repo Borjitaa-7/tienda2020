@@ -60,17 +60,26 @@ echo"<h1 class='display-1' align='center'>Botánica y Floristería®</h1>";
 
 echo "<table border='0' width='1000px' class='table' >";
 
-//Queremos que nos muestre por fila 4 articulos y que solo nos muestre de cada articulo  el Precio el Nombre y la FOTO
+krsort($resultados->datos);
 $num="";
 //Inicilizamos la variable num
 foreach ($resultados->datos as $a){
+    sort($resultados->datos);
     $Articulo = new Articulo($a->id, $a->nombre, $a->tipo, $a->distribuidor, $a->precio, $a->descuento, $a->unidades,  $a->imagen);
-    if ($num==4){ //Cada vez que num llegue a 4 se pintara una fila nueva y asi hasta el limite del paginador en este caso tenemos configurado 16
+
+    if ($num==4){
+
         echo "<tr align='center'>";
         $num=1;
+
     }else{
+
         $num++;
     }
+
+    if($Articulo->getUnidades() != 0)
+
+    {
     echo "<td><h3 align='center'>". $Articulo->getnombre() ."</h3>"."</br>";
     echo "<div align='center'><img src='/iaw/tienda2020/imagenes/" . $Articulo->getimagen() . "' width='120px' height='120px'> ";
 
@@ -78,14 +87,24 @@ foreach ($resultados->datos as $a){
 
     echo "</br>";
     echo  "<h5>"."<b>Precio</b>: ". $Articulo->getPrecio() ."€ &nbspx &nbspUnidad</h5>";
-    echo "<a href='/iaw/tienda2020/vistas/carrito_añadir.php?id=" . encode($Articulo->getid()) . "&page=" . encode("catalogo_articulos.php") . "'<button type='button' class='btn btn-success'> Agregar ";
-    echo "<span class='glyphicon glyphicon-plus'></span></a>";
-    echo "</button>&nbsp ";
+    $pagina="catalogo_articulos.php";
+
+    if(isset($_SESSION['email'])){
+        echo "<a href='/iaw/tienda2020/vistas/carrito_prueba.php?id=".encode($Articulo->getid())."'<button type='button' class='btn btn-success'> Agregar ";
+        echo "<span class='glyphicon glyphicon-plus'></span></a>";
+        echo "</button>&nbsp ";
+    }else{
+        echo "<a href='/iaw/tienda2020/vistas/login1.php'<button type='button' class='btn btn-success'> Agregar ";
+        echo "<span class='glyphicon glyphicon-plus'></span></a>";
+        echo "</button>&nbsp ";
+    }
+ 
 
     echo "<a href='/iaw/tienda2020/vistas/read_articulos.php?id=" . encode($Articulo->getid()) . "'<button type='button' class='btn btn-primary'> Ver </buttom></a>";
     
 
     echo "</div>";
+}
 }
 
 
