@@ -69,28 +69,29 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     }
    
    // Procesamos el email
-   $emailVal = filtrado($_POST["email"]);
-   if(empty($emailVal)){
-       $emailErr = "Por favor introduzca email válido.";
-       $errores[]= $emailErr;
-    //Entonces, ahora llega aqui y comprobamos que no nos pase nada raro    
-    }elseif(!preg_match("/^[a-zA-Z0-9-_.]+[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/", $emailVal)){ //filtro para que no pueda colarnos nada
-        $emailErr = "Por favor introduzca un email válido con solo carácteres alfabéticos.";
-        $errores[]= $emailErr;
-    } else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
-        $email= $emailVal;
-    }
-
-   $emailAnterior = $_POST['emailAnterior'];
-
-   $controlador = ControladorUsuarios::getControlador();
-   $usuario = $controlador->buscarEmail($email);
-
-   if (isset($usuario) && $emailAnterior != $email) {
-    $emailErr = "Ya existe un Email igual en la Base de Datos";
-    } else {
-        $email = $emailAnterior;
-    }
+      // Procesamos el email
+      $emailVal = filtrado($_POST["email"]); //recuperamos el email valido
+      if(empty($emailVal)){
+          $emailErr = "Por favor introduzca email válido."; //dará error si no se cumple
+          $errores[]= $emailErr;
+       //Entonces, ahora llega aqui y comprobamos que no nos pase nada raro
+       }elseif(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/", $emailVal)){ //filtro para que no pueda colarnos nada
+           $emailErr = "Introduzca un email válido, como por ejemplo: usuario@dominio.com";
+           $errores[]= $emailErr;
+      } else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
+          $email= $emailVal;
+      }
+   
+      $emailAnterior = $_POST['emailAnterior']; //ahora recuperamos el email anterior para asegurar que no nos cuela una mism direccion
+   
+      $controlador = ControladorUsuarios::getControlador(); //abrimos conexion con el controlador de Usuarios
+      $usuario = $controlador->buscarEmail($email); //Buscamos la funcion del email para buscarlo
+   
+      if (isset($usuario) && $emailAnterior != $email) { //si el usuario es veradero y el email anterir es distinto de email
+           $emailErr = "Ya existe un Email igual en la Base de Datos"; //dara error si es el mismo
+       } else {
+           $email = $emailVal ; //se actualizará ya que no es el mismo
+       }
     
    // Procesamos el password
    $passwordAnterior = decode($_POST['passwordAnterior']); //recuperamos la password anterior
@@ -285,7 +286,9 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         <!-- Email -->
                         <div class="form-group <?php echo (!empty($emailErr)) ? 'error: ' : ''; ?>">
                             <label>E-Mail</label>
-                            <input type="email" required name="email" class="form-control" value="<?php echo $emailAnterior; ?>">
+                            <input type="email" required name="email" class="form-control" value="<?php echo $emailAnterior; ?>"
+                            pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})"
+                            title="Introduzca un email válido, como por ejemplo: usuario@dominio.com">
                             <span class="help-block"><?php echo $emailErr;?></span>
                         </div>
                         <!-- Password -->

@@ -59,7 +59,7 @@ $Valemail = filtrado($_POST["email"]);
 if(empty($Valemail)){
     $Erremail = "Por favor introduzca email válido.";
     $errores[]= $Erremail;
-}elseif(!preg_match("/^[a-zA-Z0-9-_.]+[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/", $Valemail)){
+}elseif(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/", $Valemail)){
     $Erremail = "Por favor introduzca un email válido con solo carácteres alfabéticos.";
     $errores[]= $Erremail;
 }else{
@@ -230,7 +230,7 @@ if(empty($Valcaducidad_year)){
               <div class='col-xs-12 form-group required'>
                 <label class='control-label'>Email</label>
                 <input type="email" required name="email" class="form-control" maxlength='30'  value='<?php echo $email?>' 
-                pattern="^[a-zA-Z0-9-_.]+[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"  title="Introduce una email valido , ejemplo jo-_-se_Lu_algo1@fm-ail.com "> 
+                pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})"  title="Introduce una email valido , ejemplo jo-_-se_Lu_algo1@fm-ail.com "> 
               </div>
             </div>
             <div class='form-row'>
