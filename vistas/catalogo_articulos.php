@@ -77,9 +77,7 @@ foreach ($resultados->datos as $a){
         $num++;
     }
 
-    if($Articulo->getUnidades() != 0)
-
-    {
+  
     echo "<td><h3 align='center'>". $Articulo->getnombre() ."</h3>"."</br>";
     echo "<div align='center'><img src='/iaw/tienda2020/imagenes/" . $Articulo->getimagen() . "' width='120px' height='120px'> ";
 
@@ -104,7 +102,7 @@ foreach ($resultados->datos as $a){
     
 
     echo "</div>";
-}
+
 }
 
 

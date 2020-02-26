@@ -4,6 +4,12 @@ require_once CONTROLLER_PATH . "ControladorArticulo.php";
 require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once UTILITY_PATH . "funciones.php";
 
+error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+ session_start();
+if ($_SESSION['administrador'] == 'no' || empty($_SESSION['administrador']) ) {
+    header("location: login1.php");
+    exit();
+}
 $nombre = $tipo = $distribuidor = $precio = $descuento  = $unidades = $imagen =  $imageninfo ="";
 "";
 $nombreVal = $tipoVal = $distribuidorVal = $precioVal = $descuentoVal  =  $unidadesVal = $imagenVal = "";
@@ -18,7 +24,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     $nombreVal = filtrado(($_POST["nombre"]));
     if (empty($nombreVal)) {
         $nombreErr = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
-    } elseif (!preg_match("/([^\s][A-zÀ-ž\s]+$)/", $nombreVal)) {
+    } elseif (!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $nombreVal)) {
         $nombreErr = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
     } else {
         $nombre = $nombreVal;
@@ -73,11 +79,16 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     }
 
     // Procesamos precio
-    if (isset($_POST["precio"])) {
-        $precio = filtrado($_POST["precio"]);
+    $precioVal=$_POST["precio"];
+
+    if (empty($precioVal)) {
+        $precioErr= "Por favor debe introducir un precio";
+    }elseif( !preg_match('/^[0-9]+(?:\.[0-9]{0,3})?$/' , $precioVal) ){
+        $precioErr= "Por favor introduzca una numero del 1 al 999";
     } else {
-        $precioErr = "Debe elegir al menos una precio";
+        $precio = $precioVal;
     }
+
 
       // Procesamos descuento
       if (isset($_POST["descuento"])) {
@@ -89,8 +100,8 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     // Procesamos unidades
     if (isset($_POST["unidades"])) {
         $unidades = filtrado($_POST["unidades"]);
-        if (!preg_match("/([1-9])/", $unidades)) {
-            $unidadesErr = "Introduzca una cantidad valida, rango 1 hasta el 99";
+        if (!preg_match("/^([0-9]){1,3}$/", $unidades)) {
+            $unidadesErr = "Introduzca una cantidad valida, rango 1 hasta el 999";
         }
     } else {
         $unidadesErr = "Debe al menos tener una unidad de este producto";
@@ -195,7 +206,6 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                     <h2>Modificar Articulo</h2>
                     </div>
                     
-
 <p>Por favor edite la nueva información para actualizar la ficha.</p>
 <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" enctype="multipart/form-data">
     <table>
@@ -204,7 +214,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                 <!-- Nombre-->
                 <div class="form-group <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>">
                     <label>Nombre</label>
-                    <input type="text" name="nombre" value="<?php echo $nombre; ?>">
+                    <input type="text" name="nombre"  pattern="^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$" value="<?php echo $nombre; ?>">
                     <?php echo $nombreErr; ?>
                 </div>
             </td>
@@ -247,7 +257,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 <!-- Descuento -->
 <div class="form-group <?php echo (!empty($descuentoErr)) ? 'error: ' : ''; ?>">
         <label>Descuento</label>
-        <input type="radio" name="descuento" value=0 <?php echo (strstr($descuento, '0')) ? 'checked' : ''; ?>>Ninguno</input>
+        <input type="radio" name="descuento" value="0" <?php echo (strstr($descuento, '0')) ? 'checked' : ''; ?>>Ninguno</input>
         <input type="radio" name="descuento" value="5" <?php echo (strstr($descuento, '5')) ? 'checked' : ''; ?>>5%</input>
         <input type="radio" name="descuento" value="10" <?php echo (strstr($descuento, '10')) ? 'checked' : ''; ?>>10%</input>
         <input type="radio" name="descuento" value="20" <?php echo (strstr($descuento, '20')) ? 'checked' : ''; ?>>20%</input>

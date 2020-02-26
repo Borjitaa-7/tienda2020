@@ -44,9 +44,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
 //Validamos el nombre
 $Valnombre = filtrado($_POST['nombre']);
 if(empty($Valnombre)){
-  $Errnombre = "Por favor introduzca un nombre.";
+  $Errnombre = "Por favor introduzca un nombre y apellido.";
   $errores[]= $Errnombre;
-}elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s+([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,36}$/iu", $Valnombre)){
+}elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $Valnombre)){
   $Errnombre = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
   $errores[]= $Errnombre;
 
@@ -222,7 +222,7 @@ $venta = new Venta($idVenta, "", $total, round(($total / 1.21), 2), round(($tota
             <div class='form-row'>
               <div class='col-xs-12 form-group required'>
                 <label class='control-label'>Nombre</label>
-                <input type="text" required name="nombre"  class="form-control" maxlength='30' value='<?php echo $nombreC ?>' pattern="^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s+([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,36}$">
+                <input type="text" required name="nombre"  class="form-control" maxlength='30' value='<?php echo $nombreC ?>' pattern="^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$">
                 <span class="help-block"><?php echo $Errnombre;?></span>
 
               </div>

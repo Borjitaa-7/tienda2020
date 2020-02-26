@@ -15,9 +15,6 @@ if($_SESSION['email'] != $email ){
     exit();
 }
 
-/**
- * Filtra la descargas según lo que necesite
- */
 $fichero = ControladorDescargaFactura::getControlador();
 switch ($opcion) {
     case 'FAC_PDF':

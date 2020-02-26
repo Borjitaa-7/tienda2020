@@ -38,8 +38,8 @@ body {
                 </div>
                 <form class="form-inline" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="no_imprimir">
                     <div class="form-group mx-sm-5 mb-2">
-                        <label for="nombre" class="sr-only">Nombre o Tipo</label>
-                        <input type="text" class="form-control" id="buscar" name="usuario" placeholder="Nombre">
+                        <label for="nombre" class="sr-only">Nombre </label>
+                        <input type="text" class="form-control" name="nombre" placeholder="Nombre">
                     </div>
                     <button type="submit" class="btn btn-primary mb-2"> <span class="glyphicon glyphicon-search"></span>  Buscar</button>
                     <a href="javascript:window.print()" class="btn pull-right"> <span class="glyphicon glyphicon-print"></span> IMPRIMIR</a>
@@ -55,12 +55,11 @@ body {
             require_once CONTROLLER_PATH ."Paginador.php";
             require_once UTILITY_PATH."funciones.php";
 
-            if (!isset($_POST["usuario"])) {
+            if (!isset($_POST["nombre"])) {
                 $nombre = "";
                 $tipo = "";
             } else {
-                $nombre = filtrado($_POST["usuario"]);
-                $tipo = filtrado($_POST["usuario"]);
+                $nombre = filtrado($_POST["nombre"]);
             }
 
 
@@ -71,8 +70,8 @@ body {
             $enlaces = (isset($_GET['enlaces'])) ? $_GET['enlaces'] : 10;
 
             // Consulta 
-            $consulta = "SELECT * FROM articulos WHERE nombre LIKE :nombre OR tipo LIKE :tipo";
-            $parametros = array(':nombre' => "%" .$nombre. "%", ':tipo' => "%".$tipo."%");
+            $consulta = "SELECT * FROM articulos WHERE nombre LIKE :nombre";
+            $parametros = array(':nombre' => "%" .$nombre. "%");
             $limite = 4; // Limite del paginador
             $paginador  = new Paginador($consulta, $parametros, $limite);
             $resultados = $paginador->getDatos($pagina);

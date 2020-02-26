@@ -13,41 +13,6 @@ $imagenAnterior = "";
 
 $errores=[];
  
-if($_SESSION['id'] == decode($_GET["id"])){
-
-    // Comprobamos que existe el id antes de ir más lejos
-        if(isset($_GET["id"]) && !empty(trim($_GET["id"] ))){
-            $id =  decode($_GET["id"]);
-            $controlador = ControladorUsuarios::getControlador();
-            $usuario = $controlador->buscarUsuario($id);
-            if (!is_null($usuario)) {
-                $dni = $usuario->getDni();
-                $dniAnterior = $dni;
-                $nombre = $usuario->getNombre();
-                $apellidos = $usuario->getApellidos();
-                $email = $usuario->getEmail();
-                $emailAnterior = $email;
-                $password = $usuario->getPassword();
-                $passwordAnterior = $password;
-                $admin = $usuario->getAdmin();
-                $telefono = $usuario->getTelefono();
-                $telefonoAnterior = $telefono;
-                $fecha = $usuario->getFecha();
-                $imagen = $usuario->getImagen();
-                $imagenAnterior = $imagen;
-            }else{
-                header("location: error.php");
-                exit();
-            }
-        }else{
-                header("location: error.php");
-                exit();
-        }
-    
-    }else{
-        header("location: error.php");
-                exit();
-    }
 
 // Procesamos la información obtenida por el get
 if(isset($_POST["id"]) && !empty($_POST["id"])){

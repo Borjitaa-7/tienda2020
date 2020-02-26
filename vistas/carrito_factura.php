@@ -107,7 +107,8 @@ if (isset($_GET['venta']) || !empty($_SESSION["venta"] )) {
         <div class='text-center' id="imprimir">
             <a href="../index.php" class='btn btn-success'><span class='glyphicon glyphicon-ok'></span> Finalizar compra </a>
             <?php
-            echo "<a href='/iaw/tienda2020/utilidades/descargas.php?opcion=FAC_PDF&id=".encode($idVenta)."&email=".encode($email). " ' target='_blank' class='btn btn-primary'><span class='glyphicon glyphicon-download'></span>  PDF</a>";
+            $correo=$_SESSION['email']; 
+            echo "<a href='/iaw/tienda2020/utilidades/descargas.php?opcion=FAC_PDF&id=".encode($idVenta)."&email=".encode($correo). " ' target='_blank' class='btn btn-primary'><span class='glyphicon glyphicon-download'></span>  PDF</a>";
             ?>
         </div>
     </div>

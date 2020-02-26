@@ -173,11 +173,7 @@ $id = decode($_POST["id"]);
     if (isset($usuario) && $telefonoAnterior != $telefono) { //si el usuario es veradero y el telefono anterir es distinto de telefono
          $telefonoErr = "Ya existe un telefono igual en la Base de Datos"; //dara error si es el mismo
      } else {
-<<<<<<< HEAD
          $telefono = $telefonoAnterior ; //se actualizará ya que no es el mismo
-=======
-         $telefono = $telefonoVal ; //se actualizará ya que no es el mismo
->>>>>>> master
      }
 
 

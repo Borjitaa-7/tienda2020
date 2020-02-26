@@ -21,9 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
     $nombreVal = filtrado(($_POST["nombre"]));
     if (empty($nombreVal)) {
         $nombreErr = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
-    } elseif (!preg_match("/([^\s][A-zÀ-ž\s]+$)/", $nombreVal)) {
+    }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $nombreVal)){
         $nombreErr = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
-    } else {
+    }else {
         $nombre = $nombreVal;
     }
     // NO SE REPITA el nombre (si se quiere otro campo modificar el ControladorArticulo en la funcion buscar Articulo)
@@ -50,10 +50,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
     }
 
     // Procesamos precio
-    if (isset($_POST["precio"])) {
-        $precio = filtrado($_POST["precio"]);
+    $precioVal=$_POST["precio"];
+
+    if (empty($precioVal)) {
+        $precioErr= "Por favor debe introducir un precio";
+    }elseif( !preg_match('/^[0-9]+(?:\.[0-9]{0,3})?$/' , $precioVal) ){
+        $precioErr= "Por favor introduzca una numero del 1 al 999";
     } else {
-        $precioErr = "Debe elegir al menos una precio";
+        $precio = $precioVal;
     }
 
     // Procesamos descuento
@@ -66,8 +70,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
     // Procesamos unidades
     if (isset($_POST["unidades"])) {
         $unidades = filtrado($_POST["unidades"]);
-        if (!preg_match("/([1-9])/", $unidades)) {
-            $unidadesErr = "Introduzca una cantidad valida, rango 1 hasta el 99";
+        if (!preg_match("/^[0-9]{1,3}$/", $unidades)) {
+            $unidadesErr = "Introduzca una cantidad valida, rango 1 hasta el 999";
         }
     } else {
         $unidadesErr = "Debe al menos tener una unidad de este producto";
@@ -137,10 +141,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
                     <!-- Formulario-->
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
                     <!-- Nombre-->
-                    <div class="form-group <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>">
                         <label>Nombre</label>
-                        <input type="text" required name="nombre" class="form-control" pattern="([^\s][A-zÀ-ž\s]+)" title="El nombre no puede contener números" value="<?php echo $nombre; ?>">
-                        <span class="help-block"><?php echo $nombreErr;?></span>
+                        <input type="text" required name="nombre" class="form-control"  pattern="^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$" title="El nombre no puede contener números" value="<?php echo $nombreVal; ?>">
+                        <span class="help-block"><br><?php echo $nombreErr;?></span>
                     </div>
                     <!-- Tipo -->
                     <div class="form-group <?php echo (!empty($tipoErr)) ? 'error: ' : ''; ?>">
@@ -162,25 +165,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
                     <!-- Precio -->
                     <div class="form-group <?php echo (!empty($precioErr)) ? 'error: ' : ''; ?>">
                         <label>Precio</label>
-                        <input type="number" min="0.01" class="form-control" step="0.01" max="1000" pattern="[0-9]{1,3}+([\.][0-9]{0,2})?"  required name="precio"  title="Inserte un numero desde el 1 hasta el 99" value="<?php echo $precio; ?>">
+                        <input type="number" min="0.01" class="form-control" step="0.01" max="1000" pattern="[0-9]{1,3}+([\.][0-9]{0,2})?"  required name="precio"  title="Inserte un numero desde el 1 hasta el 99" value="<?php echo $precioVal; ?>">
                         <span class="help-block"><?php echo $precioErr; ?></span>
                     </div>
 
                     <!-- descuento -->
                     <div class="form-group <?php echo (!empty($descuentoErr)) ? 'error: ' : ''; ?>">
                         <label>Descuento</label>
-                        <input type="radio" name="descuento"  value=0 <?php echo (strstr($descuento, '0')) ? 'checked' : ''; ?>>Ninguno</input>
+                        <input type="radio" name="descuento" checked value="0" <?php echo (strstr($descuento, '0')) ? 'checked' : ''; ?>>Ninguno</input>
                         <input type="radio" name="descuento"  value="5" <?php echo (strstr($descuento, '5')) ? 'checked' : ''; ?>>5%</input>
-                        <input type="radio" name="descuento" value="10" <?php echo (strstr($descuento, '10')) ? 'checked' : ''; ?>>10%</input>
-                        <input type="radio" name="descuento" value="20" <?php echo (strstr($descuento, '20')) ? 'checked' : ''; ?>>20%</input>
-                        <input type="radio" name="descuento" value="50" <?php echo (strstr($descuento, '50')) ? 'checked' : ''; ?>>50%</input>
+                        <input type="radio" name="descuento"  value="10" <?php echo (strstr($descuento, '10')) ? 'checked' : ''; ?>>10%</input>
+                        <input type="radio" name="descuento"  value="20" <?php echo (strstr($descuento, '20')) ? 'checked' : ''; ?>>20%</input>
+                        <input type="radio" name="descuento"  value="50" <?php echo (strstr($descuento, '50')) ? 'checked' : ''; ?>>50%</input>
                         <span class="help-block"><?php echo $descuentoErr; ?></span>
                     </div>
                 
                     <!-- Unidades -->
                     <div class="form-group <?php echo (!empty($unidadesErr)) ? 'error: ' : ''; ?>">
                         <label>Unidades</label>
-                        <input type="number" name="unidades" class="form-control" pattern="([1-9]){2}" maxlength="2" title="Inserte un numero desde el 1 hasta el 99" required value="<?php echo $unidades; ?>">
+                        <input type="number" name="unidades" class="form-control" pattern="([1-9]){2}" maxlength="2" title="Inserte un numero desde el 1 hasta el 99" required value="<?php echo $unidadesVal; ?>">
                         <span class="help-block"><?php echo $unidadesErr; ?></span>
                     </div>
 
