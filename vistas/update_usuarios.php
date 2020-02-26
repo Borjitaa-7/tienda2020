@@ -4,12 +4,51 @@ require_once CONTROLLER_PATH."ControladorUsuarios.php";
 require_once CONTROLLER_PATH."ControladorImagen.php";
 require_once UTILITY_PATH."funciones.php";
  
+error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+session_start();
+
 $dni = $nombre = $apellidos = $email = $password = $admin = $telefono = $fecha = $imagen = $imageninfo ="";
 $dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr = $fechaErr = $imagenErr= "";
 $imagenAnterior = "";
 
 $errores=[];
  
+if($_SESSION['id'] == decode($_GET["id"])){
+
+    // Comprobamos que existe el id antes de ir más lejos
+        if(isset($_GET["id"]) && !empty(trim($_GET["id"] ))){
+            $id =  decode($_GET["id"]);
+            $controlador = ControladorUsuarios::getControlador();
+            $usuario = $controlador->buscarUsuario($id);
+            if (!is_null($usuario)) {
+                $dni = $usuario->getDni();
+                $dniAnterior = $dni;
+                $nombre = $usuario->getNombre();
+                $apellidos = $usuario->getApellidos();
+                $email = $usuario->getEmail();
+                $emailAnterior = $email;
+                $password = $usuario->getPassword();
+                $passwordAnterior = $password;
+                $admin = $usuario->getAdmin();
+                $telefono = $usuario->getTelefono();
+                $telefonoAnterior = $telefono;
+                $fecha = $usuario->getFecha();
+                $imagen = $usuario->getImagen();
+                $imagenAnterior = $imagen;
+            }else{
+                header("location: error.php");
+                exit();
+            }
+        }else{
+                header("location: error.php");
+                exit();
+        }
+    
+    }else{
+        header("location: error.php");
+                exit();
+    }
+
 // Procesamos la información obtenida por el get
 if(isset($_POST["id"]) && !empty($_POST["id"])){
     $id = $_POST["id"];
@@ -69,28 +108,29 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     }
    
    // Procesamos el email
-   $emailVal = filtrado($_POST["email"]);
-   if(empty($emailVal)){
-       $emailErr = "Por favor introduzca email válido.";
-       $errores[]= $emailErr;
-    //Entonces, ahora llega aqui y comprobamos que no nos pase nada raro    
-    }elseif(!preg_match("/^[a-zA-Z0-9-_.]+[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/", $emailVal)){ //filtro para que no pueda colarnos nada
-        $emailErr = "Por favor introduzca un email válido con solo carácteres alfabéticos.";
-        $errores[]= $emailErr;
-    } else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
-        $email= $emailVal;
-    }
-
-   $emailAnterior = $_POST['emailAnterior'];
-
-   $controlador = ControladorUsuarios::getControlador();
-   $usuario = $controlador->buscarEmail($email);
-
-   if (isset($usuario) && $emailAnterior != $email) {
-    $emailErr = "Ya existe un Email igual en la Base de Datos";
-    } else {
-        $email = $emailAnterior;
-    }
+      // Procesamos el email
+      $emailVal = filtrado($_POST["email"]); //recuperamos el email valido
+      if(empty($emailVal)){
+          $emailErr = "Por favor introduzca email válido."; //dará error si no se cumple
+          $errores[]= $emailErr;
+       //Entonces, ahora llega aqui y comprobamos que no nos pase nada raro
+       }elseif(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/", $emailVal)){ //filtro para que no pueda colarnos nada
+           $emailErr = "Introduzca un email válido, como por ejemplo: usuario@dominio.com";
+           $errores[]= $emailErr;
+      } else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
+          $email= $emailVal;
+      }
+   
+      $emailAnterior = $_POST['emailAnterior']; //ahora recuperamos el email anterior para asegurar que no nos cuela una mism direccion
+   
+      $controlador = ControladorUsuarios::getControlador(); //abrimos conexion con el controlador de Usuarios
+      $usuario = $controlador->buscarEmail($email); //Buscamos la funcion del email para buscarlo
+   
+      if (isset($usuario) && $emailAnterior != $email) { //si el usuario es veradero y el email anterir es distinto de email
+           $emailErr = "Ya existe un Email igual en la Base de Datos"; //dara error si es el mismo
+       } else {
+           $email = $emailVal ; //se actualizará ya que no es el mismo
+       }
     
    // Procesamos el password
    $passwordAnterior = decode($_POST['passwordAnterior']); //recuperamos la password anterior
@@ -121,6 +161,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $telefono = $telefonoVal;
     }
 
+<<<<<<< HEAD
     $telefonoAnterior = $_POST['telefonoAnterior']; //ahora recuperamos el telefono anterior para asegurar que no nos cuela una mism direccion
 
     $controlador = ControladorUsuarios::getControlador(); //abrimos conexion con el controlador de Usuarios
@@ -132,6 +173,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
          $telefono = $telefonoAnterior ; //se actualizará ya que no es el mismo
      }
 
+=======
+>>>>>>> master
    // Procsamos admin
    if (isset($_POST["admin"])) {
     $admin = filtrado($_POST["admin"]);
@@ -210,6 +253,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
 
 }
     
+<<<<<<< HEAD
     // Comprobamos que existe el id antes de ir más lejos
     if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
         $id =  decode($_GET["id"]);
@@ -239,6 +283,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             exit();
     }
 
+=======
+>>>>>>> master
 ?>
  
 <?php require_once VIEW_PATH."cabecera.php"; ?>
@@ -285,7 +331,9 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         <!-- Email -->
                         <div class="form-group <?php echo (!empty($emailErr)) ? 'error: ' : ''; ?>">
                             <label>E-Mail</label>
-                            <input type="email" required name="email" class="form-control" value="<?php echo $emailAnterior; ?>">
+                            <input type="email" required name="email" class="form-control" value="<?php echo $emailAnterior; ?>"
+                            pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})"
+                            title="Introduzca un email válido, como por ejemplo: usuario@dominio.com">
                             <span class="help-block"><?php echo $emailErr;?></span>
                         </div>
                         <!-- Password -->
@@ -305,7 +353,11 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
                             <label>Telefono de Contacto</label>
                             <input type="number" required name="telefono" class="form-control" value="<?php echo $telefono;?>" pattern="[0-9]{9}"
+<<<<<<< HEAD
                             title="Por favor introduzca un telefono válido con 9 dígitos";>
+=======
+                            title="Por favor introduzca un telefono válido con 9 dígitos" readonly>
+>>>>>>> master
                             <span class="help-block"><?php echo $telefonoErr;?></span>
                         </div>
                         <!-- Fecha-->

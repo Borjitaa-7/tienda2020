@@ -118,8 +118,8 @@ $id = decode($_POST["id"]);
        $emailErr = "Por favor introduzca email válido."; //dará error si no se cumple
        $errores[]= $emailErr;
     //Entonces, ahora llega aqui y comprobamos que no nos pase nada raro
-    }elseif(!preg_match("/^[a-zA-Z0-9-_.]+[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/", $emailVal)){ //filtro para que no pueda colarnos nada
-        $emailErr = "Por favor introduzca un email válido con solo carácteres alfabéticos.";
+    }elseif(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/", $emailVal)){ //filtro para que no pueda colarnos nada
+        $emailErr = "Introduzca un email válido, como por ejemplo: usuario@dominio.com";
         $errores[]= $emailErr;
    } else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
        $email= $emailVal;
@@ -133,7 +133,7 @@ $id = decode($_POST["id"]);
    if (isset($usuario) && $emailAnterior != $email) { //si el usuario es veradero y el email anterir es distinto de email
         $emailErr = "Ya existe un Email igual en la Base de Datos"; //dara error si es el mismo
     } else {
-        $email = $emailAnterior ; //se actualizará ya que no es el mismo
+        $email = $emailVal ; //se actualizará ya que no es el mismo
     }
 
    // Procesamos el password
@@ -173,7 +173,11 @@ $id = decode($_POST["id"]);
     if (isset($usuario) && $telefonoAnterior != $telefono) { //si el usuario es veradero y el telefono anterir es distinto de telefono
          $telefonoErr = "Ya existe un telefono igual en la Base de Datos"; //dara error si es el mismo
      } else {
+<<<<<<< HEAD
          $telefono = $telefonoAnterior ; //se actualizará ya que no es el mismo
+=======
+         $telefono = $telefonoVal ; //se actualizará ya que no es el mismo
+>>>>>>> master
      }
 
 
@@ -301,7 +305,9 @@ echo "<br>";
                         <!-- Email -->
                         <div class="form-group <?php echo (!empty($emailErr)) ? 'error: ' : ''; ?>">
                             <label>E-Mail</label>
-                            <input type="email" required name="email" class="form-control" value="<?php echo $email; ?>">
+                            <input type="email" required name="email" class="form-control" value="<?php echo $email; ?>" 
+                            pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})"
+                            title="Introduzca un email válido, como por ejemplo: usuario@dominio.com">
                             <span class="help-block"><?php echo $emailErr;?></span>
                         </div>
                         <!-- Password -->
