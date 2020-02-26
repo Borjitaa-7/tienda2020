@@ -1,22 +1,30 @@
 <?php
 
+error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+session_start();
+
+
 // Lo que necesitamos
 require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 require_once CONTROLLER_PATH . "ControladorAcceso.php";
-//require_once CONTROLLER_PATH . "ControladorSesion.php";
 require_once CONTROLLER_PATH . "ControladorVenta.php";
 require_once VIEW_PATH . "cabecera.php";
 
-//ESTO HAY QUE TOCARLO. PENDIENTE MAÑANA, PROBLEMAS EN EL ARRAY!! REVISAR FLUJO
 $cs = ControladorAcceso::getControlador();
 $cs->reiniciarCarrito();
-//$cs->destruirCookie();
 
 
+if (isset($_GET['venta']) || !empty($_SESSION["venta"] )) {
+    $idVenta = decode($_GET['venta']);
+    $cv = ControladorVenta::getControlador();
+    $venta = $cv->buscarVentaID($idVenta); //Seleccionamos la venta por ID para recuperar los campos de abajo
+    if($_SESSION['email'] != $venta->getEmail()){
+        alerta("Nada que mostrar","catalogo_articulos.php");
+    }
+  }else{
+    alerta("Nada que mostrar","catalogo_articulos.php");
+  }
 //decodificamos la venta que pasamos desde el carrito_resumen y llamamos al controlador venta para llamar a la función
-$idVenta = decode($_GET['venta']);
-$cv = ControladorVenta::getControlador();
-$venta = $cv->buscarVentaID($idVenta); //Seleccionamos la venta por ID para recuperar los campos de abajo
 
 ?>
 

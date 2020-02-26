@@ -1,8 +1,7 @@
 <?php
 error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
  session_start();
- if (!isset($_SESSION['USUARIO']['email']) || in_array("no",$_SESSION['USUARIO']['email'])) {
- 
+ if (!isset($_SESSION['USUARIO']['email']) || $_SESSION['administrador'] == 'no' ) {
      header("location: login1.php");
      exit();
  }
@@ -126,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
 }
 ?>
 
-<?php require_once VIEW_PATH . "cabecera1.php"; ?>
+<?php require_once VIEW_PATH . "cabecera.php"; ?>
 <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
