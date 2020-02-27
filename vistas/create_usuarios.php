@@ -21,12 +21,15 @@ $dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $t
 // Procesamos el formulario 
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
 
-     $dniVal = filtrado(($_POST["dni"]));
-     if(empty($dniVal)){
-         $dniErr = "Por favor, introduzca un DNI válido";
-     }else{
-         $dni= $dniVal;
-     }
+    $dniVal = filtrado(($_POST["dni"]));
+    if(empty($dniVal)){
+        $dniErr = "Por favor, introduzca un DNI válido";
+
+    }elseif(!preg_match("/^([0-9]){8}+([A-Za-z]){1}$/", $dniVal)){
+            $dniErr = "Por favor introduzca un DNI con un formato valido =>Formato admitido 123456789A.";
+    } else{
+           $dni= $dniVal;
+    }
      
      $controlador = ControladorUsuarios::getControlador();
      $usuario = $controlador->buscarUsuarioDni($dni);
@@ -166,7 +169,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
                         <div class="form-group <?php echo (!empty($dniErr)) ? 'error: ' : ''; ?>">
                             <label>DNI</label>
                             <input type="text" required name="dni" class="form-control" value="<?php echo $dni; ?>"
-                            pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra">
+                            pattern="[0-9]{8}[A-Za-z]{1}" 
+                            title="Por favor introduzca un DNI con un formato valido =>Formato admitido 123456789A.">
                             <span class="help-block"><?php echo $dniErr;?></span>
                         </div>
                     <!-- Nombre-->
