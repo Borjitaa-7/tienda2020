@@ -85,7 +85,7 @@ body {
                 echo "<th>Nombre</th>";
                 echo "<th>Apellidos</th>";
                 echo "<th>Email</th>";
-                echo "<th>Contraseña</th>";
+                // echo "<th>Contraseña</th>";
                 echo "<th>Administrador</th>";
                 echo "<th>Telefono</th>";
                 echo "<th>Fecha</th>";
@@ -101,7 +101,7 @@ body {
                     echo "<td>" . $usuario->getNombre() . "</td>";
                     echo "<td>" . $usuario->getApellidos() . "</td>";
                     echo "<td>" . $usuario->getEmail() . "</td>";
-                    echo "<td>" . str_repeat("*",strlen($usuario->getPassword())) . "</td>";
+                    // echo "<td>" . str_repeat("*",strlen($usuario->getPassword())) . "</td>";
                     echo "<td>" . $usuario->getAdmin() . "</td>";
                     echo "<td>" . $usuario->getTelefono() . "</td>";
                     echo "<td>" . $usuario->getFecha() . "</td>";

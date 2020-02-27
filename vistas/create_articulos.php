@@ -23,8 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
     $nombreVal = filtrado(($_POST["nombre"]));
     if (empty($nombreVal)) {
         $nombreErr = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
-    }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $nombreVal)){
-        $nombreErr = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
+    }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $nombreVal) || strlen($nombreVal) > 15){
+        $nombreErr = "Por favor introduzca un nombre válido con solo carácteres alfabéticos y no mas de 15 caracteres.";
     }else {
         $nombre = $nombreVal;
     }
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
     $controlador = ControladorArticulo::getControlador();
     $articulo = $controlador->buscarArticulo($nombre);
     if (isset($articulo)) {
-        $nombreErr = "Ya existe un Articulo con este nombre:" . $nombreVal . " en la Base de Datos";
+        $nombreErr = "Ya existe un Articulo con este nombre:" . $nombre . " en la Base de Datos";
     } else {
         $nombre = $nombreVal;
     }
@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
 
     if (empty($precioVal)) {
         $precioErr= "Por favor debe introducir un precio";
-    }elseif(!preg_match('/^[0-9]+(?:\.[0-9]{0,3})?$/' , $precioVal)){
+    }elseif(!preg_match('/^[0-9]+(?:\.[0-9]{0,3})?$/' , $precioVal) || strlen($precioVal) > 3){
         $precioErr= "Por favor introduzca una numero del 1 al 999";
     } else {
         $precio = $precioVal;
@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
     // Procesamos unidades
     if (isset($_POST["unidades"]) && !empty($_POST["unidades"])) {
         $unidades = filtrado($_POST["unidades"]);
-        if (!preg_match("/^[0-9]{1,3}$/", $unidades)) {
+        if (!preg_match("/^[0-9]{1,3}$/", $unidades) || strlen($unidades) > 3) {
             $unidadesErr = "Introduzca una cantidad valida, rango 1 hasta el 999";
         }
     } else {

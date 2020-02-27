@@ -53,7 +53,7 @@ class ControladorVenta
         $bd->cerrarBD();
         error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
         session_start();
-        $_SESSION['venta']="pizza";
+        $_SESSION['venta']="para generar factura";
         // Recorremos los campos del array de la sesion de la cesta . Nos interesan articulo y cantidad para la resta
         foreach ($_SESSION['cesta'] as $key => $value) {
             

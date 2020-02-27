@@ -72,6 +72,7 @@ if(isset($_GET["add"])){
             $estado = $cc->add($id);
              // si mandamos lo que sea desde el catalogo que nos sume la unidad y lo redirija
             header("location: carrito_prueba.php");
+
     }else{
         alerta("Sientiendolo mucho, no tenemos stock de ese producto", "catalogo_articulos.php");
     }

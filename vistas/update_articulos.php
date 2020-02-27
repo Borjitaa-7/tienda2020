@@ -24,7 +24,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     $nombreVal = filtrado(($_POST["nombre"]));
     if (empty($nombreVal)) {
         $nombreErr = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
-    } elseif (!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $nombreVal)) {
+    } elseif (!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $nombreVal) || strlen($nombreVal) > 15) {
         $nombreErr = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
     } else {
         $nombre = $nombreVal;
@@ -83,7 +83,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
     if (empty($precioVal)) {
         $precioErr= "Por favor debe introducir un precio";
-    }elseif( !preg_match('/^[0-9]+(?:\.[0-9]{0,3})?$/' , $precioVal) ){
+    }elseif( !preg_match('/^[0-9]+(?:\.[0-9]{0,3})?$/' , $precioVal) || strlen($precioVal) > 6){
         $precioErr= "Por favor introduzca una numero del 1 al 999";
     } else {
         $precio = $precioVal;
@@ -100,7 +100,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     // Procesamos unidades
     if (isset($_POST["unidades"]) && !empty($_POST["unidades"])) {
         $unidades = filtrado($_POST["unidades"]);
-        if (!preg_match("/^([0-9]){1,3}$/", $unidades)) {
+        if (!preg_match("/^([0-9]){1,3}$/", $unidades) || strlen($unidades) > 3) {
             $unidadesErr = "Introduzca una cantidad valida, rango 1 hasta el 999";
         }
     } else {

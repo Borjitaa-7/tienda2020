@@ -26,7 +26,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
         $dniErr = "Por favor, introduzca un DNI válido";
 
     }elseif(!preg_match("/^([0-9]){8}+([A-Za-z]){1}$/", $dniVal) || strlen($dniVal) > 9){
-            $dniErr = "Por favor introduzca un DNI con un formato valido =>Formato admitido 123456789A.";
+            $dniErr = "Por favor introduzca un DNI con un formato valido =>Formato admitido 12345678A.";
     } else{
            $dni= $dniVal;
     }
@@ -40,11 +40,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
      }
     
     // Procesamos el nombre
-    $nombreVal = filtrado(($_POST["nombre"])|| strlen($nombreVal) > 15);
+    $nombreVal = filtrado(($_POST["nombre"]));
     if(empty($nombreVal)){
         $nombreErr = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
 
-    }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $nombreVal)){ //filtro para que no pueda colarnos nada
+    }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $nombreVal)|| strlen($nombreVal) > 15 ){ //filtro para que no pueda colarnos nada
         $nombreErr = "Por favor introduzca un nombre con formato valido, ejemplos Juan Pedro o Juan .";
     }else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
       $nombre= $nombreVal;

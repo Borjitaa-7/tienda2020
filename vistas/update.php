@@ -59,7 +59,7 @@ $id = decode($_POST["id"]);
         $dniErr = "Por favor introduzca un DNI válido.";
         $errores[]= $dniErr;
   }
-   elseif(!preg_match("/^([0-9]){8}+([A-Za-z]){1}$/", $dniVal)){
+   elseif(!preg_match("/^([0-9]){8}+([A-Za-z]){1}$/", $dniVal)|| strlen($dniVal) > 9){
         $dniErr = "Por favor introduzca un DNI con un formato valido =>Formato admitido 123456789A.";
         $errores[]= $dniErr;
    } else{
@@ -158,7 +158,7 @@ $id = decode($_POST["id"]);
     if(empty($telefonoVal)){
         $telefonoErr = "Tienes que escribir tu número de teléfono";
         $errores[]= $telefonoErr;
-    }elseif(!preg_match("/^[6|7|8|9][0-9]{8}$/", $telefonoVal) || strlen($telefonoVal) > 10){ //filtro para que no pueda colarnos nada
+    }elseif(!preg_match("/^[6|7|8|9][0-9]{8}$/", $telefonoVal) || strlen($telefonoVal) > 9){ //filtro para que no pueda colarnos nada
         $telefonoErr = "Por favor introduzca un telefono válido con 9 dígitos y en formato español empezando por 6,7,8";
         $errores[]= $telefonoErr;
     }else{

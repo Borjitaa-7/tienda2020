@@ -11,7 +11,7 @@ require_once CONTROLLER_PATH . "ControladorVenta.php";
 require_once VIEW_PATH . "cabecera.php";
 
 
-if (isset($_GET['venta']) && !empty($_SESSION["venta"] )) {
+if (isset($_GET['venta'])) {
     $idVenta = decode($_GET['venta']);
     $cv = ControladorVenta::getControlador();
     $venta = $cv->buscarVentaID($idVenta); //Seleccionamos la venta por ID para recuperar los campos de abajo

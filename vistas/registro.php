@@ -91,7 +91,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
     if(empty($telefonoVal)){
         $telefonoErr = "Tienes que escribir tu número de teléfono";
 
-    }elseif(!preg_match("/^[6|7|8|9][0-9]{8}$/", $telefonoVal) || strlen($nombreVal) > 9){ //filtro para que no pueda colarnos nada
+    }elseif(!preg_match("/^[6|7|8|9][0-9]{8}$/", $telefonoVal) || strlen($telefonoVal) > 9){ //filtro para que no pueda colarnos nada
         $telefonoErr = "Por favor introduzca un telefono válido con 9 dígitos y en formato español empezando por 6,7,8";
     }else{
         $telefono = $telefonoVal;
@@ -126,8 +126,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
         $controlador = ControladorUsuarios::getControlador();
         $estado = $controlador->almacenarUsuario($dni, $nombre, $apellidos, $email, $password,'no', $telefono, $fecha, $imagen);
         if($estado){
-            alerta("Te has regristrado con exito");
-            header("location: login1.php");
+            alerta("Te has regristrado con exito","login1.php");
             exit();
         }else{
             alerta("location: error.php");

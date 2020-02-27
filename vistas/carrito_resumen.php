@@ -45,7 +45,7 @@ $Valnombre = filtrado($_POST['nombre']);
 if(empty($Valnombre)){
   $Errnombre = "Por favor introduzca un nombre y apellido.";
   $errores[]= $Errnombre;
-}elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $Valnombre)){
+}elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $Valnombre) || strlen($Valnombre) > 25){
   $Errnombre = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
   $errores[]= $Errnombre;
 
@@ -58,7 +58,7 @@ $Valemail = filtrado($_POST["email"]);
 if(empty($Valemail)){
     $Erremail = "Por favor introduzca email válido.";
     $errores[]= $Erremail;
-}elseif(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/", $Valemail)){
+}elseif(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/", $Valemail)|| strlen($Valemail) > 25){
     $Erremail = "Por favor introduzca un email válido, formato valido: joseborja@gmcil.com ";
     $errores[]= $Erremail;
 }else{
@@ -82,7 +82,7 @@ if (isset($usuario) && $emailAnterior != $email) {
 if(empty($Valtelefono)){
   $Errtelefono = "Tienes que escribir tu número de teléfono";
   $errores[]= $Errtelefono;
-}elseif(!(preg_match('/^[6|7|8|9][0-9]{8}$/', $Valtelefono))){
+}elseif(!(preg_match('/^[6|7|8|9][0-9]{8}$/', $Valtelefono)) || strlen($Valtelefono) > 9){
   $Errtelefono = "Por favor introduzca 9 numeros válidos";
   $errores[]= $Errtelefono;
 }else{
@@ -94,7 +94,7 @@ $Valdireccion = filtrado($_POST['direccion']);
 if(empty($Valdireccion)){
   $Errdireccion = "Tienes que escribir una direccion de casa";
   $errores[]= $Errdireccion;
-}elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){1,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,10}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){2,10}\s+[1-9]{0,3}$/iu", $Valdireccion)){
+}elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){1,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,10}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){2,10}\s+[1-9]{0,3}$/iu", $Valdireccion) || strlen($Valdireccion) > 35){
   $Errdireccion= "Introduce una direccion valida , valores validos : Pio 3 , Falsa 4 , Principe pio 9 , Téresa De Calcula 192 ";
   $errores[]= $Errdireccion;
 }else{
@@ -106,7 +106,7 @@ $Valtitular = filtrado($_POST['titular']);
 if(empty($Valtitular)){
 $Errtitular = "Por favor introduzca un nombre de titular válido con solo carácteres alfabéticos.";
 $errores[]= $Errtitular;
-}elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){2,18}\s+([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,36}$/iu", $Valtitular)){
+}elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){2,18}\s+([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,36}$/iu", $Valtitular) || strlen($Valtitular) > 25){
 $Errtitular = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
 $errores[]= $Errtitular;
 }else{
@@ -118,7 +118,7 @@ $Valtarjeta = filtrado($_POST['tarjeta']);
 if(empty($Valtarjeta)){
   $Errtarjeta = "Por introduzca un numero de tarjeta.";
   $errores[]= $Errtarjeta;
-}elseif(!(preg_match('/^[1-9]{1}[0-9]{12}$/', $Valtarjeta))){
+}elseif(!(preg_match('/^[1-9]{1}[0-9]{12}$/', $Valtarjeta)) || strlen($Valtarjeta) > 13){
   $Errtarjeta = "Por favor introduzca una tarjeta con 13 numeros validos.";
   $errores[]= $Errtarjeta;
 }else{
@@ -129,7 +129,7 @@ $Valcvc = filtrado($_POST['cvc']);
 if(empty($Valcvc)){
   $Errcvc = "Por favor introduzca un cvc valido.";
   $errores[]= $Errcvc;
-}elseif(!(preg_match('/^[1-9]+[0-9]{2}$/', $Valcvc))){
+}elseif(!(preg_match('/^[1-9]+[0-9]{2}$/', $Valcvc)) || strlen($Valcvc) > 3){
   $Errcvc = "Por favor introduzca un cvc valido del 100 al 999.";
   $errores[]= $Errcvc;
 }else{
@@ -152,7 +152,7 @@ $Valcaducidad_year = filtrado($_POST['caducidad_year']);
 if(empty($Valcaducidad_year)){
   $Errcaducidad_year = "Por favor introduzca algun cvc";
   $errores[]= $Errcaducidad_year;
-}elseif(!(preg_match('/^(2[1-9]){1}$/', $Valcaducidad_year))){ 
+}elseif(!(preg_match('/^(2[1-9]){1}$/', $Valcaducidad_year)) || strlen($Valcaducidad_year) > 2){ 
   $Errcaducidad_year = "Por favor introduzca un año valido del 21 al 29.";
   $errores[]= $Errcaducidad_year;
 }else{
@@ -390,7 +390,7 @@ $venta = new Venta($idVenta, "", $total, round(($total / 1.21), 2), round(($tota
               </div>
               <div class='col-xs-4 form-group expiration required'>
                 <label class='control-label'>Caducidad Año</label>
-                <input type="text" required name="caducidad_year" class="form-control" placeholder='AA' maxlength='222' minlength='1' value="" pattern="2[1-9]"
+                <input type="text" required name="caducidad_year" class="form-control" placeholder='AA' maxlength='2' minlength='1' value="" pattern="2[1-9]"
                             title="Introduce el mes de caducidad de tu tarjeta, numeros validos del 21 al 29">
                             <span class="help-block"><?php echo $Errcaducidad_year;?></span>                        
               </div>
