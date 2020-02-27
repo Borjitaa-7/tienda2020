@@ -51,8 +51,9 @@ class ControladorVenta
         // y utilizamos dichos campos para actualizar la BBDD. Después cerramos conexión.
         $estado = $bd->actualizarBD($consulta, $campos);
         $bd->cerrarBD();
-
-
+        error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+        session_start();
+        $_SESSION['venta']="pizza";
         // Recorremos los campos del array de la sesion de la cesta . Nos interesan articulo y cantidad para la resta
         foreach ($_SESSION['cesta'] as $key => $value) {
             
@@ -71,6 +72,9 @@ class ControladorVenta
     //Para buscar las ventas por id en el carrito_factura y sacar los datos para mostrarlos
     public function buscarVentaID($id)
     {
+        error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+        session_start();
+
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
 

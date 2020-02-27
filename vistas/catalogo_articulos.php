@@ -1,12 +1,3 @@
-<?php
-// session_start();
-// if (!isset($_SESSION['USUARIO']['email'])) {
-//     //echo $_SESSION['USUARIO']['email'];
-//     //exit();
-//     header("location: login.php");
-//     exit();
-// }
-?>
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php"; 
 require_once VIEW_PATH . "cabecera.php"
 ?>

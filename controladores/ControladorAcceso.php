@@ -65,7 +65,6 @@ class ControladorAcceso
                     $_SESSION['email'] = $usuario->getEmail();
                     $_SESSION['USUARIO']['email'] = $email;
                     $_SESSION['uds'] = 0;
-                    $_SESSION['carrito'] = array();
 
                 header("location: ../index.php");
                 exit();

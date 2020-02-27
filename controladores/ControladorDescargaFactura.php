@@ -32,6 +32,9 @@ class ControladorDescargaFactura
     //HAY QUE TOCARLO
     public function facturaPDF($id)
     {
+        error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+        session_start();
+        $factura = $_SESSION['factura'];
         $cv = ControladorVenta::getControlador();
 
         $venta = $cv->buscarVentaID($id);
@@ -58,26 +61,50 @@ class ControladorDescargaFactura
         $objeto .= "<h5>Dirección " . $venta->getDireccion() . "</h5>";
         $objeto .= "<table align='center'>
 
-                        <tbody>";
+                <thead>
+                <tr><td><b>Item</b></td><td><b>Precio (PVP)</b></td><td><b>Descuento</b></td><td><b>Cantidad</b></td><td><b>Precio</b></td>
+                </tr>
+                </thead>
+                <tbody>";
 
-        $objeto .= "<tr>
-                            <td></td>
-                            <td></td>
-                            <td><h5><strong>Total sin IVA</strong></h5></td>
-                            <td><h5>" . $venta->getSubtotal() . "€</h5></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td><h5><strong>I.V.A</strong></h5></td>
-                            <td><h5>" . $venta->getIva() . " €</h5></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td><h4><strong>TOTAL</strong></h4></td>
-                            <td><h4><strong>" . $venta->getTotal() . " €</strong></h4></td>
-                        </tr>";
+                    foreach ($factura as $indice => $elemento) {
+                        $linea = $elemento['articulo'];
+                    $objeto .= "<tr>";
+                    $objeto .= "<td>" . $linea->getNombre() . "</td>";
+                    $objeto .= "<td>" . $elemento['precio'] . " €</td>";
+                    if($elemento['descuento']!=0){
+                    $objeto .= "<td>" . $elemento['descuento'] . " %</td>";
+                    }else{
+                    $objeto .= "<td>Ninguno</td>";
+                    }
+                    $objeto .= "<td>" .$elemento['cantidad'] . "</td>";
+                    if ($elemento['descuento'] == null){
+                    $preciounidad = $elemento['precio'] ;
+                    }else{
+                    $preciounidad = ($elemento['precio']) - (($elemento['precio'] * $elemento['descuento'])/100);  
+                    }  
+                    $objeto .= "<td>" . ($preciounidad * $elemento['cantidad']) . " €</td>";
+                    $objeto .= "</tr>";
+                 }
+
+                    $objeto .= "<tr>
+             <td></td>
+             <td></td>
+             <td><h5><strong>Total sin IVA</strong></h5></td>
+             <td><h5>" . $venta->getSubtotal() . "€</h5></td>
+         </tr>
+         <tr>
+             <td></td>
+             <td></td>
+             <td><h5><strong>I.V.A</strong></h5></td>
+             <td><h5>" . $venta->getIva() . " €</h5></td>
+         </tr>
+         <tr>
+             <td></td>
+             <td></td>
+             <td><h4><strong>TOTAL</strong></h4></td>
+             <td><h4><strong>" . $venta->getTotal() . " €</strong></h4></td>
+         </tr>";
 
         $objeto .= " </tbody>
                     </table>";

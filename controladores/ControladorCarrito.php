@@ -84,6 +84,10 @@ public function add($id) {
                 $ca = ControladorArticulo::getControlador(); //Abrimos una conexion con el controlado de articulos
                 $articulo = $ca->buscarArticuloidconStock($id_articulo); //y ademas comprobamos si hay stock
                     if($articulo){
+                        error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+                        session_start();
+                        unset($_SESSION['pizza']);  //Reinicializamos todo el proceso 
+                        unset($_SESSION['venta']);
                         $_SESSION['cesta'][] = array(
                             "id_producto" => $articulo->getid(),
                             "precio" => $articulo->getPrecio(),

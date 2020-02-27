@@ -263,7 +263,8 @@ echo "<br>";
                                     <label>DNI</label>
                                     <input type="text" required name="dni" class="form-control" value="<?php echo $dni; ?>"
                                         pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra">
-                                    <span class="help-block"><?php echo $dniErr;?></span>
+                                        <span class="help-block"><p class="text-danger"><?php echo $dniErr;?></p></span>                        </div>
+
                                 </div>
                             </td>
                             <!-- Fotografía -->
@@ -295,8 +296,7 @@ echo "<br>";
                             <input type="email" required name="email" class="form-control" value="<?php echo $email; ?>" 
                             pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})"
                             title="Introduzca un email válido, como por ejemplo: usuario@dominio.com">
-                            <span class="help-block"><?php echo $emailErr;?></span>
-                        </div>
+                            <span class="help-block"><p class="text-danger"><?php echo $emailErr;?></p></span>                        </div>
                         <!-- Password -->
                         <div class="form-group <?php echo (!empty($passwordErr)) ? 'error: ' : ''; ?>">
                             <label>Password</label>
@@ -318,11 +318,11 @@ echo "<br>";
                             <span class="help-block"><?php echo $telefonoErr;?></span>
                         </div>
                         <!-- Fecha-->
-                        <div class="form-group <?php echo (!empty($fechaErr)) ? 'error: ' : ''; ?>">
+                        <!-- <div class="form-group <?php echo (!empty($fechaErr)) ? 'error: ' : ''; ?>">
                         <label>Fecha de Matriculación</label>
                             <input type="date" required name="fecha" value="<?php echo date('Y-m-d', strtotime(str_replace('/', '-', $fecha)));?>"readonly></input><div>
                             <span class="help-block"><?php echo $fechaErr;?></span>
-                        </div>
+                        </div> -->
                          <!-- Foto-->
                          <div class="form-group <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>">
                         <label>Fotografía</label>
@@ -334,6 +334,7 @@ echo "<br>";
                         <input type="hidden" name="dniAnterior" value="<?php echo $dniAnterior; ?>"/>
                         <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>"/>
                         <input type="hidden" name="emailAnterior" value="<?php echo $emailAnterior; ?>" />
+                        <input type="hidden" name="fecha" value="<?php echo $fecha; ?>" />
                         <input type="hidden" name="passwordAnterior" value="<?php echo encode($passwordAnterior); ?>"/>
                         <input type="hidden" name="id" value="<?php echo encode($id); ?>"/>
                         <button type="submit" value="aceptar" class="btn btn-warning"> <span class="glyphicon glyphicon-refresh"></span>  Modificar</button>

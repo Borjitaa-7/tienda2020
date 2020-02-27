@@ -10,11 +10,8 @@ require_once CONTROLLER_PATH . "ControladorAcceso.php";
 require_once CONTROLLER_PATH . "ControladorVenta.php";
 require_once VIEW_PATH . "cabecera.php";
 
-$cs = ControladorAcceso::getControlador();
-$cs->reiniciarCarrito();
 
-
-if (isset($_GET['venta']) || !empty($_SESSION["venta"] )) {
+if (isset($_GET['venta']) && !empty($_SESSION["venta"] )) {
     $idVenta = decode($_GET['venta']);
     $cv = ControladorVenta::getControlador();
     $venta = $cv->buscarVentaID($idVenta); //Seleccionamos la venta por ID para recuperar los campos de abajo
@@ -24,6 +21,26 @@ if (isset($_GET['venta']) || !empty($_SESSION["venta"] )) {
   }else{
     alerta("Nada que mostrar","catalogo_articulos.php");
   }
+
+
+
+if(empty($_SESSION['pizza']) || !isset($_SESSION['pizza'])){
+    $ventaFactura = $_SESSION['cesta'];
+    $_SESSION['factura'] = $ventaFactura;
+}
+
+
+if(empty($_SESSION['pizza']) || !isset($_SESSION['pizza'])){
+    $cs = ControladorAcceso::getControlador();
+    $cs->reiniciarCarrito();
+    $_SESSION['pizza']="muyrika";
+}
+
+
+
+
+
+
 //decodificamos la venta que pasamos desde el carrito_resumen y llamamos al controlador venta para llamar a la función
 
 ?>
@@ -49,7 +66,6 @@ if (isset($_GET['venta']) || !empty($_SESSION["venta"] )) {
 <div align="center">
     <img src='../imagenes/cd.jpg' width="100px">
 </div>
-
 <main role="main">
     <div class="container">
     <div class="row">
@@ -67,7 +83,9 @@ if (isset($_GET['venta']) || !empty($_SESSION["venta"] )) {
             <address>
             <h4><strong>Facturado a:</strong></h4><br>
                 <?php echo $venta->getTitular(); ?><br>
+             
             </address>
+            
         </div>
         <div class="col-xs-6 text-right">
             <address>
@@ -89,10 +107,9 @@ if (isset($_GET['venta']) || !empty($_SESSION["venta"] )) {
         </div>
         <div class="col-xs-6 text-right">
             <address>
-            <h4><strong>Fecha de compra:</strong></h4><br>
+            <h4><strong>Total de la compra:</strong></h4><br>
                 <?php
-                    $date = new DateTime($venta->getFecha());
-                    echo $date->format('d/m/Y'); ?><br><br>
+                     echo $venta->getTotal(); ?> €<br><br>
             </address>
         </div>
     </div>
@@ -108,7 +125,7 @@ if (isset($_GET['venta']) || !empty($_SESSION["venta"] )) {
             <a href="../index.php" class='btn btn-success'><span class='glyphicon glyphicon-ok'></span> Finalizar compra </a>
             <?php
             $correo=$_SESSION['email']; 
-            echo "<a href='/iaw/tienda2020/utilidades/descargas.php?opcion=FAC_PDF&id=".encode($idVenta)."&email=".encode($correo). " ' target='_blank' class='btn btn-primary'><span class='glyphicon glyphicon-download'></span>  PDF</a>";
+            echo "<a href='/iaw/tienda2020/utilidades/descargas.php?opcion=FAC_PDF&id=".encode($idVenta)."&email=".encode($correo). " ' target='_blank' class='btn btn-primary'><span class='glyphicon glyphicon-download'></span> Descargar Factura</a>";
             ?>
         </div>
     </div>

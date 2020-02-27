@@ -5,6 +5,8 @@ error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
      header("location: login1.php");
      exit();
  }
+
+ 
  
 require_once $_SERVER['DOCUMENT_ROOT'] . "/iaw/tienda2020/dirs.php";
 require_once CONTROLLER_PATH . "ControladorArticulo.php";
@@ -54,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
 
     if (empty($precioVal)) {
         $precioErr= "Por favor debe introducir un precio";
-    }elseif( !preg_match('/^[0-9]+(?:\.[0-9]{0,3})?$/' , $precioVal) ){
+    }elseif(!preg_match('/^[0-9]+(?:\.[0-9]{0,3})?$/' , $precioVal)){
         $precioErr= "Por favor introduzca una numero del 1 al 999";
     } else {
         $precio = $precioVal;
@@ -68,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
     }
 
     // Procesamos unidades
-    if (isset($_POST["unidades"])) {
+    if (isset($_POST["unidades"]) && !empty($_POST["unidades"])) {
         $unidades = filtrado($_POST["unidades"]);
         if (!preg_match("/^[0-9]{1,3}$/", $unidades)) {
             $unidadesErr = "Introduzca una cantidad valida, rango 1 hasta el 999";

@@ -6,6 +6,12 @@ require_once CONTROLLER_PATH."ControladorUsuarios.php";
 require_once VIEW_PATH."cabecera.php";
 require_once UTILITY_PATH."funciones.php";
 
+error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+ session_start();
+ if ((isset($_SESSION['nombre']))) {
+    header("location: error.php");
+    exit();
+}
 //-----------------------------------------------------------------PROCESAR FORMULARIO
 $dni = $nombre = $apellidos = $email = $password = $telefono = $fecha = $imagen ="";
 $dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $telefonoErr = $fechaErr = $imagenErr= "";
@@ -138,7 +144,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
 ?>
 
  
-<!-- ---------------------------------------------------------------FORMULARIO -->
+<!-----------------------------------------------------------------FORMULARIO -->
 <?php require_once VIEW_PATH."cabecera.php"; ?>
 
 <!DOCTYPE html>
@@ -175,7 +181,7 @@ body {
                             <label>DNI</label>
                             <input type="text" required name="dni" class="form-control" value="<?php echo $dni; ?>"
                             pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra">
-                            <span class="help-block"><?php echo $dniErr;?></span>
+                            <span class="help-block"><p class="text-danger"><?php echo $dniErr;?></p></span>
                         </div>
                     <!-- Nombre-->
                         <div class="form-group <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>">
@@ -183,7 +189,7 @@ body {
                             <input type="text" required name="nombre" class="form-control" value="<?php echo $nombre; ?>" minlength="3"
                             pattern="([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$"
                             title="Por favor introduzca un nombre con formato valido, ejemplos Juan Pedro o Juan.">
-                            <span class="help-block"><?php echo $nombreErr;?></span>
+                            <span class="help-block"><p class="text-danger"><?php echo $nombreErr;?></p></span>
                         </div>
                     <!-- Apellidos-->
                         <div class="form-group <?php echo (!empty($apellidosErr)) ? 'error: ' : ''; ?>">
@@ -211,10 +217,9 @@ body {
                     <!-- Telefono-->
                         <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
                             <label>Telefono de Contacto</label>
-                            <input type="text" required name="telefono" class="form-control" value="<?php echo $telefono;?>" 
-                            pattern="^[6|7|8|9][0-9]{8}$"
-                            title="Por favor introduzca un telefono válido con 9 dígitos y en formato español empezando por 6,7,8";>
-                            <span class="help-block"><?php echo $telefonoErr;?></span>
+                            <input type="text" required name="telefono" class="form-control" value="<?php echo $telefono;?>" pattern="[0-9]{9}" 
+                            title="En este campo solo puedes escribir números, por ejemplo: 689 00 00 00">
+                            <span class="help-block"><p class="text-danger"><?php echo $telefonoErr;?></p></span>
                         </div>
                     <!-- Fecha-->
                             <input type="hidden" required name="fecha" value="<?php echo date('Y-m-d', strtotime(str_replace('/', '-', $fecha)));?>" readonly></input><div>

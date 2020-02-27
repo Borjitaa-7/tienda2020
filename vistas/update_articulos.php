@@ -5,7 +5,7 @@ require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once UTILITY_PATH . "funciones.php";
 
 error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
- session_start();
+session_start();
 if ($_SESSION['administrador'] == 'no' || empty($_SESSION['administrador']) ) {
     header("location: login1.php");
     exit();
@@ -98,7 +98,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     }
 
     // Procesamos unidades
-    if (isset($_POST["unidades"])) {
+    if (isset($_POST["unidades"]) && !empty($_POST["unidades"])) {
         $unidades = filtrado($_POST["unidades"]);
         if (!preg_match("/^([0-9]){1,3}$/", $unidades)) {
             $unidadesErr = "Introduzca una cantidad valida, rango 1 hasta el 999";
@@ -181,7 +181,8 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
         $distribuidor = $Articulo->getDistribuidor();
         $precio = $Articulo->getPrecio();
         $descuento = $Articulo->getDescuento();
-        $unidades = $Articulo->getUnidades();
+        if($descuento == "0"){$descuento = "ninguno";}
+        $stock =  $Articulo->getUnidades();
         $imagen = $Articulo->getimagen();
         $imagenAnterior = $imagen;
     } else {
@@ -205,7 +206,8 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                     <div class="page-header">
                     <h2>Modificar Articulo</h2>
                     </div>
-                    
+
+
 <p>Por favor edite la nueva información para actualizar la ficha.</p>
 <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" enctype="multipart/form-data">
     <table>
@@ -257,7 +259,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 <!-- Descuento -->
 <div class="form-group <?php echo (!empty($descuentoErr)) ? 'error: ' : ''; ?>">
         <label>Descuento</label>
-        <input type="radio" name="descuento" value="0" <?php echo (strstr($descuento, '0')) ? 'checked' : ''; ?>>Ninguno</input>
+        <input type="radio" name="descuento" value="0" <?php echo (strstr($descuento, 'ninguno')) ? 'checked' : ''; ?>>Ninguno</input>
         <input type="radio" name="descuento" value="5" <?php echo (strstr($descuento, '5')) ? 'checked' : ''; ?>>5%</input>
         <input type="radio" name="descuento" value="10" <?php echo (strstr($descuento, '10')) ? 'checked' : ''; ?>>10%</input>
         <input type="radio" name="descuento" value="20" <?php echo (strstr($descuento, '20')) ? 'checked' : ''; ?>>20%</input>
@@ -268,7 +270,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
    <!-- Unidades -->
    <div class="form-group <?php echo (!empty($unidadesErr)) ? 'error: ' : ''; ?>">
         <label>Unidades</label>
-        <input type="number" required name="unidades" pattern="([1-9])" maxlength="2" title="Inserte un numero desde el 1 hasta el 99" value="<?php echo $unidades; ?>">
+        <input type="number" required name="unidades" pattern="([1-9])" maxlength="2" title="Inserte un numero desde el 1 hasta el 99" value="<?php echo $stock; ?>">
         <?php echo $unidadesErr; ?>
     </div>
 

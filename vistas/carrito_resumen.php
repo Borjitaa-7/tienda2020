@@ -5,7 +5,6 @@ require_once CONTROLLER_PATH . "ControladorUsuarios.php";
 require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once CONTROLLER_PATH . "ControladorVenta.php";
 require_once CONTROLLER_PATH . "ControladorSesion.php";
-require_once MODEL_PATH . "Venta.php";
 require_once VIEW_PATH . "cabecera.php"; 
 require_once UTILITY_PATH . "funciones.php"; 
 
@@ -177,7 +176,7 @@ $venta = new Venta($idVenta, "", $total, round(($total / 1.21), 2), round(($tota
         alerta("Venta procesada. Se te redirige al final de tu compra", "carrito_factura.php?venta=" . encode($idVenta));
         exit();
     }else{
-      alerta("Ha habido un problema con el controlador venta", "error.php");
+      alerta("Ha sucedido un problema con el controlador venta", "error.php");
     }
     //Posteriormente, en el AddVenta, tambien se aplicará que se reste lo que haya en la session de cesta, y se restará cuando se pulse el boton aceptar
     //Resumiendo;

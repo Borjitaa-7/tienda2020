@@ -7,6 +7,10 @@ require_once VIEW_PATH . "cabecera.php";
 error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
 session_start();
 
+if(!isset($_SESSION['cesta']) && !isset($_SESSION['nombre'])){
+    alerta("Estas haciendo cositas malas","error.php");
+}
+
 if ($_GET["quitar"] && $_GET["ui"]) //Comprobamos de que pagina se recibe la peticion para redireccionarlo o bien 
 // a carrito prueba o bien a carrito resumen
 {
@@ -91,7 +95,7 @@ if(isset($_GET["id"])){
              // si mandamos lo que sea desde el catalogo que nos sume la unidad y lo redirija
             header("location: catalogo_articulos.php");
     }else{
-        alerta("Sientiendolo mucho, no tenemos stock de ese producto", "catalogo_articulos.php");
+        alerta("Sintiendolo mucho, no tenemos stock de ese producto", "catalogo_articulos.php");
     }
    
 }
@@ -146,7 +150,7 @@ foreach($_SESSION['cesta'] as $indice => $elemento) {
         <td> <?php echo $articulo->getnombre(); ?></td> <!-- Nombre del articulo -->
         <td> <?php echo $articulo->getTipo() ;?></td>  <!-- Tipo -->
         <td> <?php echo $elemento['precio'] ;?>€</td>  <!-- Precio -->
-        <td> <?php echo $elemento['descuento'] ;?>%</td> <!-- descuento -->
+        <td> <?php if($elemento['descuento']){echo $elemento['descuento'] ."%";}else{echo "-";} ;?></td> <!-- descuento -->
         <td> <?php echo $elemento['cantidad'] ;?></td>  <!-- cantidad -->
         <td> <a href='/iaw/tienda2020/vistas/carrito_prueba.php?quitar_unidad="<?php echo encode($elemento['id_producto']); ?>"'><button type="button"   class='btn btn-warning'> Quitar</button></a></td>
         <!-- Lo que estoy pasando por GET es el ID del producto -->
