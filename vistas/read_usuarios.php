@@ -3,6 +3,13 @@ require_once $_SERVER['DOCUMENT_ROOT']."/iaw/tienda2020/dirs.php";
 require_once CONTROLLER_PATH."ControladorUsuarios.php";
 require_once UTILITY_PATH."funciones.php";
 
+error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+ session_start();
+if ($_SESSION['administrador'] == 'no' || empty($_SESSION['administrador']) ) {
+    header("location: login1.php");
+    exit();
+}
+
 if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     $id = decode($_GET["id"]);
     $controlador = ControladorUsuarios::getControlador();

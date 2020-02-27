@@ -5,6 +5,15 @@ require_once CONTROLLER_PATH."ControladorUsuarios.php";
 require_once CONTROLLER_PATH."ControladorImagen.php";
 require_once UTILITY_PATH."funciones.php";
 
+
+error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+ session_start();
+if ($_SESSION['administrador'] == 'no' || empty($_SESSION['administrador']) ) {
+    header("location: login1.php");
+    exit();
+}
+
+
 // Obtenemos los datos del usuario que nos vienen de la página anterior
 if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     $id = decode($_GET["id"]);

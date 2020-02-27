@@ -5,7 +5,11 @@ require_once CONTROLLER_PATH."ControladorImagen.php";
 require_once UTILITY_PATH."funciones.php";
  
 error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
-session_start();
+ session_start();
+if ($_SESSION['administrador'] == 'no' || empty($_SESSION['administrador']) ) {
+    header("location: login1.php");
+    exit();
+}
 
 $dni = $nombre = $apellidos = $email = $password = $admin = $telefono = $fecha = $imagen = $imageninfo ="";
 $dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr = $fechaErr = $imagenErr= "";
@@ -119,23 +123,12 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     if(empty($telefonoVal)){
         $telefonoErr = "Tienes que escribir tu número de teléfono";
         $errores[]= $telefonoErr;
-    }elseif(!preg_match("/^[0-9]{9}$/", $telefonoVal)){ //filtro para que no pueda colarnos nada
-        $telefonoErr = "Por favor introduzca un telefono válido con 9 dígitos";
+    }elseif(!preg_match("/^[6|7|8|9][0-9]{8}$/", $telefonoVal)){ //filtro para que no pueda colarnos nada
+        $telefonoErr = "Por favor introduzca un telefono válido con 9 dígitos y en formato español empezando por 6,7,8";
         $errores[]= $telefonoErr;
     }else{
         $telefono = $telefonoVal;
     }
-
-    $telefonoAnterior = $_POST['telefonoAnterior']; //ahora recuperamos el telefono anterior para asegurar que no nos cuela una mismo numero
-
-    $controlador = ControladorUsuarios::getControlador(); //abrimos conexion con el controlador de Usuarios
-    $telefon = $controlador->buscarTelefono($telefono); //Buscamos la funcion del telefono para buscarlo
- 
-    if (isset($telefon) && $telefonoAnterior != $telefono) { //si el usuario es veradero y el telefono anterir es distinto de telefono
-         $telefonoErr = "Ya existe un telefono igual en la Base de Datos"; //dara error si es el mismo
-     } else {
-         $telefono = $telefonoAnterior ; //se actualizará ya que no es el mismo
-     }
 
    // Procsamos admin
    if (isset($_POST["admin"])) {
@@ -311,7 +304,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         <!-- Telefono-->
                         <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
                             <label>Telefono de Contacto</label>
-                            <input type="number" required name="telefono" class="form-control" value="<?php echo $telefono;?>" pattern="[0-9]{9}"
+                            <input type="number" required name="telefono" class="form-control" value="<?php echo $telefono;?>" readonly pattern="[0-9]{9}"
                             title="Por favor introduzca un telefono válido con 9 dígitos";>
                             <span class="help-block"><?php echo $telefonoErr;?></span>
                         </div>

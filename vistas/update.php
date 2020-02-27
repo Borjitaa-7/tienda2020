@@ -149,7 +149,7 @@ $id = decode($_POST["id"]);
                         $password= hash('md5',$passwordVal);
                     }
     }else{              //Si no se ha cambiado se mantiene la anterior
-    $password = $passwordAnterior;
+        $password = $passwordAnterior;
    }
 
     // Procesamos telefono
@@ -158,8 +158,8 @@ $id = decode($_POST["id"]);
     if(empty($telefonoVal)){
         $telefonoErr = "Tienes que escribir tu número de teléfono";
         $errores[]= $telefonoErr;
-    }elseif(!preg_match("/^[0-9]{9}$/", $telefonoVal)){ //filtro para que no pueda colarnos nada
-        $telefonoErr = "Por favor introduzca un telefono válido con 9 dígitos";
+    }elseif(!preg_match("/^[6|7|8|9][0-9]{8}$/", $telefonoVal)){ //filtro para que no pueda colarnos nada
+        $telefonoErr = "Por favor introduzca un telefono válido con 9 dígitos y en formato español empezando por 6,7,8";
         $errores[]= $telefonoErr;
     }else{
         $telefono = $telefonoVal;
@@ -173,7 +173,7 @@ $id = decode($_POST["id"]);
     if (isset($usuario) && $telefonoAnterior != $telefono) { //si el usuario es veradero y el telefono anterir es distinto de telefono
          $telefonoErr = "Ya existe un telefono igual en la Base de Datos"; //dara error si es el mismo
      } else {
-         $telefono = $telefonoAnterior ; //se actualizará ya que no es el mismo
+         $telefono = $telefonoVal ; //se actualizará ya que no es el mismo
      }
 
 

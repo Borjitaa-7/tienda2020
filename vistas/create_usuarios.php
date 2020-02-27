@@ -15,6 +15,8 @@ require_once UTILITY_PATH."funciones.php";
 //-----------------------------------------------------------------PROCESAR FORMULARIO
 $dni = $nombre = $apellidos = $email = $password = $admin = $telefono = $fecha = $imagen ="";
 $dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr = $fechaErr = $imagenErr= "";
+
+
  
 // Procesamos el formulario 
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
