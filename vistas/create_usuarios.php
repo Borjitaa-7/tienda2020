@@ -39,26 +39,35 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
     // Procesamos el nombre
     $nombreVal = filtrado(($_POST["nombre"]));
     if(empty($nombreVal)){
-        $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos.";
-    } else{
-        $nombre= $nombreVal;
+        $nombreErr = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
+
+    }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $nombreVal)){ //filtro para que no pueda colarnos nada
+        $nombreErr = "Por favor introduzca un nombre con formato valido, ejemplos Juan Pedro o Juan .";
+    }else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
+      $nombre= $nombreVal;
     }
 
     // Procesamos los apellidos
     $apellidosVal = filtrado(($_POST["apellidos"]));
     if(empty($apellidosVal)){
         $apellidosErr = "Por favor introduzca un apellido válido con solo carácteres alfabéticos.";
-    } else{
+
+    }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $apellidosVal)){ //filtro para que no pueda colarnos nada
+        $apellidosErr = "Por favor introduzca el apellido con formato valido, ejemplos Garcia Vaquero o Garcia .";
+    } else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
         $apellidos= $apellidosVal;
     }
     
     // Procesamos el email
     $emailVal = filtrado($_POST["email"]);
     if(empty($emailVal)){
-        $emailErr = "Por favor introduzca email válido.";
-    } else{
-        $email= $emailVal;
-    }
+        $emailErr = "Por favor introduzca un email válido.";
+
+    }elseif(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/", $emailVal)){ //filtro para que no pueda colarnos nada
+        $emailErr = "Introduzca un email válido, como por ejemplo: usuario@dominio.com";
+   } else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
+       $email= $emailVal;
+   }
 
     $controlador = ControladorUsuarios::getControlador();
     $usuario = $controlador->buscarEmail($email);
@@ -84,11 +93,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
         $admin= $adminVal;
     }
 
-    // Procesamos telefono
-    if(isset($_POST["telefono"])){
-        $telefono = filtrado($_POST["telefono"]);
-    }else{
+    //Procesamos el telefono
+    $telefonoVal = filtrado($_POST["telefono"]);
+    if(empty($telefonoVal)){
         $telefonoErr = "Tienes que escribir tu número de teléfono";
+
+    }elseif(!preg_match("/^[6|7|8|9][0-9]{8}$/", $telefonoVal)){ //filtro para que no pueda colarnos nada
+        $telefonoErr = "Por favor introduzca un telefono válido con 9 dígitos y en formato español empezando por 6,7,8";
+    }else{
+        $telefono = $telefonoVal;
     }
     
     // Procesamos fecha
@@ -159,19 +172,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
                     <!-- Nombre-->
                         <div class="form-group <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>">
                             <label>Nombre</label>
-                            <input type="text" required name="nombre" class="form-control" value="<?php echo $nombre; ?>" minlength="3">
+                            <input type="text" required name="nombre" class="form-control" value="<?php echo $nombre; ?>" minlength="3"
+                            pattern="([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$"
+                            title="Por favor introduzca un nombre con formato valido, ejemplos Juan Pedro o Juan.">
                             <span class="help-block"><?php echo $nombreErr;?></span>
                         </div>
                     <!-- Apellidos-->
                         <div class="form-group <?php echo (!empty($apellidosErr)) ? 'error: ' : ''; ?>">
                             <label>Apellidos</label>
-                            <input type="text" required name="apellidos" class="form-control" value="<?php echo $apellidos; ?>" minlength="3">
+                            <input type="text" required name="apellidos" class="form-control" value="<?php echo $apellidos; ?>" minlength="3"
+                            pattern="([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$"
+                            title="Por favor introduzca el apellido con formato valido, ejemplos Garcia Vaquero o Garcia.">
                             <span class="help-block"><?php echo $apellidosErr;?></span>
                         </div>
                     <!-- Email -->
                         <div class="form-group <?php echo (!empty($emailErr)) ? 'error: ' : ''; ?>">
                             <label>E-Mail</label>
-                            <input type="email" required name="email" class="form-control" value="<?php echo $email; ?>">
+                            <input type="email" required name="email" class="form-control" value="<?php echo $email; ?>"
+                            pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})"
+                            title="Introduzca un email válido, como por ejemplo: usuario@dominio.com">
                             <span class="help-block"><?php echo $emailErr;?></span>
                         </div>
                     <!-- Password -->
@@ -191,8 +210,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
                     <!-- Telefono-->
                         <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
                             <label>Telefono de Contacto</label>
-                            <input type="text" required name="telefono" class="form-control" value="<?php echo $telefono;?>" pattern="[0-9]{9}" 
-                            title="En este campo solo puedes escribir números, por ejemplo: 689 00 00 00">
+                            <input type="text" required name="telefono" class="form-control" value="<?php echo $telefono;?>" 
+                            pattern="^[6|7|8|9][0-9]{8}$"
+                            title="Por favor introduzca un telefono válido con 9 dígitos y en formato español empezando por 6,7,8";>
                             <span class="help-block"><?php echo $telefonoErr;?></span>
                         </div>
                     <!-- Fecha-->

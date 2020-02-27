@@ -321,8 +321,8 @@ echo "<br>";
                         <!-- Telefono-->
                         <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
                             <label>Telefono de Contacto</label>
-                            <input type="number" required name="telefono" class="form-control" value="<?php echo $telefono;?>" pattern="[0-9]{9}"
-                            title="Por favor introduzca un telefono válido con 9 dígitos";>
+                            <input type="number" required name="telefono" class="form-control" value="<?php echo $telefono;?>" pattern="^[6|7|8|9][0-9]{8}$"
+                            title="Por favor introduzca un telefono válido con 9 dígitos y en formato español empezando por 6,7,8";;>
                             <span class="help-block"><?php echo $telefonoErr;?></span>
                         </div>
                         <!-- Fecha-->
