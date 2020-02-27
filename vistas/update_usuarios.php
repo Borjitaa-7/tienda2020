@@ -28,7 +28,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $dniErr = "Por favor introduzca un DNI válido.";
         $errores[]= $dniErr;
     }
-    elseif(!preg_match("/^([0-9]){8}+([A-Za-z]){1}$/", $dniVal)){
+    elseif(!preg_match("/^([0-9]){8}+([A-Za-z]){1}$/", $dniVal) || strlen($dniVal) > 9){
         $dniErr = "Por favor introduzca un DNI con un formato valido =>Formato admitido 123456789A.";
         $errores[]= $dniErr;
    } else{
@@ -61,7 +61,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
        $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos."; //dará error si no se cumple
        $errores[]= $nombreErr;
    //Entonces, ahora llega aqui y comprobamos que no nos pase nada raro
-   }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $nombreVal)){ //filtro para que no pueda colarnos nada
+   }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $nombreVal) || strlen($nombreVal) > 15){ //filtro para que no pueda colarnos nada
          $nombreErr = "Por favor introduzca un nombre con formato valido, ejemplos Juan Pedro o Juan .";
          $errores[]= $nombreErr;
    }else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
@@ -74,7 +74,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $apellidosErr = "Por favor introduzca un apellido válido con solo carácteres alfabéticos.";
     $errores[]= $apellidosErr;
    //Entonces, ahora llega aqui y comprobamos que no nos pase nada raro
-    }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $apellidosVal)){ //filtro para que no pueda colarnos nada
+    }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $apellidosVal) || strlen($apellidosVal) > 15){ //filtro para que no pueda colarnos nada
         $apellidosErr = "Por favor introduzca el apellido con formato valido, ejemplos Garcia Vaquero o Garcia .";
         $errores[]= $apellidosErr;
     } else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
@@ -88,7 +88,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
           $emailErr = "Por favor introduzca email válido."; //dará error si no se cumple
           $errores[]= $emailErr;
        //Entonces, ahora llega aqui y comprobamos que no nos pase nada raro
-       }elseif(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/", $emailVal)){ //filtro para que no pueda colarnos nada
+       }elseif(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/", $emailVal) || strlen($emailVal) > 25){ //filtro para que no pueda colarnos nada
            $emailErr = "Introduzca un email válido, como por ejemplo: usuario@dominio.com";
            $errores[]= $emailErr;
       } else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
@@ -128,7 +128,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     if(empty($telefonoVal)){
         $telefonoErr = "Tienes que escribir tu número de teléfono";
         $errores[]= $telefonoErr;
-    }elseif(!preg_match("/^[6|7|8|9][0-9]{8}$/", $telefonoVal)){ //filtro para que no pueda colarnos nada
+    }elseif(!preg_match("/^[6|7|8|9][0-9]{8}$/", $telefonoVal) || strlen($telefonoVal) > 9){ //filtro para que no pueda colarnos nada
         $telefonoErr = "Por favor introduzca un telefono válido con 9 dígitos y en formato español empezando por 6,7,8";
         $errores[]= $telefonoErr;
     }else{

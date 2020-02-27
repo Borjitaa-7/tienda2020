@@ -8,7 +8,7 @@ error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
 session_start();
 
 if(!isset($_SESSION['cesta']) && !isset($_SESSION['nombre'])){
-    alerta("Estas haciendo cositas malas","error.php");
+    alerta("Error","error.php");
 }
 
 if ($_GET["quitar"] && $_GET["ui"]) //Comprobamos de que pagina se recibe la peticion para redireccionarlo o bien 

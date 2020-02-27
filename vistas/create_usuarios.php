@@ -25,7 +25,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
     if(empty($dniVal)){
         $dniErr = "Por favor, introduzca un DNI válido";
 
-    }elseif(!preg_match("/^([0-9]){8}+([A-Za-z]){1}$/", $dniVal)){
+    }elseif(!preg_match("/^([0-9]){8}+([A-Za-z]){1}$/", $dniVal) || strlen($dniVal) > 9){
             $dniErr = "Por favor introduzca un DNI con un formato valido =>Formato admitido 123456789A.";
     } else{
            $dni= $dniVal;
@@ -40,7 +40,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
      }
     
     // Procesamos el nombre
-    $nombreVal = filtrado(($_POST["nombre"]));
+    $nombreVal = filtrado(($_POST["nombre"])|| strlen($nombreVal) > 15);
     if(empty($nombreVal)){
         $nombreErr = "Por favor introduzca un nombre válido con solo carácteres alfabéticos.";
 
@@ -55,7 +55,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
     if(empty($apellidosVal)){
         $apellidosErr = "Por favor introduzca un apellido válido con solo carácteres alfabéticos.";
 
-    }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $apellidosVal)){ //filtro para que no pueda colarnos nada
+    }elseif(!preg_match("/^([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$/iu", $apellidosVal) || strlen($apellidosVal) > 15){ //filtro para que no pueda colarnos nada
         $apellidosErr = "Por favor introduzca el apellido con formato valido, ejemplos Garcia Vaquero o Garcia .";
     } else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
         $apellidos= $apellidosVal;
@@ -66,7 +66,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
     if(empty($emailVal)){
         $emailErr = "Por favor introduzca un email válido.";
 
-    }elseif(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/", $emailVal)){ //filtro para que no pueda colarnos nada
+    }elseif(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/", $emailVal) || strlen($emailVal) > 25){ //filtro para que no pueda colarnos nada
         $emailErr = "Introduzca un email válido, como por ejemplo: usuario@dominio.com";
    } else{ //si todo lo anterior es falso o no e cumple se actualiza el apellido
        $email= $emailVal;
@@ -101,7 +101,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
     if(empty($telefonoVal)){
         $telefonoErr = "Tienes que escribir tu número de teléfono";
 
-    }elseif(!preg_match("/^[6|7|8|9][0-9]{8}$/", $telefonoVal)){ //filtro para que no pueda colarnos nada
+    }elseif(!preg_match("/^[6|7|8|9][0-9]{8}$/", $telefonoVal) || strlen($telefonoVal) > 9){ //filtro para que no pueda colarnos nada
         $telefonoErr = "Por favor introduzca un telefono válido con 9 dígitos y en formato español empezando por 6,7,8";
     }else{
         $telefono = $telefonoVal;
