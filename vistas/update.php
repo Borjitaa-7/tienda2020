@@ -31,7 +31,6 @@ if($_SESSION['id'] == decode($_GET["id"])){
             $passwordAnterior = $password;
             $admin = $usuario->getAdmin();
             $telefono = $usuario->getTelefono();
-            $telefonoAnterior = $telefono;
             $fecha = $usuario->getFecha();
             $imagen = $usuario->getImagen();
             $imagenAnterior = $imagen;
@@ -165,18 +164,6 @@ $id = decode($_POST["id"]);
         $telefono = $telefonoVal;
     }
 
-    $telefonoAnterior = $_POST['telefonoAnterior']; //ahora recuperamos el telefono anterior para asegurar que no nos cuela una mism direccion
-
-    $controlador = ControladorUsuarios::getControlador(); //abrimos conexion con el controlador de Usuarios
-    $usuario = $controlador->buscarTelefono($telefono); //Buscamos la funcion del telefono para buscarlo
- 
-    if (isset($usuario) && $telefonoAnterior != $telefono) { //si el usuario es veradero y el telefono anterir es distinto de telefono
-         $telefonoErr = "Ya existe un telefono igual en la Base de Datos"; //dara error si es el mismo
-     } else {
-         $telefono = $telefonoVal ; //se actualizará ya que no es el mismo
-     }
-
-
    // Procesamos admin
    if (isset($_POST["admin"])) {
     $admin = filtrado($_POST["admin"]);
@@ -289,13 +276,17 @@ echo "<br>";
                          <!-- Nombre-->
                          <div class="form-group <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>">
                             <label>Nombre</label>
-                            <input type="text" name="nombre" class="form-control" value="<?php echo $nombre; ?>">
+                            <input type="text" name="nombre" class="form-control" value="<?php echo $nombre; ?>"
+                            pattern="([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$"
+                            title="Por favor introduzca un nombre con formato valido, ejemplos Juan Pedro o Juan .">
                             <span class="help-block"><?php echo $nombreErr;?></span>
                         </div>
                         <!-- Apellidos-->
                             <div class="form-group <?php echo (!empty($apellidosErr)) ? 'error: ' : ''; ?>">
                             <label>Apellidos</label>
-                            <input type="text" required name="apellidos" class="form-control" value="<?php echo $apellidos; ?>" minlength="3">
+                            <input type="text" required name="apellidos" class="form-control" value="<?php echo $apellidos; ?>" minlength="3"
+                            pattern="([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){3,18}\s?([A-Za-zÑñ]+[áéíóú]?[A-Za-z]*){0,36}$"
+                            title="Por favor introduzca un nombre con formato valido, ejemplos Garcia Vaquero o Garcia .">
                             <span class="help-block"><?php echo $apellidosErr;?></span>
                         </div>
                         <!-- Email -->
@@ -321,8 +312,9 @@ echo "<br>";
                         <!-- Telefono-->
                         <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
                             <label>Telefono de Contacto</label>
-                            <input type="number" required name="telefono" class="form-control" value="<?php echo $telefono;?>" pattern="^[6|7|8|9][0-9]{8}$"
-                            title="Por favor introduzca un telefono válido con 9 dígitos y en formato español empezando por 6,7,8";;>
+                            <input type="number" required name="telefono" class="form-control" value="<?php echo $telefono;?>" 
+                            pattern="[6|7|8|9][0-9]{8}$"
+                            title="Por favor introduzca un telefono válido con 9 dígitos y en formato español empezando por 6,7,8">
                             <span class="help-block"><?php echo $telefonoErr;?></span>
                         </div>
                         <!-- Fecha-->
@@ -342,7 +334,6 @@ echo "<br>";
                         <input type="hidden" name="dniAnterior" value="<?php echo $dniAnterior; ?>"/>
                         <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>"/>
                         <input type="hidden" name="emailAnterior" value="<?php echo $emailAnterior; ?>" />
-                        <input type="hidden" name="telefonoAnterior" value="<?php echo $telefonoAnterior; ?>" />
                         <input type="hidden" name="passwordAnterior" value="<?php echo encode($passwordAnterior); ?>"/>
                         <input type="hidden" name="id" value="<?php echo encode($id); ?>"/>
                         <button type="submit" value="aceptar" class="btn btn-warning"> <span class="glyphicon glyphicon-refresh"></span>  Modificar</button>
