@@ -25,8 +25,12 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
    // Procesamos el dni
    $dniVal = filtrado($_POST["dni"]);
    if(empty($dniVal)){
-       $dniErr = "Por favor introduzca un DNI válido.";
-   $errores[]= $dniErr;
+        $dniErr = "Por favor introduzca un DNI válido.";
+        $errores[]= $dniErr;
+    }
+    elseif(!preg_match("/^([0-9]){8}+([A-Za-z]){1}$/", $dniVal)){
+        $dniErr = "Por favor introduzca un DNI con un formato valido =>Formato admitido 123456789A.";
+        $errores[]= $dniErr;
    } else{
        $dni= $dniVal;
    }
