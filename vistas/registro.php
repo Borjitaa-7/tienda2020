@@ -13,20 +13,25 @@ $dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $telefonoErr =
 // Procesamos el formulario 
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
 
-     // Procesamos DNI
-     //$controlador = ControladorUsuario::getControlador();
-     //$usuario = $controlador->buscarUsuarioDni($dniVal);
     $dniVal = filtrado(($_POST["dni"]));
     if(empty($dniVal)){
-        $dniErr = "Ya existe un usuario con DNI:" .$dniVal. " en la Base de Datos";
+        $dniErr = "Por favor, introduzca un DNI válido";
     }else{
         $dni= $dniVal;
     }
     
+    $controlador = ControladorUsuarios::getControlador();
+    $usuario = $controlador->buscarUsuarioDni($dni);
+    if (isset($usuario)) {
+        $dniErr = "Ya existe un usuario con este DNI actualmente, utiliza otro DNI para el registro";
+    } else {
+        $dni = $dniVal;
+    }
+
     // Procesamos el nombre
     $nombreVal = filtrado(($_POST["nombre"]));
     if(empty($nombreVal)){
-        $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos.";
+        $nombreErr = "Por favor introduzca un nombre válido con solo carcvteres alfabéticos.";
     } else{
         $nombre= $nombreVal;
     }

@@ -21,15 +21,20 @@ $dniErr = $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $t
 // Procesamos el formulario 
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
 
-     // Procesamos DNI
-     //$controlador = ControladorUsuario::getControlador();
-     //$usuario = $controlador->buscarUsuarioDni($dniVal);
-    $dniVal = filtrado(($_POST["dni"]));
-    if(empty($dniVal)){
-        $dniErr = "Ya existe un usuario con DNI:" .$dniVal. " en la Base de Datos";
-    }else{
-        $dni= $dniVal;
-    }
+     $dniVal = filtrado(($_POST["dni"]));
+     if(empty($dniVal)){
+         $dniErr = "Por favor, introduzca un DNI válido";
+     }else{
+         $dni= $dniVal;
+     }
+     
+     $controlador = ControladorUsuarios::getControlador();
+     $usuario = $controlador->buscarUsuarioDni($dni);
+     if (isset($usuario)) {
+         $dniErr = "Ya existe un usuario con este DNI actualmente, utiliza otro DNI para el registro";
+     } else {
+         $dni = $dniVal;
+     }
     
     // Procesamos el nombre
     $nombreVal = filtrado(($_POST["nombre"]));
@@ -53,6 +58,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
         $emailErr = "Por favor introduzca email válido.";
     } else{
         $email= $emailVal;
+    }
+
+    $controlador = ControladorUsuarios::getControlador();
+    $usuario = $controlador->buscarEmail($email);
+    if (isset($usuario)) {
+        $emailErr = "Ya existe un usuario con este email actualmente, utiliza otro email para el registro";
+    } else {
+        $email = $emailVal;
     }
 
     // Procesamos el password
